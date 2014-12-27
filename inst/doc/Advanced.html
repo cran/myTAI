@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2014-11-01" />
+<meta name="date" content="2014-12-27" />
 
 <title>Advanced Phylotranscriptomics Analyses</title>
 
@@ -52,19 +52,38 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <div id="header">
 <h1 class="title">Advanced Phylotranscriptomics Analyses</h1>
-<h4 class="date"><em>2014-11-01</em></h4>
+<h4 class="date"><em>2014-12-27</em></h4>
 </div>
 
 
 <p>The <code>myTAI</code> package provides analytics tools for datasets fulfilling the <strong>PhyloExpressionSet</strong> and <strong>DivergenceExpressionSet</strong> standard. To obtain this data format a <strong>PhyloExpressionSet</strong> or <strong>DivergenceExpressionSet</strong> resembles the combination of a Phylostratigraphic Map and an Expressionset (<strong>PhyloExpressionSet</strong>) or the combination of a Divergence Map and an Expressionset (<strong>DivergenceExpressionSet</strong>).</p>
 <p>The computation of a Phylostratigraphic Map relies on a method named <a href="http://www.sciencedirect.com/science/article/pii/S0168952507002995">Phylostratigraphy</a>. The computation of a Divergence Map relies on a method named <a href="http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html">Divergence Stratigraphy</a>. Both methods are computationally expensive and include many methodologies and evolutionary concepts. Nevertheless, the <a href="https://github.com/HajkD/orthologr">orthologr</a> package aims to automate <a href="http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html">Divergence Stratigraphy</a> and can be used to obtain a Divergence Map for a <em>query organism of interest</em>.</p>
+<p>A more detailed description of Divergence-Stratigraphy can be found in the <a href="https://github.com/HajkD/orthologr/blob/master/vignettes/divergence_stratigraphy.Rmd">Divergence-Stratigraphy Vignette</a> that is included in <a href="https://github.com/HajkD/orthologr">orthologr</a>.</p>
 <div id="fast-installation-guide-for-orthologr" class="section level2">
-<h2>Fast Installation guide for orthologr</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install orthologr from CRAN</span>
-<span class="kw">install.packages</span>(<span class="st">&quot;orthologr&quot;</span>)</code></pre>
+<h2>Fast Installation Guide for orthologr</h2>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install orthologr from GitHub</span>
+<span class="co"># install.packages(&quot;devtools&quot;)</span>
+
+<span class="co"># install the current version of orthologr on your system</span>
+<span class="kw">library</span>(devtools)
+<span class="kw">install_github</span>(<span class="st">&quot;HajkD/orthologr&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># On Windows, this won't work - see ?build_github_devtools</span>
+<span class="kw">install_github</span>(<span class="st">&quot;HajkD/orthologr&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># When working with Windows, first you need to install the</span>
+<span class="co"># R package: rtools -&gt; install.packages(&quot;rtools&quot;)</span>
+
+<span class="co"># Afterwards you can install devtools -&gt; install.packages(&quot;devtools&quot;)</span>
+<span class="co"># and then you can run:</span>
+
+devtools::<span class="kw">install_github</span>(<span class="st">&quot;HajkD/orthologr&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># and then call it from the library</span>
+<span class="kw">library</span>(<span class="st">&quot;orthologr&quot;</span>, <span class="dt">lib.loc =</span> <span class="st">&quot;C:/Program Files/R/R-3.1.1/library&quot;</span>)</code></pre>
 </div>
 <div id="retrieving-a-divergence-map" class="section level2">
-<h2>Retrieving a divergence map</h2>
+<h2>Retrieving a Divergence Map</h2>
 <p>A divergence map quantifies for each protein coding gene of a given organism the degree of selection pressure. The selection pressure is quantified by dNdS estimation.</p>
 <p>To perform <code>divergence stratigraphy</code> using <code>orthologr</code> you need the following prerequisites</p>
 <ul>
@@ -93,17 +112,47 @@ Arabidopsis_lyrata.v.1.0.23.cds.all.fa.gz
 -o Arabidopsis_lyrata.v.1.0.23.cds.all.fa.gz
 
 </code></pre>
+<p>Alternatively, you can use the Biological Data Retrieval package <a href="https://github.com/HajkD/biomartr">biomartr</a> to download proteomes from the refseq database (see <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd">Sequence Retrieval Vignette</a> for details).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;devtools&quot;)</span>
+
+<span class="co"># install the current version of biomartr on your system</span>
+<span class="kw">library</span>(devtools)
+<span class="kw">install_github</span>(<span class="st">&quot;HajkD/biomartr&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># On Windows, this won't work - see ?build_github_devtools</span>
+<span class="kw">install_github</span>(<span class="st">&quot;HajkD/biomartr&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># When working with Windows, first you need to install the</span>
+<span class="co"># R package: rtools -&gt; install.packages(&quot;rtools&quot;)</span>
+
+<span class="co"># Afterwards you can install devtools -&gt; install.packages(&quot;devtools&quot;)</span>
+<span class="co"># and then you can run:</span>
+
+devtools::<span class="kw">install_github</span>(<span class="st">&quot;HajkD/biomartr&quot;</span>, <span class="dt">build_vignettes =</span> <span class="ot">TRUE</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># and then call it from the library</span>
+<span class="kw">library</span>(<span class="st">&quot;biomartr&quot;</span>, <span class="dt">lib.loc =</span> <span class="st">&quot;C:/Program Files/R/R-3.1.1/library&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the proteome of Arabidopsis thaliana from refseq</span>
+<span class="co"># and store the corresponding proteome file in '_ncbi_downloads/proteomes'</span>
+Ath_Proteome &lt;-<span class="st"> </span><span class="kw">getProteome</span>( <span class="dt">db           =</span> <span class="st">&quot;refseq&quot;</span>, 
+                             <span class="dt">kingdom      =</span> <span class="st">&quot;plant&quot;</span>,
+                             <span class="dt">organism     =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>,
+                             <span class="dt">clean_folder =</span> <span class="ot">FALSE</span> )</code></pre>
+<p>Internally, the <code>getProteome()</code> function creates a directory named <code>_ncbi_downloads/proteome</code> in which corresponding proteomes are loaded and then sourced as data.table object into the current R session. When specifying <code>clean_folder = FALSE</code>, the <code>_ncbi_downloads/proteomes</code> folder will not be removed and the corresponding proteome does not need to be downloaded again when sourcing it into the current R session via <code>getProteome()</code>.</p>
 <p>When the download is finished you need to unzip the files and then start R to perform the following analyses:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(orthologr)
 
 <span class="co"># compute the divergence map of A. thaliana</span>
 Athaliana_DM &lt;-<span class="st"> </span><span class="kw">divergence_stratigraphy</span>(
-                         <span class="dt">query_file =</span> <span class="st">&quot;path/to/Arabidopsis_thaliana.TAIR10.23.cds.all.fa&quot;</span>,
-                         <span class="dt">subject_file =</span> <span class="st">&quot;path/to/Arabidopsis_lyrata.v.1.0.23.cds.all.fa&quot;</span>,
-                         <span class="dt">eval =</span> <span class="st">&quot;1E-5&quot;</span>, <span class="dt">ortho_detection =</span> <span class="st">&quot;RBH&quot;</span>,
-                         <span class="dt">comp_cores =</span> <span class="dv">1</span>, <span class="dt">quiet =</span> <span class="ot">TRUE</span>, <span class="dt">clean_folders =</span> <span class="ot">TRUE</span> )</code></pre>
+                         <span class="dt">query_file      =</span> <span class="st">&quot;path/to/Arabidopsis_thaliana.TAIR10.23.cds.all.fa&quot;</span>,
+                         <span class="dt">subject_file    =</span> <span class="st">&quot;path/to/Arabidopsis_lyrata.v.1.0.23.cds.all.fa&quot;</span>,
+                         <span class="dt">eval            =</span> <span class="st">&quot;1E-5&quot;</span>, 
+                         <span class="dt">ortho_detection =</span> <span class="st">&quot;RBH&quot;</span>,
+                         <span class="dt">comp_cores      =</span> <span class="dv">1</span>, 
+                         <span class="dt">quiet           =</span> <span class="ot">TRUE</span>, 
+                         <span class="dt">clean_folders   =</span> <span class="ot">TRUE</span> )</code></pre>
 <p><strong>Note</strong>, that you can specify the <code>comp_cores</code> argument in case you work with an multicore machine.</p>
-<p>The next step is to combine the <code>divergence map</code> of <em>A. thaliana</em> (<code>Athaliana_DM</code>) with an gene expression set covering a developmental process of interest (in our case <em>A. thaliana</em> embryogenesis). We obtain an example gene expression set covering <em>A. thaliana</em> embryogenesis from the ExpressionMatrix stored in <code>PhyloExpressionSetExample</code>. This results in an standard DivergenceExpressionSet object.</p>
+<p>The next step is to combine the <code>Divergence Map</code> of <em>A. thaliana</em> (<code>Athaliana_DM</code>) with an gene expression set covering a biological process of interest (in our case <em>A. thaliana</em> embryogenesis). We obtain an example gene expression set covering <em>A. thaliana</em> embryogenesis from the ExpressionMatrix stored in <code>PhyloExpressionSetExample</code>. This results in an standard DivergenceExpressionSet object.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the PhyloExpressionSetExample data set</span>
 <span class="kw">data</span>(PhyloExpressionSetExample)
 
@@ -112,7 +161,8 @@ ExprMatrix &lt;-<span class="st"> </span>PhyloExpressionSetExample[ , <span clas
 
 <span class="co"># match the divergence map with the gene expression set of A. thaliana</span>
 <span class="co"># to obtain an PhyloExpressionSet object</span>
-Ath_PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(<span class="dt">Map =</span> Athaliana_DM,<span class="dt">ExpressionMatrix =</span> ExprMatrix)</code></pre>
+Ath_PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">MatchMap</span>( <span class="dt">Map              =</span> Athaliana_DM,
+                                    <span class="dt">ExpressionMatrix =</span> ExprMatrix )</code></pre>
 <p>This way you can create any PhyloExpressionSet of interest. In this example, the output of <code>Ath_PhyloExpressionSet</code> should be analogous to <code>PhyloExpressionSetExample</code>.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the PhyloExpressionSetExample data set</span>
 <span class="kw">data</span>(PhyloExpressionSetExample)

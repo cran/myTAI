@@ -1,7 +1,7 @@
 myTAI
 =====
 
-### A framework to perform phylotranscriptomics analyses and visualization for Evolutionary Developmental Biology research.
+### A Framework to Perform Phylotranscriptomics Analyses and Visualization for Evolutionary Developmental Biology Research.
 
 The present collection of [R](http://cran.r-project.org/) functions can be used to perform phylotranscriptomics 
 analyses and visualization to investigate phenomena within the field of Evolutionary Developmental Biology.
@@ -46,6 +46,13 @@ All three functions also include visual analytics tools to quantify the goodness
 ## Fast installation guide
 
 ```r
+
+# install myTAI version 0.0.1 from CRAN
+install.packages("myTAI")
+
+
+# The developer version can be installed directly from github:
+
 # install.packages("devtools")
 
 # install the current version of myTAI on your system

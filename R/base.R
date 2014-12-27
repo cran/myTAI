@@ -6,24 +6,34 @@ pow <- function(x,power)
 }
 
 
-#' @title Match function for a map with an ExpressionSet
-#' @details This function matches a \emph{phylostratigraphic map} or \emph{divergence map} only storing unique gene ids with an ExpressionSet also storing only unique gene ids.
-#' @param Map a standard \emph{phylostratigraphic map} or \emph{divergence map} object.
+#' @title Match a Phylostratigraphic Map or Divergence Map with a ExpressionMatrix
+#' @details This function matches a \emph{Phylostratigraphic Map} or \emph{Divergence Map} only storing unique gene ids with a ExpressionMatrix
+#' also storing only unique gene ids.
+#' @param Map a standard \emph{Phylostratigraphic Map} or \emph{Divergence Map} object.
 #' @param ExpressionMatrix  a standard ExpressionMatrix object.
+#' @param accumulate an accumulation function such as \code{mean()}, \code{median()}, or \code{min()}
+#' to accumulate multiple expression levels that map to the same unique gene id present in the \code{ExpressionMatrix}.
 #' @details
 #' 
 #' In phylotranscriptomics analyses two major techniques are performed to
-#' obtain standard \emph{phylostratigraphic map} or \emph{divergence map} objects.
+#' obtain standard \emph{Phylostratigraphic map} or \emph{Divergence map} objects.
 #' 
-#' To obtain a \emph{phylostratigraphic map}, \emph{phylostratigraphy} (Domazet-Lošo et al., 2007) has to be performed. To obtain a \emph{sequence divergence map}, orthologous gene detection and Ka/Ks computations (Quint et al., 2012; Drost et al., 2014) have to be performed.
+#' To obtain a \emph{Phylostratigraphic Map}, \emph{Phylostratigraphy} (Domazet-Lošo et al., 2007) has to be performed. To obtain a \emph{Divergence Map}, 
+#' orthologous gene detection, Ka/Ks computations, and decilation (Quint et al., 2012; Drost et al., 2015) have to be performed.
 #' 
-#' The resulting standard \emph{phylostratigraphic map} or \emph{divergence map} objects consist of 2 colums storing the phylostratum assignment or divergence stratum assignment of a given gene in column one, and the corresponding gene id of that gene on columns two.
+#' The resulting standard \emph{Phylostratigraphic Map} or \emph{Divergence Map} objects consist of 2 colums storing the phylostratum assignment 
+#' or divergence stratum assignment of a given gene in column one, and the corresponding gene id of that gene on columns two.
 #' 
 #' A standard ExpressionMatrix is a common gene expression matrix storing the gene ids or probe ids in the first column, and all experiments/stages/replicates in the following columns.
 #' 
 #' The \emph{MatchMap} function takes both standard datasets: \emph{Map} and \emph{ExpressionMatrix} to merge both data sets to obtain a standard PhyloExpressionSet or DivergenceExpressionSet object.
 #' 
-#' This procedure is analogous to \code{\link{merge}}, but is customized to the \emph{phylostratigraphic map}, \emph{divergence map}, and \emph{ExpressionMatrix} standards to allow a faster and more intuitive usage. 
+#' This procedure is analogous to \code{\link{merge}}, but is customized to the \emph{Phylostratigraphic Map}, \emph{Divergence Map}, and \emph{ExpressionMatrix} standards to allow a faster and more intuitive usage. 
+#' 
+#' In case you work with an ExpressionMatrix that stores multiple expression levels for a unique gene id, you
+#' can specify the \code{accumulation} argument to accumulate these multiple expression levels to obtain
+#' one expression level for one unique gene.
+#' 
 #' 
 #' @return a standard PhyloExpressionSet or DivergenceExpressionSet object. 
 #' @references 
@@ -34,7 +44,7 @@ pow <- function(x,power)
 #' 
 #'   Quint M., Drost H.G., Gabel A., Ullrich K.K., Boenn M., Grosse I. (2012) A transcriptomic hourglass in plant embryogenesis. Nature 490: 98-101.
 #' 
-#'   Drost et al. (2014), Active maintenance of phylotranscriptomic hourglass patterns in animal and plant embryogenesis.
+#'   Drost et al. (2015), Evidence for active maintenance of phylotranscriptomic hourglass patterns in animal and plant embryogenesis.
 #' 
 #' @author Hajk-Georg Drost
 #' @examples
@@ -77,32 +87,45 @@ pow <- function(x,power)
 #'         
 #'         
 #'@export
-MatchMap <- function(Map,ExpressionMatrix)
+MatchMap <- function(Map,ExpressionMatrix, accumulate = NULL)
 {
   
-  # looking for intersecting genes in both data sets
-  intersectingGeneIDs <- intersect(sort(toupper(Map[ , 2])),sort(toupper(ExpressionMatrix[ , 1])))
-  # saving the IDs in each data set of the intersecting genes
-  XmapGeneNumbers <- match(intersectingGeneIDs,toupper(Map[ , 2]))
-  ExpressionSetGeneNumbers <- match(intersectingGeneIDs,toupper(ExpressionMatrix[ , 1]))
+  names(ExpressionMatrix)[1] <- "GeneID"
+  names(Map)[2] <- "GeneID"
+  ExpressionMatrix[ , "GeneID"] <- tolower(ExpressionMatrix[ , "GeneID"])
+  Map[ , "GeneID"] <- tolower(Map[ , "GeneID"])
+  GeneID <- NULL
   
-  # saving a subset which only contains the intersecting genes
-  Xmap_Intersected <- Map[XmapGeneNumbers,]
-  ExpressionSet_Intersected <- ExpressionMatrix[ExpressionSetGeneNumbers , ]
+  if(any(duplicated(Map[ , "GeneID"])))
+          stop("You have duplicate Gene IDs in your Map. Please enter only unique Gene IDs.")
   
-  # putting together the Xmap and Expression Set
-  FinalIntersectedExpressionSet <- data.frame(Xmap_Intersected,ExpressionSet_Intersected)
-  # print out a test case which shows if the matching pocess has been performed correctly
-  print(head(FinalIntersectedExpressionSet,n = 20))
-  print(length(intersectingGeneIDs))
-  nColsFinal <- dim(FinalIntersectedExpressionSet)[2]
-  # return the matched data set
-  return(FinalIntersectedExpressionSet[ , c(1, 3:nColsFinal)])
+  if(!is.null(accumulate)){
+        
+          acc_fun <- match.fun(accumulate)
+          ExpressionMatrix <- dplyr::summarise_each(dplyr::group_by(ExpressionMatrix, GeneID), dplyr::funs(acc_fun))
+           
+  }
+          
+  if(any(duplicated(ExpressionMatrix[ , "GeneID"])))
+          stop("You have duplicate Gene IDs in your ExpressionMatrix. Please enter only unique Gene IDs, or specify the 'accumulate' argument.")
+  
+  joined_ExpressionMatrix <- dplyr::semi_join(ExpressionMatrix, Map, by = "GeneID")
+  
+  res_tbl <- merge(joined_ExpressionMatrix,Map, by = "GeneID")
+  
+  if(!any(duplicated(res_tbl[ , "GeneID"]))){
+          
+          return(res_tbl[ , c(ncol(res_tbl),1:(ncol(res_tbl)-1))])
+          
+  } else {
+          
+          stop("Something went wrong with matching Map and ExpressionMatrix! Plaese check for duplicate entries!")
+  }
   
 }
 
 
-#' @title Function to compute the TAI or TDI profiles omitting a given gene
+#' @title Compute TAI or TDI profiles omitting a given gene
 #' @description For each gene i, exclude the corresponding gene i from the global
 #'  PhyloExpressionSet or DivergenceExpressionSet and compute the \code{\link{TAI}} or \code{\link{TDI}} 
 #'  profile for the corresponding global PhyloExpressionSet or DivergenceExpressionSet
@@ -203,7 +226,7 @@ re.colors <- function(n)
 }
 
 
-#' @title A function to get a vector of length n storing a palette of colors for multiple bars in barplots
+#' @title Color palette for barplots
 #' @description A nice color palette for barplots with several bars.
 #' @param n the number of colors to be in the palette. 
 #' @return a character vector containing different color names that can be used for barplots.
@@ -213,7 +236,6 @@ re.colors <- function(n)
 #' 
 #' # get 5 different colors for 5 different bars
 #' barplot_colors <- bar.colors(5)
-#' 
 #' @export
 bar.colors <- function(n)
 {
@@ -224,7 +246,7 @@ bar.colors <- function(n)
 }
 
 
-#' @title Function testing for the validaty of a PhyloExpressionSet or DivergenceExpressionSet standard
+#' @title Testing the validaty of a PhyloExpressionSet or DivergenceExpressionSet standard
 #' @description This function tests whether a given ExpressionSet follows the pre-defined PhyloExpressionSet or DivergenceExpressionSet standard.
 #' @param ExpressionSet a standard PhyloExpressionSet or DivergenceExpressionSet that shall be tested for format validity.
 #' @author Hajk-Georg Drost
