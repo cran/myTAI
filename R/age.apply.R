@@ -1,7 +1,6 @@
-#' @title Age class specific apply function
+#' @title Age Category Specific apply Function
 #' @description 
-#' This function takes a standard PhyloExpressionSet or DivergenceExpressionSet object
-#' as argument and performs any given function to the sub expression matrix of each phylotranscriptomic age class.
+#' This function performs the split-apply-combine methodology on Phylostrata or Divergence Strata stored within the input ExpressionSet.
 #' 
 #' This function is very useful to perform any phylostratum or divergence-stratum specific analysis.
 #' 
@@ -54,15 +53,15 @@ age.apply <- function(ExpressionSet,FUN, ... ,as.list = FALSE)
         is.ExpressionSet(ExpressionSet)
         
         f <- match.fun(FUN)
-        ncols <- dim(ExpressionSet)[2]
+        ncols <- ncol(ExpressionSet)
         s <- split(ExpressionSet, ExpressionSet[ , 1])
         
-        if(as.list == FALSE){
+        if(!as.list){
                 res <- t(as.data.frame(lapply(s , function(x) f(as.matrix(x[ , 3:ncols]) , ...))))
                 rownames(res) <- levels(as.factor(ExpressionSet[ , 1]))
         }
         
-        if(as.list == TRUE){
+        if(as.list){
                 res <- lapply(s , function(x) f(as.matrix(x[ , 3:ncols]) , ...))
                 names(res) <- levels(as.factor(ExpressionSet[ , 1]))
         }

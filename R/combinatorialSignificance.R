@@ -1,4 +1,4 @@
-#' @title Compute the statistical significance of each replicate combination
+#' @title Compute the Statistical Significance of Each Replicate Combination
 #' @description In case a PhyloExpressionSet or DivergenceExpressionSet stores replicates for each
 #' developmental stage or experiment, this function allows to compute the p-values quantifying
 #' the statistical significance of the underlying pattern for all combinations of replicates.
@@ -8,13 +8,12 @@
 #' In case replicate stores only one value, then the function assumes that each developmental stage or experiment
 #' stores the same number of replicates.
 #' @param TestStatistic a string defining the type of test statistics to be used to quantify the statistical significance the present phylotranscriptomics pattern.
-#' Possible values can be: \code{TestStatistic} = "FlatLineTest" : Statistical test for the deviation from a flat line.
-#' \code{TestStatistic} = "ReductiveHourglassTest" : Statistical test for the existence of a hourglass shape (high-low-high pattern).
-#' @param permutations a numeric value specifying the number of permutations to be performed for the \code{\link{FlatLineTest}} or \code{\link{ReductiveHourglassTest}}.
+#' Default is \code{TestStatistic} = \code{"FlatLineTest"}.
+#' @param permutations a numeric value specifying the number of permutations to be performed for the \code{\link{FlatLineTest}}.
 #' @param parallel a boolean value specifying whether parallel processing (multicore processing) shall be performed.
 #' @details 
 #' 
-#' #' The intention of this analysis is to validate that there exists no sequence of replicates 
+#' The intention of this analysis is to validate that there exists no sequence of replicates 
 #' (for all possible combination of replicates) that results in a non-significant pattern,
 #' when the initial pattern with combined replicates was shown to be significant.
 #' 
@@ -56,16 +55,16 @@
 #' whether an critical value \eqn{\alpha} is exeeded or not (e.g. \eqn{\alpha = 0.05}).
 #' 
 #' 
-#' The function receives a standard PhyloExpressionSet or DivergenceExpressionSet object and a vector storing the number of replicates present in each stage or experiment. Based on these arguments the function computes all possible replicate combinations using the \code{\link{expand.grid}} function and performs a permutation test (either a \code{\link{FlatLineTest}} or \code{\link{ReductiveHourglassTest}}) for each replicate combination. The \emph{permutation} parameter of this function specifies the number of permutations that shall be performed for each permutation test. When all p-values are computed, a numeric vector storing the corresponding p-values for each replicate combination is returned.  
+#' The function receives a standard PhyloExpressionSet or DivergenceExpressionSet object and a vector storing the number of replicates present in each stage or experiment. Based on these arguments the function computes all possible replicate combinations using the \code{\link{expand.grid}} function and performs a permutation test (either a \code{\link{FlatLineTest}} for each replicate combination. The \emph{permutation} parameter of this function specifies the number of permutations that shall be performed for each permutation test. When all p-values are computed, a numeric vector storing the corresponding p-values for each replicate combination is returned.  
 #' 
 #' In other words, for each replicate combination present in the PhyloExpressionSet or DivergenceExpressionSet object, the TAI or TDI pattern of the corresponding replicate combination is tested for its statistical significance based on the underlying test statistic.
 #' 
 #' This function is also able to perform all computations in parallel using multicore processing. The underlying statistical tests are written in C++ and optimized for fast computations.
 #' 
 #' @return a numeric vector storing the p-values returned by the underlying test statistic for all possible replicate combinations.
-#' @references Drost et al. 2015, Evidence for active maintenance of phylotranscriptomic hourglass patterns in animal and plant embryogenesis.
+#' @references Drost HG et al. (2015). \emph{Evidence for Active Maintenance of Phylotranscriptomic Hourglass Patterns in Animal and Plant Embryogenesis}. Mol Biol Evol. 32 (5): 1221-1231 doi:10.1093/molbev/msv012.
 #' @author Hajk-Georg Drost
-#' @seealso \code{\link{expand.grid}}, \code{\link{FlatLineTest}}, \code{\link{ReductiveHourglassTest}}
+#' @seealso \code{\link{expand.grid}}, \code{\link{FlatLineTest}}
 #' @examples
 #' 
 #' # load a standard PhyloExpressionSet
@@ -77,28 +76,33 @@
 #' # and 2 replicates for stage 3
 #' # FOR REAL ANALYSES PLEASE USE: permutations = 1000 or 10000
 #' # BUT NOTE THAT THIS TAKES MUCH MORE COMPUTATION TIME
-#' p.vector <- combinatorialSignificance(PhyloExpressionSetExample, 
-#'                                       replicates = c(2,3,2), 
+#' p.vector <- CombinatorialSignificance(ExpressionSet = PhyloExpressionSetExample, 
+#'                                       replicates    = c(2,3,2), 
 #'                                       TestStatistic = "FlatLineTest", 
-#'                                       permutations = 10, parallel = FALSE)
+#'                                       permutations  = 10, 
+#'                                       parallel      = FALSE)
 #'
 #'
 #'
 #'
 #' @import foreach
 #' @export
-combinatorialSignificance <- function(ExpressionSet,replicates,TestStatistic = "FlatLineTest", 
-                                      permutations = 1000, parallel = FALSE)
+CombinatorialSignificance <- function(ExpressionSet,
+                                      replicates,
+                                      TestStatistic = "FlatLineTest", 
+                                      permutations  = 1000, 
+                                      parallel      = FALSE)
 {
   
   is.ExpressionSet(ExpressionSet)
   
-  if(!is.element(TestStatistic, c("FlatLineTest","ReductiveHourglassTest"))){
-    stop("Please enter a correct string for the test statistic: 'FlatLineTest' or 'ReductiveHourglassTest'.")
+  if(!is.element(TestStatistic, c("FlatLineTest"))){
+    stop("Please enter a correct string for the test statistic: 'FlatLineTest'.")
   }
   
   ncols <- dim(ExpressionSet)[2]
   
+  # in case all stages have the exact same number of replicates
   if(length(replicates) == 1){
   
      if((ncols - 2) %% replicates != 0)
@@ -114,6 +118,7 @@ combinatorialSignificance <- function(ExpressionSet,replicates,TestStatistic = "
      combinatorialMatrix <- expand.grid(replicateName.List, stringsAsFactors = FALSE)
   }
   
+  # in case stages have variable number of replicates per stage
   if(length(replicates) > 1){
     
     nStages <- length(replicates)

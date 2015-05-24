@@ -9,94 +9,70 @@ using namespace Rcpp;
 NumericVector cpp_TAI(NumericMatrix ExpressionSet, NumericVector Phylostratum);
 RcppExport SEXP myTAI_cpp_TAI(SEXP ExpressionSetSEXP, SEXP PhylostratumSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionSet(ExpressionSetSEXP );
-        Rcpp::traits::input_parameter< NumericVector >::type Phylostratum(PhylostratumSEXP );
-        NumericVector __result = cpp_TAI(ExpressionSet, Phylostratum);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionSet(ExpressionSetSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type Phylostratum(PhylostratumSEXP);
+    __result = Rcpp::wrap(cpp_TAI(ExpressionSet, Phylostratum));
+    return __result;
 END_RCPP
 }
 // cpp_bootMatrix
 NumericMatrix cpp_bootMatrix(NumericMatrix ExpressionMatrix, NumericVector AgeVector, int permutations);
 RcppExport SEXP myTAI_cpp_bootMatrix(SEXP ExpressionMatrixSEXP, SEXP AgeVectorSEXP, SEXP permutationsSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionMatrix(ExpressionMatrixSEXP );
-        Rcpp::traits::input_parameter< NumericVector >::type AgeVector(AgeVectorSEXP );
-        Rcpp::traits::input_parameter< int >::type permutations(permutationsSEXP );
-        NumericMatrix __result = cpp_bootMatrix(ExpressionMatrix, AgeVector, permutations);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionMatrix(ExpressionMatrixSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type AgeVector(AgeVectorSEXP);
+    Rcpp::traits::input_parameter< int >::type permutations(permutationsSEXP);
+    __result = Rcpp::wrap(cpp_bootMatrix(ExpressionMatrix, AgeVector, permutations));
+    return __result;
 END_RCPP
 }
 // cpp_pMatrix
 NumericMatrix cpp_pMatrix(NumericMatrix ExpressionSet, NumericVector AgeVector);
 RcppExport SEXP myTAI_cpp_pMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionSet(ExpressionSetSEXP );
-        Rcpp::traits::input_parameter< NumericVector >::type AgeVector(AgeVectorSEXP );
-        NumericMatrix __result = cpp_pMatrix(ExpressionSet, AgeVector);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionSet(ExpressionSetSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type AgeVector(AgeVectorSEXP);
+    __result = Rcpp::wrap(cpp_pMatrix(ExpressionSet, AgeVector));
+    return __result;
 END_RCPP
 }
 // cpp_std_error
 double cpp_std_error(NumericVector x);
 RcppExport SEXP myTAI_cpp_std_error(SEXP xSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP );
-        double __result = cpp_std_error(x);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(cpp_std_error(x));
+    return __result;
 END_RCPP
 }
 // cpp_geom_mean
 double cpp_geom_mean(NumericVector x);
 RcppExport SEXP myTAI_cpp_geom_mean(SEXP xSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP );
-        double __result = cpp_geom_mean(x);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(cpp_geom_mean(x));
+    return __result;
 END_RCPP
 }
 // cpp_omitMatrix
 NumericMatrix cpp_omitMatrix(NumericMatrix ExpressionSet, NumericVector AgeVector);
 RcppExport SEXP myTAI_cpp_omitMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionSet(ExpressionSetSEXP );
-        Rcpp::traits::input_parameter< NumericVector >::type AgeVector(AgeVectorSEXP );
-        NumericMatrix __result = cpp_omitMatrix(ExpressionSet, AgeVector);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericMatrix >::type ExpressionSet(ExpressionSetSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type AgeVector(AgeVectorSEXP);
+    __result = Rcpp::wrap(cpp_omitMatrix(ExpressionSet, AgeVector));
+    return __result;
 END_RCPP
 }

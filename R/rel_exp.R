@@ -1,4 +1,4 @@
-#' @title Transform to relative expression levels
+#' @title Transform to Relative Expression Levels
 #' @description This function computes the relative expression profiles of any given gene expression set. 
 #' The relative expression profile is being computed as follows:
 #' 
@@ -14,9 +14,9 @@
 #' @param ExpressionMatrix a numeric matrix representing a gene expression matrix for which the relative expression profile shall be computed.
 #' @return a vector containing the relative expression profile of the correspnding data matrix.
 #' @references 
-#' Domazet-Loso T and Tautz D. 2010. "A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns". Nature (468): 815-818.
+#' Domazet-Loso T and Tautz D. (2010). \emph{A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns}. Nature (468): 815-818.
 #'
-#' Quint M et al. 2012. "A transcriptomic hourglass in plant embryogenesis". Nature (490): 98-101.
+#' Quint M et al. (2012). \emph{A transcriptomic hourglass in plant embryogenesis}. Nature (490): 98-101.
 #' @author Hajk-Georg Drost
 #' @seealso \code{\link{REMatrix}}, \code{\link{PlotRE}}
 #' @examples
@@ -42,8 +42,7 @@ RE <- function(ExpressionMatrix)
         return(RE)
 }
 
-#' @title Compute relative expression profiles for Phylostrata or Divergence-Strata
-#' available in a PhyloExpressionSet or DivergenceExpressionSet
+#' @title Compute a Relative Expression Matrix
 #' @description This function computes the relative expression profiles of 
 #' all given phylostrata or divergence-strata within a given PhyloExpressionSet or DivergenceExpressionSet.
 #' @param ExpressionSet a standard PhyloExpressionSet or DivergenceExpressionSet object.
@@ -59,9 +58,9 @@ RE <- function(ExpressionMatrix)
 #' and the relative expression levels \eqn{f_js} of all other stages s range between 0 and 1, accordingly.
 #' @author Hajk-Georg Drost
 #' @references
-#' Domazet-Loso T and Tautz D. 2010. "A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns". Nature (468): 815-818.
+#' Domazet-Loso T and Tautz D. (2010). \emph{A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns}. Nature (468): 815-818.
 #'
-#' Quint M et al. 2012. "A transcriptomic hourglass in plant embryogenesis". Nature (490): 98-101.
+#' Quint M et al. (2012). \emph{A transcriptomic hourglass in plant embryogenesis}. Nature (490): 98-101.
 #' 
 #' @seealso \code{\link{RE}}, \code{\link{PlotRE}}, \code{\link{PlotBarRE}}
 #' @examples
@@ -81,7 +80,8 @@ RE <- function(ExpressionMatrix)
 
 REMatrix <- function(ExpressionSet)
 {
-        
+        if(ncol(ExpressionSet) < 4)
+                stop("You need at least 2 stages (= expression columns in your data.frame) to comptute relative expression levels...")
         is.ExpressionSet(ExpressionSet)
         return(age.apply(ExpressionSet = ExpressionSet, RE))
         

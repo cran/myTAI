@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2014-12-27" />
+<meta name="date" content="2015-05-24" />
 
 <title>Introduction to the myTAI Package</title>
 
@@ -52,41 +52,238 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <div id="header">
 <h1 class="title">Introduction to the myTAI Package</h1>
-<h4 class="date"><em>2014-12-27</em></h4>
+<h4 class="date"><em>2015-05-24</em></h4>
 </div>
 
 
-<p>The <code>myTAI</code> package provides a statistical framework and a collection of functions that can be used to perform phylotranscriptomics analyses and visualization to investigate phenomena within the field of <strong>Evolutionary Developmental Biology</strong>.</p>
-<p>The goal of this package is to provide a broad range of users (as well as the phylotranscriptomics community) with an easy to use and computationally optimized framework for reproducible research in the fields referred to as <strong>Evolutionary Developmental Biology</strong> and <strong>Phylotranscriptomics</strong> and to allow a better comparability between molecular phenomena resulting from <em>in silico</em> data analyses.</p>
-<p>A series of tutorials aim to introduce you to the <code>myTAI</code> package:</p>
+<div id="performing-phylotranscriptomics-with-r" class="section level2">
+<h2>Performing Phylotranscriptomics with R</h2>
+<p>The <code>myTAI</code> package allows users to capture evolutionary signals in developmental transcriptomes using a phylotranscriptomic approach.</p>
+<p>Phylotranscriptomics defines the concept of combining genetic sequence information with gene expression levels to capture evolutionary signals during development (Domazet-Loso and Tautz, 2010; Quint et al., 2012; Drost et al., 2015).</p>
+<p>This subfield of Evolutionary Developmental Biology aims to investigate stages or periods of evolutionary conservation or constraint in developmental processes of extant species.</p>
+<p><code>myTAI</code> provides easy to use and optimized functions to perform phylostrancriptomic analyses for any annotated organism and developmental process of interest. Additionally, a customized visualization framework implemented in myTAI allows users to generate publication quality plots of their custom phylotranscriptomic analyses.</p>
+<p>The goal of <code>myTAI</code> is to provide a broad range of users interested in the evolution of developmental transcriptomes with an easy to use and computationally optimized framework for reproducible research and modular pipeline implementation.</p>
+<p>A series of tutorials aim to guide you through the <code>myTAI</code> package:</p>
 <ul>
 <li><strong>1) Introduction:</strong> Vignette - Introduction to the myTAI package</li>
 <li><strong>2) Intermediate:</strong> Vignette - Intermediate Analyses and Test Statistics</li>
-<li><strong>3) Advanced:</strong> Vignette - Advanced use of the myTAI package and data retrieval performing divergence stratigraphy using the <a href="https://github.com/HajkD/orthologr">orthologr</a> package</li>
+<li><strong>3) Advanced:</strong> Vignette - Data Retrieval and Divergence Stratigraphy using the <a href="https://github.com/HajkD/orthologr">orthologr</a> package</li>
 </ul>
-<p>Internally, computationally intensive functions have been written in C++ using the <a href="http://cran.r-project.org/web/packages/Rcpp/index.html">Rcpp</a> package to allow fast analytics in phylotranscriptomics research.</p>
+</div>
 <div id="getting-started" class="section level2">
 <h2>Getting Started</h2>
-<p>All functions implemented in the <code>myTAI</code> package expect a specific data format as input data. These standardized data formats are referred to as <strong>PhyloExpressionSet</strong> and <strong>DivergenceExpressionSet</strong>.</p>
-<p>The simplest way to get introduced into the standard formats referred to as <strong>PhyloExpressionSet</strong> and <strong>DivergenceExpressionSet</strong> is to look at the example data sets that come with the <code>myTAI</code> package.</p>
+<p>The following sections provide step by step tutorials on <code>phylotranscriptomic analyses</code>.</p>
+<p>As already mentioned above, phylotranscriptomic analyses are based on the combination of genetic sequence information with transcriptome data.</p>
+<p>For this purpose the following data sets need to be generated or obtained to be able to perform phylotranscriptomic analyses:</p>
+<ul>
+<li><p>Phylostratigraphic Map of an Organism (of Interest)</p></li>
+<li><p>Divergence Map of an Organism (of Interest)</p></li>
+<li><p>Transcriptome Data Covering a Specific Experiment for the Organism (of Interest)</p></li>
+</ul>
+<p>Each step can be performed independent of all other steps and the resulting data sets can also be used for different (independent) studies and analyses.</p>
+<p>So, the first step in performing phylotranscriptomic analyses is to perform <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code> to assign each protein coding genes of an organism of interest an evolutionary age (<a href="http://www.sciencedirect.com/science/article/pii/S0168952507002995">Phylostratigraphy</a>) or degree of selection pressure (<a href="http://mbe.oxfordjournals.org/content/32/5/1221.full">Divergence Stratigraphy</a>). The resulting <code>Phylostratigraphic Map</code> and <code>Divergence Map</code> of the corresponding organism of interest is then matched with a transcriptome data set covering the developmental process of interest.</p>
+<p>The following code illustrates how a typical <code>Phylostratigraphic Map</code> and <code>Divergence Map</code> are structured:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
 
-<span class="co"># load an example PhyloExpressionSet stored in the myTAI package</span>
-<span class="kw">data</span>(PhyloExpressionSetExample) 
+<span class="co"># load example data sets</span>
+<span class="kw">data</span>(PhyloExpressionSetExample)
+<span class="kw">data</span>(DivergenceExpressionSetExample)
 
-<span class="co"># load an example DivergenceExpressionSet stored in the myTAI package</span>
-<span class="kw">data</span>(DivergenceExpressionSetExample) </code></pre>
-<p>Now, we want to have a look at the data sets and their standard format.</p>
-<ul>
-<li><strong>First</strong> for a PhyloExpressionSet:</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(PhyloExpressionSetExample, <span class="dv">3</span>) <span class="co"># head of an example standard PhyloExpressionSet</span></code></pre>
-<pre><code>
-  Phylostratum      GeneID   Zygote Quadrant Globular     Heart  Torpedo      Bent    Mature
-1            1 at1g01040.2 2173.635 1911.200 1152.555 1291.4224 1000.253  962.9772 1696.4274
-2            1 at1g01050.1 1501.014 1817.309 1665.309 1564.7612 1496.321 1114.6435 1071.6555
-3            1 at1g01070.1 1212.793 1233.002  939.200  929.6195  864.218  877.2060  894.8189
-</code></pre>
+<span class="co"># show an example structure of a Phylostratigraphic Map</span>
+<span class="kw">head</span>(PhyloExpressionSetExample[ , <span class="kw">c</span>(<span class="st">&quot;Phylostratum&quot;</span>,<span class="st">&quot;GeneID&quot;</span>)])</code></pre>
+<pre><code>  Phylostratum      GeneID
+1            1 at1g01040.2
+2            1 at1g01050.1
+3            1 at1g01070.1
+4            1 at1g01080.2
+5            1 at1g01090.1
+6            1 at1g01120.1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show an example structure of a Divergence Map</span>
+<span class="kw">head</span>(DivergenceExpressionSetExample[ , <span class="kw">c</span>(<span class="st">&quot;Divergence.stratum&quot;</span>,<span class="st">&quot;GeneID&quot;</span>)])</code></pre>
+<pre><code>  Divergence.stratum      GeneID
+1                  1 at1g01050.1
+2                  1 at1g01120.1
+3                  1 at1g01140.3
+4                  1 at1g01170.1
+5                  1 at1g01230.1
+6                  1 at1g01540.2</code></pre>
+<p>Hence, a standard <code>Phylostratigraphic Map</code> or <code>Divergence Map</code> stores the <em>gene age</em> or <em>sequence divergence</em> information in the first column and the corresponding <em>gene id</em> in the second column.</p>
+<div id="performing-phylostratigraphy" class="section level3">
+<h3>Performing Phylostratigraphy</h3>
+<p>You can find a <code>Perl Script</code> for performing Phylostratigraphy in <a href="https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses/blob/master/README.md">Drost et al., 2015</a>.</p>
+<p>Methodologically, the process of performing <code>Phylostratigraphy</code> can be summarized by the following algorithm:</p>
+<ol style="list-style-type: decimal">
+<li><p>Define a toxonomy for the organism of interest.</p></li>
+<li><p>Sort all genomes stored in your curated data base (e.g., NCBI nr or any other custom data base) into age categories (= phylostrata) according to the previously defined taxonomy (step 1).</p></li>
+<li><p>Perform BLAST homology searches using all protein sequences of the query organism (organism of interest) against a curated data dase.</p></li>
+<li><p>Detect the most distant homolog fulfilling the <code>E-value</code> criterium and assign this gene to the phylostratum of the corresponding homolog.</p></li>
+<li><p>In case no homolog was found the corresponding gene is labeled as <em>organism specific</em> denoting the youngest phylostratum.</p></li>
+</ol>
+<div id="step-by-step-instructions-phylostratigraphy" class="section level4">
+<h4>Step by Step Instructions: <code>Phylostratigraphy</code></h4>
+<p>Here, we will construct an example <code>Phylostratigraphic Map</code> for <em>Arabidopsis thaliana</em>.</p>
+<p>In the first step, please go to <a href="https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses/blob/master/createPsMap.pl">Drost et al., 2015</a> and download the <code>Perl Script</code> to run the <code>Phylostratigraphy</code> algorithm. Now please install the <a href="https://github.com/HajkD/biomartr#installation-guide">biomartr</a> package to be able to automatically define a taxonomy for <em>A. thaliana</em>. After installing <code>biomartr</code> on your system, you can retrieve taxonomic classification information for any annotated species by typing (here we use <em>A. thaliana</em> as example):</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(biomartr)
+
+<span class="co"># retrieving the taxonomic hierarchy of &quot;Arabidopsis thaliana&quot;</span>
+<span class="co"># from NCBI Taxonomy</span>
+<span class="kw">taxonomy</span>( <span class="dt">organism =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>, 
+          <span class="dt">db       =</span> <span class="st">&quot;ncbi&quot;</span>,
+          <span class="dt">output   =</span> <span class="st">&quot;classification&quot;</span> )</code></pre>
+<pre><code>                   name         rank      id
+1    cellular organisms      no rank  131567
+2             Eukaryota superkingdom    2759
+3         Viridiplantae      kingdom   33090
+4          Streptophyta       phylum   35493
+5        Streptophytina      no rank  131221
+6           Embryophyta      no rank    3193
+7          Tracheophyta      no rank   58023
+8         Euphyllophyta      no rank   78536
+9         Spermatophyta      no rank   58024
+10        Magnoliophyta      no rank    3398
+11      Mesangiospermae      no rank 1437183
+12       eudicotyledons      no rank   71240
+13           Gunneridae      no rank   91827
+14         Pentapetalae      no rank 1437201
+15               rosids     subclass   71275
+16              malvids      no rank   91836
+17          Brassicales        order    3699
+18         Brassicaceae       family    3700
+19           Camelineae        tribe  980083
+20          Arabidopsis        genus    3701
+21 Arabidopsis thaliana      species    3702</code></pre>
+<p>The resulting classification table shows all taxonomic categories starting with the <em>oldest</em> taxonomic category (<code>cellular organisms</code>) down to the <em>youngest</em> taxonomic category (<code>Arabidopsis thaliana</code>). The <code>taxonomy ids</code> stored in the third column are used to classify proteomes stored in the curated data base (e.g. NCBI nr) into corresponding taxonomic categories stored in the first column.</p>
+<p>In some cases (due to the coverage of sequenced genomes and predicted proteomes) only a very small number of proteomes are classified into a specific taxonomic category. In this case, taxonomic categories can be summarized. For example, Quint et al., 2012 and Drost et al., 2015 summarized the taxonomic categories shown above into 12 categories, so that a minimum amount of proteomes represent a corresponding taxonomic category (see <a href="http://mbe.oxfordjournals.org/content/32/5/1221/F1.expansion.html">Fig. 1 c</a>). These 12 taxonomic categories are respresented as 12 <code>phylostrata</code> starting with the <em>oldest</em> <code>phylostratum</code> (= <code>PS1</code> = <code>cellular organisms</code>) up to the <em>youngest</em> <code>phylostratum</code> (= <code>PS12</code> = <code>A. thaliana</code>).</p>
+<p>This representation of taxonomic categories as <code>phylostrata</code> are labeled as discrete values <em>1, 2, …, n</em> and are stored in all <code>Phylostratigraphic Maps</code>.</p>
+<pre><code>  Phylostratum      GeneID
+1            1 at1g01040.2
+2            1 at1g01050.1
+3            1 at1g01070.1
+4            1 at1g01080.2
+5            1 at1g01090.1
+6            1 at1g01120.1</code></pre>
+<p>Here, all genes correspond to <code>Phylostratum 1</code> (PS1) representing the taxonomic category <code>cellular organisms</code>.</p>
+<p>The <code>taxonomy()</code> functions allows you to retrieve taxonomic classification information for any annotated organism of interest by specifying its <code>scientific name</code>, e.g. <code>Arabidopsis thaliana</code>, <code>Homo sapiens</code>, <code>Mus musculus</code>, etc. In case you would like to add more information to the underlying taxonomy, please consult the <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Taxonomy.Rmd#taxonomic-information-retrieval">Taxonomy</a> Vignette of the <a href="https://github.com/HajkD/biomartr#installation-guide">biomartr</a> package.</p>
+<p>The next step is to run the <code>createPsMap.pl</code> script (see also <a href="https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses">Drost et al., 2015</a>).</p>
+<p>Now the following steps have to be done to create a <code>Phylostratigraphic Map</code> for <em>A. thaliana</em>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Make sure that <a href="ftp://ftp.ncbi.nlm.nih.gov/blast/executables/release/2.2.21/">BLAST</a> is installed on your machine.</p></li>
+<li><p>Download the sequence database <a href="http://msbi.ipb-halle.de/download/phyloBlastDB_Drost_Gabel_Grosse_Quint.fa.tbz">phyloBlastDB_Drost_Gabel_Grosse_Quint.fa</a> used for BLAST searches and unpack it (<code>tar xfvj phyloBlastDB_Drost_Gabel_Grosse_Quint.fa.tbz</code>).</p></li>
+<li><p>Make sure that the header of your FASTA-files (e.g. Athaliana_167_protein.fa) fullfills the following specification:<br /> <code>&gt;GeneID | [organism_name] | [taxonomy]</code><br /> Notice, the taxonomy begins after the node “Cellular organisms” e.g.</p></li>
+</ol>
+<pre><code>&gt;NP_146894.1 | [Aeropyrum pernix] | [Archaea; Crenarchaeota; Thermoprotei; Desulfurococcales; Desulfurococcaceae; Aeropyrum]
+or
+&gt;YP_001514406.1 | [Acaryochloris marina MBIC11017] | [Bacteria; Cyanobacteria; Oscillatoriophycideae; Chroococcales; Acaryochloris; Acaryochloris marina]
+or
+&gt;ATCG00500.1|PACid:19637947 | [Arabidopsis thaliana] | [Eukaryota; Viridiplantae; Streptophyta; Streptophytina; Embryophyta; Tracheophyta; Euphyllophyta; Spermatophyta; Magnoliophyta; eudicotyledons; core eudicotyledons; rosids; malvids; Brassicales; Brassicaceae; Camelineae; Arabidopsis]</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Use the following command to start the Perl script</p>
+<pre class="terminal"><code>perl createPsMap.pl -i Athaliana_167_protein_with_new_Header.fa -d phyloBlastDB_Drost_Gabel_Grosse_Quint.fa -p BLAST_Athaliana 
+                -r athaliana_blast_results -t 30 -a 64             
+Arguments:
+-i,--input          input file name in FASTA format
+-d,--database       BLAST sequence database name
+-p,--prefix         Prefix for generated mysql-files containing BLAST results
+-r,--resultTable    mysql table name
+-t,--threshold      threshold for sequence length (Default 30 amino acids)
+-a                  threads for BLAST searches
+-e,--evalue         e-value threshold for BLAST </code></pre></li>
+</ol>
+<p><strong>Note</strong> that <code>Phylostratigraphy</code> needs large computational resources, because of thousands of sequence comparisons between genes of the query organism and thousands of classified proteomes stored in the curated data base. For this task we use a computing cluster with several thousand nodes to be able to solve this task in a few hours to days. Hence, when running the <code>createPsMap.pl</code> script on a laptop or local machine with a small number of computing cores, the task will likely take weeks or months to terminate.</p>
+</div>
+</div>
+<div id="performing-divergence-stratigraphy" class="section level3">
+<h3>Performing Divergence Stratigraphy</h3>
+<p><a href="http://mbe.oxfordjournals.org/content/32/5/1221.full">Divergence Stratigraphy</a> is a computational method to determine the degree of selection pressure acting on each protein coding gene of a query organism against a reference organism.</p>
+<p>A detailed tutorial on how to perform Divergence Stratigraphy for any pairwise genome comparison can be found in the <a href="https://github.com/HajkD/orthologr/blob/master/vignettes/divergence_stratigraphy.Rmd">Divergence Stratigraphy Vignette</a> of the <a href="https://github.com/HajkD/orthologr">orthologr</a> package in which the <code>divergence_stratigraphy()</code> algorithm is implemented.</p>
+<p>Following steps summarize the <code>Divergence Stratigraphy</code> algorithm:</p>
+<ol style="list-style-type: decimal">
+<li><p>Orthology Inference using BLAST reciprocal best hit based on <code>blastp</code> algorithm</p></li>
+<li><p>Pairwise global amino acid alignments of orthologous genes using the <a href="http://www.sciencedirect.com/science/article/pii/0022283670900574">Needleman-Wunsch algorithm</a></p></li>
+<li><p>Codon alignments of orthologous genes using <a href="http://www.bork.embl.de/pal2nal/">PAL2NAL</a></p></li>
+<li><p>dNdS estimation using <a href="http://link.springer.com/article/10.1007/BF00173196">Comeron’s method (1995)</a></p></li>
+<li><p>Assigning estimated dNdS values to divergence strata (deciles of all dNdS values)</p></li>
+</ol>
+<div id="step-by-step-instructions-divergence-stratigraphy" class="section level4">
+<h4>Step by Step Instructions: <code>Divergence Stratigraphy</code></h4>
+<p>The first step is to install the <a href="https://github.com/HajkD/orthologr">orthologr</a> package on your machine. In the following example we will compute a <code>Divergence Map</code> for <em>A. thaliana</em> versus <em>A. lyrata</em>.</p>
+<p>Downloading the CDS files of <code>A. thaliana</code> and <code>A. lyrata</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the CDS file of A. thaliana</span>
+<span class="kw">download.file</span>( <span class="dt">url      =</span> <span class="st">&quot;ftp://ftp.jgi-psf.org/pub/compgen/phytozome/v9.0/Athaliana/annotation/Athaliana_167_cds.fa.gz&quot;</span>, 
+               <span class="dt">destfile =</span> <span class="st">&quot;Athaliana_167_cds.fa.gz&quot;</span> )
+               
+<span class="co"># download the CDS file of A. lyrata</span>
+<span class="kw">download.file</span>( <span class="dt">url      =</span> <span class="st">&quot;ftp://ftp.jgi-psf.org/pub/compgen/phytozome/v9.0/Alyrata/annotation/Alyrata_107_cds.fa.gz&quot;</span>, 
+               <span class="dt">destfile =</span> <span class="st">&quot;Alyrata_107_cds.fa.gz&quot;</span> )</code></pre>
+<p>Compute the <code>Divergence Map</code> of <code>A. thaliana</code> versus <code>A. lyrata</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(orthologr)
+
+<span class="co"># compute the divergence map of A. thaliana vs. A. lyrata</span>
+Ath_vs_Aly_DM &lt;-<span class="st"> </span><span class="kw">divergence_stratigraphy</span>(
+                         <span class="dt">query_file      =</span> <span class="st">&quot;Athaliana_167_cds.fa&quot;</span>,
+                         <span class="dt">subject_file    =</span> <span class="st">&quot;Alyrata_107_cds.fa&quot;</span>,
+                         <span class="dt">eval            =</span> <span class="st">&quot;1E-5&quot;</span>, 
+                         <span class="dt">ortho_detection =</span> <span class="st">&quot;RBH&quot;</span>,
+                         <span class="dt">comp_cores      =</span> <span class="dv">1</span>, 
+                         <span class="dt">quiet           =</span> <span class="ot">TRUE</span>, 
+                         <span class="dt">clean_folders   =</span> <span class="ot">TRUE</span> )
+   </code></pre>
+<p>In case you are working on a multicore machine, you can specify the <code>comp_cores</code> argument to perform <code>divergence_stratigraphy()</code> using multiple computing cores.</p>
+<p>Now the resulting <code>Divergence Map</code> stores the <code>divergence stratum</code> in the first column and the corresponding <code>gene id</code> in the second column.</p>
+<pre><code>  Divergence.stratum      GeneID
+1                  1 at1g01050.1
+2                  1 at1g01120.1
+3                  1 at1g01140.3
+4                  1 at1g01170.1
+5                  1 at1g01230.1
+6                  1 at1g01540.2</code></pre>
+<p>For a more detailed tutorial on how to use the <code>divergence_stratigraphy()</code> function implemented in <a href="https://github.com/HajkD/orthologr/blob/master/vignettes/divergence_stratigraphy.Rmd">orthologr</a> please consult the <a href="https://github.com/HajkD/orthologr">Divergence Stratigraphy Vignette</a>.</p>
+</div>
+</div>
+</div>
+<div id="phyloexpressionset-and-divergenceexpressionset" class="section level2">
+<h2><code>PhyloExpressionSet</code> and <code>DivergenceExpressionSet</code></h2>
+<p>All functions implemented in the <code>myTAI</code> package expect a specific data format as input data. These standardized data formats are referred to as <strong>PhyloExpressionSet</strong> and <strong>DivergenceExpressionSet</strong>. The following sections will give you an overview about these data formats.</p>
+<div id="phyloexpressionset-specifications" class="section level3">
+<h3><code>PhyloExpressionSet</code> Specifications</h3>
+<p>A <code>PhyloExpressionSet</code> specifies the combination of a <code>Phylostratigraphic Map</code> with an <code>Gene Expression Set</code>. Hence, to generate a <code>PhyloExpressionSet</code> the following two tables need to be joined:</p>
+<pre><code># a Phylostratigraphic Map
+
+  Phylostratum      GeneID
+1            1 at1g01040.2
+2            1 at1g01050.1
+3            1 at1g01070.1
+4            1 at1g01080.2
+5            1 at1g01090.1
+6            1 at1g01120.1</code></pre>
+<p>and a</p>
+<pre><code># gene expression set
+
+       GeneID     Zygote   Quadrant   Globular      Heart    Torpedo       Bent    Mature
+1 at1g01040.2  2173.6352  1911.2001  1152.5553  1291.4224  1000.2529   962.9772 1696.4274
+2 at1g01050.1  1501.0141  1817.3086  1665.3089  1564.7612  1496.3207  1114.6435 1071.6555
+3 at1g01070.1  1212.7927  1233.0023   939.2000   929.6195   864.2180   877.2060  894.8189
+4 at1g01080.2  1016.9203   936.3837  1181.3381  1329.4734  1392.6429  1287.9746  861.2605
+5 at1g01090.1 11424.5667 16778.1685 34366.6493 39775.6405 56231.5689 66980.3673 7772.5617
+6 at1g01120.1   844.0414   787.5929   859.6267   931.6180   942.8453   870.2625  792.7542</code></pre>
+<p>In this example the <code>gene expression set</code> covers seven stages of <em>A. thaliana</em> embryo development. This data format is defined as <code>ExpressionMatrix</code> in the <code>myTAI</code> data format specification.</p>
+<p>The function <code>MatchMap()</code> allows you to join a <code>Phylostratigraphic Map</code> with an <code>ExpressionMatrix</code> to obtain a <code>PhyloExpressionSet</code>. In some cases, the GeneIDs stored in the <code>ExpressionMatrix</code> and in the <code>Phylostratigraphic Map</code> do not match. This is due to GeneID mappings between different data bases and annotations. To map non matching GeneIDs between data bases and annotations, please consult the <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd">Functional Annotation Vignette</a> in the <a href="https://github.com/HajkD/biomartr">biomartr</a> package. The <code>biomartr</code> package allows you to map GeneIDs between data base annotations.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
+
+<span class="kw">data</span>(PhyloExpressionSetExample)
+
+Example.PhylostratigraphicMap &lt;-<span class="st"> </span>PhyloExpressionSetExample[ , <span class="dv">1</span>:<span class="dv">2</span>]
+Example.ExpressionMatrix &lt;-<span class="st"> </span>PhyloExpressionSetExample[ , <span class="dv">2</span>:<span class="dv">9</span>]
+
+<span class="co"># join a PhylostratigraphicMap with an ExpressionMatrix</span>
+Example.PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(Example.PhylostratigraphicMap, Example.ExpressionMatrix)
+
+<span class="co"># look at a standard PhyloExpressionSet</span>
+<span class="kw">head</span>(Example.PhyloExpressionSet, <span class="dv">3</span>)</code></pre>
+<pre><code>Phylostratum      GeneID    Zygote  Quadrant  Globular    Heart  Torpedo     Bent   Mature
+1            4 at1g01010.1  878.2158  828.2301  776.0703 753.9589 775.3377 756.2460 999.9118
+2            2 at1g01020.1 1004.9710 1106.2621 1037.5141 939.0830 961.5249 871.4684 997.5953
+3            3 at1g01030.1  819.4880  771.6396  810.8717 866.7780 773.7893 747.9941 785.6105</code></pre>
 <p>As you can see, a standard PhyloExpressionSet is a <code>data.frame</code> storing the Phylostratum assignment of a given gene in the first column, the gene id of the corresponding gene in the second column, and the entire gene expression set (time series or treatments) starting with the third column. This format is crucial for all functions that are implemented in the <code>myTAI</code> package.</p>
 <p>Each function checks, whether the PhyloExpressionSet standard is fulfilled.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># used by all myTAI functions to check the validity of the PhyloExpressionSet standard</span>
@@ -105,31 +302,39 @@ code > span.er { color: #ff0000; font-weight: bold; }
 Error in is.ExpressionSet(PhyloExpressionSetExample[, 2:5]) : 
   The present input object does not fulfill the ExpressionSet standard.
   </code></pre>
-<p>This <code>PhyloExpressionSetExample</code> data set stored within the <code>myTAI</code> package stores the time course (seven stages) of <em>Arabidopsis thaliana</em> embryo development. Again, the first column represents the Phylostratum assignment of a given gene, the second column stores the gene id of the corresponding gene, and columns 3 to 9 store the gene expression set of <em>A. thaliana</em> embryo development.</p>
-<ul>
-<li><strong>Second</strong> for a DivergenceExpressionSet:</li>
-</ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(DivergenceExpressionSetExample, <span class="dv">3</span>) <span class="co"># head of an example standard DivergenceExpressionSet</span></code></pre>
+<p>The <code>PhyloExpressionSetExample</code> data set stored within the <code>myTAI</code> package stores the time course (seven stages) of <em>Arabidopsis thaliana</em> embryo development. Again, the first column represents the Phylostratum assignment of a given gene, the second column stores the gene id of the corresponding gene, and columns 3 to 9 store the gene expression set of <em>A. thaliana</em> embryo development.</p>
+</div>
+<div id="divergenceexpressionset-specifications" class="section level3">
+<h3><code>DivergenceExpressionSet</code> Specifications</h3>
+<p>A <code>DivergenceExpressionSet</code> specifies the combination of a <code>Divergence Map</code> with an <code>Gene Expression Set</code>. A <code>DivergenceExpressionSet</code> can be generated analogous to a <code>PhyloExpressionSet</code> by joining a <code>Divergence Map</code> with an <code>ExpressionMatrix</code> using the <code>MatchMap()</code> function. In some cases, the GeneIDs stored in the <code>ExpressionMatrix</code> and in the <code>Divergence Map</code> do not match. This is due to GeneID mappings between different data bases and annotations. To map non matching GeneIDs between data bases and annotations, please consult the <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd">Functional Annotation Vignette</a> in the <a href="https://github.com/HajkD/biomartr">biomartr</a> package. The <code>biomartr</code> package allows you to map GeneIDs between data base annotations.</p>
+<p>The following <code>DivergenceExpressionSet</code> example shows the standard <code>DivergenceExpressionSet</code> data set format.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># head of an example standard DivergenceExpressionSet</span>
+<span class="kw">head</span>(DivergenceExpressionSetExample, <span class="dv">3</span>) </code></pre>
 <pre><code>  Divergence.stratum      GeneID    Zygote  Quadrant  Globular    Heart   Torpedo      Bent    Mature
 1                  1 at1g01050.1 1501.0141 1817.3086 1665.3089 1564.761 1496.3207 1114.6435 1071.6555
 2                  1 at1g01120.1  844.0414  787.5929  859.6267  931.618  942.8453  870.2625  792.7542
 3                  1 at1g01140.3 1041.4291  908.3929 1068.8832  967.749 1055.1901 1109.4662  825.4633
 </code></pre>
-<p>Analogous to a standard PhyloExpressionSet, a standard DivergenceExpressionSet is a <code>data.frame</code> storing the Divergence-Stratum assignment of a given gene in the first column, the gene id of the corresponding gene in the second column, and the entire gene expression set (time series or treatments) starting with the third column. <strong>This format is crucial for all functions that are implemented in the <code>myTAI</code> package</strong>.</p>
+<p>Analogous to a standard <code>PhyloExpressionSet</code>, a standard <code>DivergenceExpressionSet</code> is a <code>data.frame</code> storing the Divergence Stratum assignment of a given gene in the first column, the gene id of the corresponding gene in the second column, and the entire gene expression set (time series or treatments) starting with the third column. <strong>This format is crucial for all functions that are implemented in the <code>myTAI</code> package</strong>.</p>
 <p>Keeping these standard data formats in mind will provide you with the most important requirements to get started with the <code>myTAI</code> package.</p>
 <p><strong>Note</strong>, that within the code of each function, the argument <code>ExpressionSet</code> always refers to either a PhyloExpressionSet or a DivergenceExpressionSet, whereas in specialized functions some arguments are specified as <em>PhyloExpressionSet</em> when they take an PhyloExpressionSet as input data set, or specified as <em>DivergenceExpressionSet</em> when they take an <em>DivergenceExpressionSet</em> as input data set.</p>
 </div>
-<div id="downloading-published-phyloexpressionsets-or-divergenceexpressionsets" class="section level2">
-<h2>Downloading Published PhyloExpressionSets or DivergenceExpressionSets</h2>
-<p>The <code>myTAI</code> package provides the statistical framework for existing PhyloExpressionSets or DivergenceExpressionSets. To re-analyze, reproduce, or further investigate phenomena of existing PhyloExpressionSets or DivergenceExpressionSets, you can use the following procedure to download published datasets. In this example we will download <code>Supplementary Table S3</code> from <a href="https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses">Drost et al., 2015</a>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;gdata&quot;)</span>
-<span class="kw">library</span>(gdata)
+</div>
+<div id="skip-phylostratigraphy-and-divergence-stratigraphy-and-download-already-published-phyloexpressionsets-or-divergenceexpressionsets" class="section level2">
+<h2>Skip <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code> and Download Already Published <code>PhyloExpressionSets</code> or <code>DivergenceExpressionSets</code></h2>
+<p>The <code>myTAI</code> package provides the statistical framework for existing PhyloExpressionSets or DivergenceExpressionSets. To re-analyze, reproduce, or further investigate phenomena of existing PhyloExpressionSets or DivergenceExpressionSets, you can use the following procedure to download published datasets. In this example we will download <code>Supplementary Table S3</code> from Drost et al., 2015. A list of published <code>Phylostratigraphic Maps</code> and <code>Divergence Maps</code> can be found <a href="https://github.com/HajkD/published_phylomaps">here</a>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install the readxl package</span>
+<span class="kw">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)
+
+<span class="co"># load package readxl</span>
+<span class="kw">library</span>(readxl)
+
 url_phyloSet &lt;-<span class="st"> &quot;http://files.figshare.com/1798296/Supplementary_table_S3.xls&quot;</span>
 
 <span class="kw">download.file</span>( <span class="dt">url      =</span>  url_phyloSet,
                <span class="dt">destfile =</span> <span class="st">&quot;PhyloExpressionSetTables.xls&quot;</span> )
 
-Athaliana_PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">read.xls</span>(<span class="st">&quot;PhyloExpressionSetTables.xls&quot;</span>, <span class="dt">sheet =</span> <span class="dv">3</span>)
+Athaliana_PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;PhyloExpressionSetTables.xls&quot;</span>, <span class="dt">sheet =</span> <span class="dv">3</span>)
 
 <span class="kw">head</span>(Athaliana_PhyloExpressionSet)</code></pre>
 <pre><code>  Phylostratum      GeneID     Zygote   Quadrant   Globular      Heart    Torpedo       Bent    Mature
@@ -144,99 +349,7 @@ Athaliana_PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">read
 <span class="kw">TAI</span>(Athaliana_PhyloExpressionSet)</code></pre>
 <pre><code>  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334 </code></pre>
-</div>
-<div id="creating-your-own-phyloexpressionset-or-divergenceexpressionset" class="section level2">
-<h2>Creating Your Own PhyloExpressionSet or DivergenceExpressionSet</h2>
-<p>Phylotranscriptomics combines evolutionary information obtained from Phylostratigraphy and Divergence-Stratigraphy with corresponding transcriptome data.</p>
-<p>For this purpose the following datasets need to be generated or obtained:</p>
-<ul>
-<li><p>Phylostratigraphic Map of an Organism (of Interest)</p></li>
-<li><p>Divergence Map of an Organism (of Interest)</p></li>
-<li><p>Transcriptome Data Covering a Specific Experiment for the Organism (of Interest)</p></li>
-</ul>
-<p>Each step can be performed independent of all other steps and the resulting datasets can also be used for different (independent) studies and analyses.</p>
-<div id="generating-a-phylostratigraphic-map-of-an-organism" class="section level3">
-<h3>Generating a Phylostratigraphic Map of an Organism</h3>
-<p>A Phylostratigraphic Map can be generated via <a href="http://www.sciencedirect.com/science/article/pii/S0168952507002995">Phylostratigraphy</a>. You can find a <code>Perl Script</code> for performing Phylostratigraphy in <a href="https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses/blob/master/README.md">Drost et al., 2015</a>. After performing Phylostratigraphy the resulting Phylostratigraphic Map stores the Phylostratum assignment of genes in the first column and the corresponding gene id in the second column.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(Athaliana_PhyloExpressionSet[ , <span class="kw">c</span>(<span class="st">&quot;Phylostratum&quot;</span>,<span class="st">&quot;GeneID&quot;</span>)])</code></pre>
-<pre><code>  Phylostratum      GeneID
-1            1 at1g01040.2
-2            1 at1g01050.1
-3            1 at1g01070.1
-4            1 at1g01080.2
-5            1 at1g01090.1
-6            1 at1g01120.1</code></pre>
-</div>
-<div id="generating-a-divergence-map-of-an-organism" class="section level3">
-<h3>Generating a Divergence Map of an Organism</h3>
-<p>A Divergence Map can be generated via <a href="https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses/blob/master/README.md">Divergence-Stratigraphy</a>. A detailed description on how to perform Divergence-Stratigraphy using the <a href="https://github.com/HajkD/orthologr">orthologr</a> package can be found in the <code>Advanced Vignette</code>. After performing Divergence-Stratigraphy the resulting Divergence Map stores the Divergence-Stratum assignment of genes in the first column and the corresponding gene id in the second column.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(DivergenceExpressionSetExample[ , <span class="kw">c</span>(<span class="st">&quot;Divergence.stratum&quot;</span>,<span class="st">&quot;GeneID&quot;</span>)])</code></pre>
-<pre><code>  Divergence.stratum      GeneID
-1                  1 at1g01050.1
-2                  1 at1g01120.1
-3                  1 at1g01140.3
-4                  1 at1g01170.1
-5                  1 at1g01230.1
-6                  1 at1g01540.2</code></pre>
-</div>
-<div id="transcriptome-data" class="section level3">
-<h3>Transcriptome Data</h3>
-<p>Any transcriptome data of interest can be used to perform phylotranscriptomics analyses. In the following sections as well as in the documentation of <code>myTAI</code> functions transcriptome data is referred to as <code>ExpressionMatrix</code>.</p>
-<p>It is assumed that a <code>ExpressionMatrix</code> used to perform phylotranscriptomics analyses does not include duplicate expression values for a gene and has the following format:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(DivergenceExpressionSetExample[ , <span class="dv">2</span>:<span class="dv">9</span>])</code></pre>
-<pre><code>       GeneID    Zygote  Quadrant  Globular     Heart   Torpedo      Bent     Mature
-1 at1g01050.1 1501.0141 1817.3086 1665.3089 1564.7612 1496.3207 1114.6435  1071.6555
-2 at1g01120.1  844.0414  787.5929  859.6267  931.6180  942.8453  870.2625   792.7542
-3 at1g01140.3 1041.4291  908.3929 1068.8832  967.7490 1055.1901 1109.4662   825.4633
-4 at1g01170.1 1361.6646 1042.1991 1225.5625 1211.7386 1674.5224 2136.4284 10662.4763
-5 at1g01230.1  894.1276  946.6993  933.0931  965.1859  870.9218  843.1814   794.6536
-6 at1g01540.2 1464.3065 1451.4255 2378.7054 1993.9326 1800.2420 2119.9220  1020.2640</code></pre>
-<p>So the Gene IDs are stored in the first column and the corresponding gene expression matrix is stored in the following columns.</p>
-<p>Now you can use the <code>?MatchMap</code> function to combine a Phylostratigraphic Map or Divergence Map with a transcriptome dataset of interest.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load a standard PhyloExpressionSet</span>
-<span class="kw">data</span>(PhyloExpressionSetExample)
-
-<span class="co"># in a standard PhyloExpressionSet,</span>
-<span class="co"># column one and column two denote a standard</span>
-<span class="co"># Phylostratigraphic Map</span>
-PhyloMap &lt;-<span class="st"> </span>PhyloExpressionSetExample[ , <span class="dv">1</span>:<span class="dv">2</span>]
-
-<span class="co"># look at the Phylostratigraphic Map standard</span>
-<span class="kw">head</span>(PhyloMap)</code></pre>
-<pre><code>  Phylostratum      GeneID
-1            1 at1g01040.2
-2            1 at1g01050.1
-3            1 at1g01070.1
-4            1 at1g01080.2
-5            1 at1g01090.1
-6            1 at1g01120.1</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># in a standard PhyloExpressionSet, column two combined</span>
-<span class="co"># with column 3 - N denote a standard ExpressionMatrix</span>
-ExpressionMatrixExample &lt;-<span class="st"> </span>PhyloExpressionSetExample[ , <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>:<span class="dv">9</span>)]
-
-<span class="kw">head</span>(ExpressionMatrixExample)</code></pre>
-<pre><code>       GeneID     Zygote   Quadrant   Globular      Heart    Torpedo       Bent    Mature
-1 at1g01040.2  2173.6352  1911.2001  1152.5553  1291.4224  1000.2529   962.9772 1696.4274
-2 at1g01050.1  1501.0141  1817.3086  1665.3089  1564.7612  1496.3207  1114.6435 1071.6555
-3 at1g01070.1  1212.7927  1233.0023   939.2000   929.6195   864.2180   877.2060  894.8189
-4 at1g01080.2  1016.9203   936.3837  1181.3381  1329.4734  1392.6429  1287.9746  861.2605
-5 at1g01090.1 11424.5667 16778.1685 34366.6493 39775.6405 56231.5689 66980.3673 7772.5617
-6 at1g01120.1   844.0414   787.5929   859.6267   931.6180   942.8453   870.2625  792.7542</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># now we can use the MatchMap function to merge both data sets</span>
-<span class="co"># to obtain a standard PhyloExpressionSet</span>
-
-PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, ExpressionMatrixExample)
-
-<span class="kw">head</span>(PES)</code></pre>
-<pre><code>  Phylostratum      GeneID    Zygote  Quadrant  Globular     Heart   Torpedo      Bent    Mature
-1            4 at1g01010.1  878.2158  828.2301  776.0703  753.9589  775.3377  756.2460  999.9118
-2            2 at1g01020.1 1004.9710 1106.2621 1037.5141  939.0830  961.5249  871.4684  997.5953
-3            3 at1g01030.1  819.4880  771.6396  810.8717  866.7780  773.7893  747.9941  785.6105
-4            1 at1g01040.2 2173.6352 1911.2001 1152.5553 1291.4224 1000.2529  962.9772 1696.4274
-5            1 at1g01050.1 1501.0141 1817.3086 1665.3089 1564.7612 1496.3207 1114.6435 1071.6555
-6            2 at1g01060.1  787.0917  802.3522  738.8684  754.8027  716.0982  670.1015  809.2199</code></pre>
-<p>Using the <code>MatchMap()</code> function you can combine any data set storing evolutionary information (e.g. generated by performing Phylostratigraphy or Divergence-Stratigraphy) with transcriptome data representing a biological process of interest to detect evolutionary signals and conserved stages within this biological process.</p>
-</div>
+<p>You can also use already published <code>Phylostratigraphic Maps</code> and <code>Divergence Maps</code> that can be found <a href="https://github.com/HajkD/published_phylomaps">here</a> and match them with your transcriptome data of interest using the <code>MatchMap()</code> function. This procedure allows you to generate your own <code>PhyloExpressionSet</code> and <code>DivergenceExpressionSet</code> to perform phylotranscriptomic analyses with <code>myTAI</code>.</p>
 </div>
 <div id="performing-a-standard-workflow-for-phylotranscriptomics-analyses" class="section level2">
 <h2>Performing a Standard Workflow for Phylotranscriptomics Analyses</h2>
@@ -266,12 +379,17 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
 <p><strong>Note</strong>: The <code>PlotCorrelation()</code> function always takes a PhyloExpressionSet as <strong>first argument</strong> and a DivergenceExpressionSet as <strong>second argument</strong>.</p>
 <div id="plotting-the-transcriptome-age-index-and-the-transcriptome-divergence-index" class="section level3">
 <h3>1) Plotting the <em>Transcriptome Age Index</em> and the <em>Transcriptome Divergence Index</em></h3>
-<p>Mathematically the <em>Transcriptome Age Index</em> (TAI) introduced by <a href="http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html">Domazet-Loso and Tautz (2010)</a> represents a weighted arithmetic mean of the transcriptome age during a corresponding developmental stage <em>s</em>.</p>
-<p>Analogous to the TAI measure, the <em>Transcriptome Divergence Index</em> (TDI) was introduced by <a href="http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html">Quint et al. (2012)</a> as weighted arithmetic mean of the degree of sequence divergence of the transcriptome being expressed during a corresponding developmental stage <em>s</em>.</p>
+<p>Mathematically the <em>Transcriptome Age Index</em> (TAI) introduced by Domazet-Loso and Tautz, 2010 represents a weighted arithmetic mean of the transcriptome age during a corresponding developmental stage <em>s</em>.</p>
+<p><span class="math">\(TAI_s = \sum_{i = 1}^n \frac{ps_i * e_{is}}{\sum_{i = 1}^n e_{is}}\)</span></p>
+<p>where <span class="math">\(ps_i\)</span> denotes the phylostratum assignment of gene <span class="math">\(i\)</span> and <span class="math">\(e_{is}\)</span> denotes the gene expression level of gene <span class="math">\(i\)</span> at developmental time point <span class="math">\(s\)</span>. A lower value of TAI describes an older transcriptome age, whereas a higher value of TAI denotes a younger transcriptome age.</p>
+<p>Analogous to the TAI measure, the <em>Transcriptome Divergence Index</em> (TDI) was introduced by Quint et al., 2012 and Drost et al., 2015 as weighted arithmetic mean of the degree of sequence divergence of the transcriptome being expressed during a corresponding developmental stage <span class="math">\(s\)</span>.</p>
+<p><span class="math">\(TDI_s = \sum_{i = 1}^n \frac{ds_i * e_{is}}{\sum_{i = 1}^n e_{is}}\)</span></p>
+<p>where <span class="math">\(ds_i\)</span> denotes the divergence stratum assignment of gene <span class="math">\(i\)</span> and <span class="math">\(e_{is}\)</span> denotes the gene expression level of gene <span class="math">\(i\)</span> at developmental time point <span class="math">\(s\)</span>. A lower value of TDI describes an more conserved transcriptome (in terms of sequence dissimilarity), whereas a higher value of TDI denotes a more variable transcriptome.</p>
 </div>
 </div>
 <div id="transcriptome-age-index-analyses" class="section level2">
 <h2>Transcriptome Age Index Analyses</h2>
+<p><a href="http://mbe.oxfordjournals.org/content/32/5/1221.full">Drost et al., 2015</a> introduced three statistical tests to quantify the significance of observed TAI patterns: <code>Flat Line Test</code>, <code>Reductive Hourglass Test</code>, and <code>Reductive Early Conservation Test</code>.</p>
 <div id="flat-line-test" class="section level3">
 <h3>Flat Line Test</h3>
 <p>The <code>PlotPattern()</code> function first computes the <code>TAI</code> (given a PhyloExpressionSet) or the <code>TDI</code> (given a DivergenceExpressionSet) to visualize the TAI or TDI profile, their standard deviation and statistical significance.</p>
@@ -282,12 +400,12 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
              <span class="dt">lwd           =</span> <span class="dv">6</span>, 
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
              <span class="dt">ylab          =</span> <span class="st">&quot;TAI&quot;</span> )</code></pre>
-<p>The p-value (<code>p_flt</code>) above the TAI curve is returned by the <a href="http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html"><em>FlatLineTest</em></a>. As described in the documentation of <code>PlotPattern()</code> (<code>?PlotPattern</code> or <code>?FlatLineTest</code>), the <code>FlatLineTest</code> is the default statistical test to quantify the statistical significance of the observed phylotranscriptomic pattern. In detail, the test quantifies any statistically significant deviation of the phylotranscriptomic pattern from a flat line.</p>
+<p>The p-value (<code>p_flt</code>) above the TAI curve is returned by the <code>FlatLineTest</code>. As described in the documentation of <code>PlotPattern()</code> (<code>?PlotPattern</code> or <code>?FlatLineTest</code>), the <code>FlatLineTest</code> is the default statistical test to quantify the statistical significance of the observed phylotranscriptomic pattern. In detail, the test quantifies any statistically significant deviation of the phylotranscriptomic pattern from a flat line. Here, we define any significant deviation of a phylotranscriptomic pattern from a flat line as evolutionary signal. Furthermore, we define corresponding stages of deviation as evolutionary conserved or variable (less conserved) depending on the magnitude of <code>TAI</code> values.</p>
 </div>
 <div id="reductive-hourglass-test" class="section level3">
 <h3>Reductive Hourglass Test</h3>
-<p>In case the observed phylotranscriptomic pattern not only significantly deviates from a flat line but also visually resembles and <em>hourglass</em> shape, one can obtain a p-value corresponding to the statistical significance of a visual <em>hourglass</em> pattern referred to as <code>ReductiveHourglassTest</code> (<code>?ReductiveHourglassTest</code>).</p>
-<p>Since the <code>ReductiveHourglassTest</code> has been defined for a priori biological knowledge (Drost et al., 2015), the <code>modules</code> argument within the <code>ReductiveHourglassTest()</code> function needs to be specified.</p>
+<p>In case the observed phylotranscriptomic pattern not only significantly deviates from a flat line but also visually resembles an <em>hourglass</em> shape, one can obtain a p-value quantifying the statistical significance of a visual <em>hourglass</em> pattern based on the <code>ReductiveHourglassTest</code> (<code>?ReductiveHourglassTest</code>).</p>
+<p>Since the <code>ReductiveHourglassTest</code> has been defined for a priori biological knowledge <a href="http://mbe.oxfordjournals.org/content/32/5/1221.short?rss=1">Drost et al., 2015</a>, the <code>modules</code> argument within the <code>ReductiveHourglassTest()</code> function needs to be specified.</p>
 <p>Three modules need to be specified: an <strong>early-module</strong>, <strong>phylotypic module</strong> (mid), and a <strong>late-module</strong>.</p>
 <p>For this example we divide <em>A. thaliana</em> embryo development stored within the <em>PhyloExpressionSetExample</em> into the following three modules:</p>
 <ul>
@@ -305,7 +423,7 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
              <span class="dt">ylab          =</span> <span class="st">&quot;TAI&quot;</span> )</code></pre>
 <p>The corresponding p-value <code>p_rht</code> now denotes the p-value returned by the <code>ReductiveHourglassTest</code> which is different from the p-value returned by the <code>FlatLineTest</code> (<code>p_flt</code>).</p>
-<p>To make sure that you selected the correct modules you can use the <code>shaded.area</code> argument to visualize the chosen modules:</p>
+<p>To make sure that correct modules have been selected to perform the <code>ReductiveHourglassTest</code>, you can use the <code>shaded.area</code> argument to visualize chosen modules:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualize the phylotypic period used for the Reductive Hourglass Test</span>
 <span class="kw">PlotPattern</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
              <span class="dt">TestStatistic =</span> <span class="st">&quot;ReductiveHourglassTest&quot;</span>,
@@ -321,7 +439,7 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
 <h3>Reductive Early Conservation Test</h3>
 <p>The third test statistic that is implemented in the <code>myTAI</code> package is the <code>EarlyConservationTest</code>.</p>
 <p>The <code>EarlyConservationTest</code> tests whether an observed phylotranscriptomic pattern follows a low-high-high pattern (monotonically increasing function) supporting the Early Conservation Model of embryogenesis.</p>
-<p>Analogous to the <code>ReductiveHourglassTest</code>, the <code>EarlyConservationTest</code> needs a priori biological knowledge (Drost et al., 2015). So again three <code>modules</code> have to be specified for the <code>EarlyConservationTest()</code> function.</p>
+<p>Analogous to the <code>ReductiveHourglassTest</code>, the <code>EarlyConservationTest</code> needs a priori biological knowledge <a href="http://mbe.oxfordjournals.org/content/32/5/1221.short?rss=1">Drost et al., 2015</a>. So again three <code>modules</code> have to be specified for the <code>EarlyConservationTest()</code> function.</p>
 <p>Three modules need to be specified: an <strong>early-module</strong>, <strong>phylotypic module</strong> (mid), and a <strong>late-module</strong>.</p>
 <p>For this example we divide <em>A. thaliana</em> embryo development stored within the <em>PhyloExpressionSetExample</em> into the following three modules:</p>
 <ul>
@@ -359,7 +477,7 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
              <span class="dt">lwd           =</span> <span class="dv">6</span>,
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
              <span class="dt">ylab          =</span> <span class="st">&quot;TDI&quot;</span> )</code></pre>
-<p>Again, for the <strong>ReductiveHourglassTest</strong> we divide <em>A. thaliana</em> embryo development into the three modules:</p>
+<p>Again, for the <strong>ReductiveHourglassTest</strong> we divide <em>A. thaliana</em> embryo development into three modules:</p>
 <ul>
 <li>early = stages 1 - 2 (Zygote and Quadrant)</li>
 <li>mid = stages 3 - 5 (Globular, Heart, and Torpedo)</li>
@@ -374,7 +492,7 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
              <span class="dt">lwd           =</span> <span class="dv">6</span>, 
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
              <span class="dt">ylab          =</span> <span class="st">&quot;TDI&quot;</span> )</code></pre>
-<p>And for the <strong>EarlyConservationTest</strong> we again divide <em>A. thaliana</em> embryo development into the three modules:</p>
+<p>And for the <strong>EarlyConservationTest</strong> we again divide <em>A. thaliana</em> embryo development into three modules:</p>
 <ul>
 <li>early = stages 1 - 2 (Zygote and Quadrant)</li>
 <li>mid = stages 3 - 5 (Globular, Heart, and Torpedo)</li>
@@ -397,7 +515,7 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
 </code></pre>
 <div id="mean-expression-and-relative-expression-of-single-phylostrata-or-divergence-strata" class="section level3">
 <h3>2) Mean Expression and Relative Expression of single phylostrata or divergence-strata</h3>
-<p>The <strong>TAI</strong> or <strong>TDI</strong> pattern are very useful to gain a first insight into the mean transcriptome age or mean sequence divergence of genes being most active during the corresponding developmental stage or experiment.</p>
+<p><strong>TAI</strong> or <strong>TDI</strong> patterns are very useful to gain a first insight into the mean transcriptome age or mean sequence divergence of genes being most active during the corresponding developmental stage or experiment.</p>
 <p>To further investigate the origins of the global <strong>TAI</strong> or <strong>TDI</strong> pattern it is useful to visualize the mean gene expression of each Phylostratum or Divergence-Stratum class.</p>
 <div id="visualizing-the-mean-expression-levels-of-a-phyloexpressionset-and-divergenceexpressionset" class="section level4">
 <h4>Visualizing the Mean Expression Levels of a PhyloExpressionSet and DivergenceExpressionSet</h4>
@@ -474,7 +592,7 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
 </div>
 <div id="visualizing-the-relative-expression-levels-of-a-phyloexpressionset-and-divergenceexpressionset" class="section level4">
 <h4>Visualizing the Relative Expression Levels of a PhyloExpressionSet and DivergenceExpressionSet</h4>
-<p>Introduced by <a href="http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html">Domazet-Loso and Tautz (2010)</a>, relative expression levels are defined as a linear transformation of the mean expression levels (of each Phylostratum or Divergence-Stratum) into the interval [0,1] (<a href="http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html">Quint et al. (2012)</a>). This allows the comparability between mean expression patterns between Phylostrata or Divergence-Strata independent from their actual magnitude.</p>
+<p>Introduced by Domazet-Loso and Tautz, (2010), relative expression levels are defined as a linear transformation of the mean expression levels (of each Phylostratum or Divergence-Stratum) into the interval <span class="math">\([0,1]\)</span> (Quint et al. (2012)). This allows the comparability between mean expression patterns between Phylostrata or Divergence-Strata independent from their actual magnitude.</p>
 <p>The <code>PlotRE()</code> function can be used (analogous to the <code>PlotMeans()</code> function) to visualize the relative expression levels of a given PhyloExpressionSet and DivergenceExpressionSet:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualizing the mean gene expression of each Phylostratum class</span>
 <span class="kw">PlotRE</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
@@ -551,7 +669,7 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
 11 0.4015809 0.4877111 0.04846721 0.05741594 0.00000000 0.07716367 1.0000000
 12 0.5052572 0.3359211 0.07100055 0.09489782 0.00000000 0.25811214 1.0000000
 </code></pre>
-<p><a href="http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html">Quint et al. (2012)</a> introduced an additional way of visualizing the difference of relative expression levels between groups of Phylostrata/Divergence-Strata.</p>
+<p>Quint et al. (2012) introduced an additional way of visualizing the difference of relative expression levels between groups of Phylostrata/Divergence-Strata.</p>
 <p>This bar plot comparing the mean relative expression levels of one Phylostratum/Divergence-Stratum group with all other groups can be plotted analogous to the <code>PlotMeans()</code> and <code>PlotRE()</code> functions:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualizing the mean relative expression of two Phylostratum groups</span>
 <span class="kw">PlotBarRE</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
@@ -613,6 +731,12 @@ PES &lt;-<span class="st"> </span><span class="kw">MatchMap</span>(PhyloMap, Exp
              <span class="dt">cex.lab       =</span> <span class="fl">0.7</span>, 
              <span class="dt">cex.axis      =</span> <span class="fl">1.5</span> )</code></pre>
 <p>These arguments can analogously be used for all other plot functions, e.g. <code>PlotMeans()</code>, <code>PlotRE()</code>, etc.</p>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Domazet-Loso T. and Tautz D. <strong>A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns</strong>. <em>Nature</em> (2010) 468: 815-8.</p>
+<p>Quint M. et al. <strong>A transcriptomic hourglass in plant embryogenesis</strong>. <em>Nature</em> (2012) 490: 98-101.</p>
+<p>Drost HG, Gabel A, Grosse I, Quint M. <strong>Evidence for Active Maintenance of Phylotranscriptomic Hourglass Patterns in Animal and Plant Embryogenesis</strong>. <em>Mol. Biol. Evol.</em> (2015) 32 (5): 1221-1231.</p>
+</div>
 </div>
 
 

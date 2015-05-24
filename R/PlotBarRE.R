@@ -1,4 +1,4 @@
-#' @title Plot the mean relative expression levels as barplot
+#' @title Plot the Mean Relative Expression Levels as Barplot
 #' @description This function takes a PhyloExpressionSet or DivergenceExpressionSet object as input and computes
 #' for two or more defined phylostratum (divergence stratum) classes the statistical significance of
 #' the differences of mean relative expression of these two (or more) corresponding phylostratum (divergence stratum) classes.
@@ -36,7 +36,7 @@
 #' Myles Hollander and Douglas A. Wolfe (1973), Nonparametric Statistical Methods. New York: John Wiley & Sons. Pages 115-120.
 #' 
 #' @author Hajk-Georg Drost
-#' @seealso \code{\link{RE}}, \code{\link{REMatrix}}, \code{\link{kruskal.test}}
+#' @seealso \code{\link{RE}}, \code{\link{REMatrix}},\code{\link{PlotRE}}, \code{\link{kruskal.test}}
 #' @examples
 #' 
 #' # read standard phylotranscriptomics data
@@ -158,9 +158,9 @@ PlotBarRE <- function(ExpressionSet,Groups = NULL,wLength = 0.1,ratio = FALSE,..
                 do.call(graphics::text,c(list(apply(REBarPlot,2,mean),0.95,labels = pValNames),
                                          dots[!is.element(names(dots),c(barplot.args))]))
                 
-                arrows(x0 = REBarPlot,y0 = ifelse(MeanREClassValues > 0,MeanREClassValues, (1/999)),x1 = REBarPlot,
+                suppressWarnings(arrows(x0 = REBarPlot,y0 = ifelse(MeanREClassValues > 0,MeanREClassValues, (1/999)),x1 = REBarPlot,
                        y1 = ifelse((StdErr.RE.ClassValues) == 0,MeanREClassValues + (1/999),
-                                   MeanREClassValues + StdErr.RE.ClassValues),code = 2, angle = 90, length = wLength)
+                                   MeanREClassValues + StdErr.RE.ClassValues),code = 2, angle = 90, length = wLength))
                 
                 par(xpd = TRUE)
                 legend("topleft",inset = c(+0.2,0),legend = paste("Group ",1:length(Groups),sep = ""),
@@ -181,9 +181,9 @@ PlotBarRE <- function(ExpressionSet,Groups = NULL,wLength = 0.1,ratio = FALSE,..
                 do.call(graphics::text,c(list(colMeans(REBarPlot),1.15,labels = pValNames),
                                          dots[!is.element(names(dots),c(barplot.args))]))
                 
-                arrows(x0 = REBarPlot,y0 = ifelse(MeanREClassValues > 0,MeanREClassValues, (1/999)),x1 = REBarPlot,
+                suppressWarnings(arrows(x0 = REBarPlot,y0 = ifelse(MeanREClassValues > 0,MeanREClassValues, (1/999)),x1 = REBarPlot,
                        y1 = ifelse((StdErr.RE.ClassValues) == 0,MeanREClassValues + (1/999),
-                                   MeanREClassValues + StdErr.RE.ClassValues),code = 2, angle = 90, length = wLength)
+                                   MeanREClassValues + StdErr.RE.ClassValues),code = 2, angle = 90, length = wLength))
                 
                 legend("topleft",legend = paste("Group ",1:length(Groups),sep = ""),fill = barColors,bty = "n",ncol = ceiling(nGroups/2))
         }
