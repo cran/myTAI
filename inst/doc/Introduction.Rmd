@@ -31,14 +31,10 @@ of evolutionary conservation or constraint in developmental processes of extant 
 
 The goal of `myTAI` is to provide a broad range of users interested in the evolution of developmental transcriptomes with an easy to use and computationally optimized framework for reproducible research and modular pipeline implementation. 
 
-A series of tutorials aim to guide you through the `myTAI` package: 
-
-* __1) Introduction:__ Vignette - Introduction to the myTAI package
-* __2) Intermediate:__ Vignette - Intermediate Analyses and Test Statistics
-* __3) Advanced:__ Vignette - Data Retrieval and Divergence Stratigraphy using the [orthologr](https://github.com/HajkD/orthologr) package
-
 
 ## Getting Started
+
+And intorduction to Phylotranscriptomics as a scientific discipline and its historical context can be found in Drost _et al._, 2015. 
 
 The following sections provide step by step tutorials on `phylotranscriptomic analyses`. 
 
@@ -55,15 +51,16 @@ For this purpose the following data sets need to be generated or obtained to be 
 Each step can be performed independent of all other steps and the resulting data sets
 can also be used for different (independent) studies and analyses.
 
+### Phylostratigraphy and Divergence Stratigraphy 
 
-So, the first step in performing phylotranscriptomic analyses is to
+The first step in performing phylotranscriptomic analyses is to
 perform `Phylostratigraphy` and `Divergence Stratigraphy` to assign
 each protein coding genes of an organism of interest an evolutionary age ([Phylostratigraphy](http://www.sciencedirect.com/science/article/pii/S0168952507002995))
 or degree of selection pressure ([Divergence Stratigraphy](http://mbe.oxfordjournals.org/content/32/5/1221.full)). The resulting
 `Phylostratigraphic Map` and `Divergence Map` of the corresponding organism of interest is then matched
 with a transcriptome data set covering the developmental process of interest.
 
-The following code illustrates how a typical `Phylostratigraphic Map` and `Divergence Map` are structured:
+The following code illustrates how the `Phylostratigraphic Map` and `Divergence Map` table format is structured:
 
 
 ```{r,eval=FALSE}
@@ -124,14 +121,13 @@ Methodologically, the process of performing `Phylostratigraphy` can be summarize
 
 #### Step by Step Instructions: `Phylostratigraphy`
 
+
 Here, we will construct an example `Phylostratigraphic Map` for _Arabidopsis thaliana_. 
 
 In the first step, please go to [Drost et al., 2015](https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses/blob/master/createPsMap.pl) and download the `Perl Script`
-to run the `Phylostratigraphy` algorithm. Now please install the [biomartr](https://github.com/HajkD/biomartr#installation-guide) package to be able to automatically define a taxonomy for _A. thaliana_. After installing `biomartr` on your system, you can retrieve taxonomic classification information for any annotated species by typing (here we use _A. thaliana_ as example): 
+to run the `Phylostratigraphy` algorithm. The phyostratigraphic approach is based on taxonomic classification of the organism of interest. The `taxonomy()` function implemented in `myTAI` automatically defines a taxonomy for your organism of interest. You can retrieve taxonomic classification information for any annotated species by typing (here we use _A. thaliana_ as example): 
 
 ```{r,eval=FALSE}
-library(biomartr)
-
 # retrieving the taxonomic hierarchy of "Arabidopsis thaliana"
 # from NCBI Taxonomy
 taxonomy( organism = "Arabidopsis thaliana", 
@@ -166,7 +162,7 @@ taxonomy( organism = "Arabidopsis thaliana",
 The resulting classification table shows all taxonomic categories starting with the _oldest_ taxonomic category (`cellular organisms`) down to the _youngest_ taxonomic category (`Arabidopsis thaliana`). The `taxonomy ids` stored in the third column are used to classify proteomes stored in  the curated data base (e.g. NCBI nr) into corresponding taxonomic categories stored in the first column. 
 
 In some cases (due to the coverage of sequenced genomes and predicted proteomes) only a very small number of proteomes are classified into a specific taxonomic category. In this case, taxonomic categories can be summarized. For example, Quint et al., 2012 and Drost et al., 2015 summarized the taxonomic categories shown above into 12 categories, so that a minimum amount of proteomes represent a corresponding 
-taxonomic category (see [Fig. 1 c](http://mbe.oxfordjournals.org/content/32/5/1221/F1.expansion.html)). These 12 taxonomic categories are respresented as 12 `phylostrata` starting with the _oldest_ `phylostratum` (= `PS1` = `cellular organisms`) up to the _youngest_ `phylostratum` (= `PS12` = `A. thaliana`).
+taxonomic category (see [Fig. 1 c](http://mbe.oxfordjournals.org/content/32/5/1221/F1.expansion.html)). These 12 taxonomic categories are represented as 12 `phylostrata` starting with the _oldest_ `phylostratum` (= `PS1` = `cellular organisms`) up to the _youngest_ `phylostratum` (= `PS12` = `A. thaliana`).
 
 This representation of taxonomic categories as `phylostrata` are labeled as discrete values _1, 2, ..., n_  and are stored in all `Phylostratigraphic Maps`.
 
@@ -180,21 +176,21 @@ This representation of taxonomic categories as `phylostrata` are labeled as disc
 6            1 at1g01120.1
 ```
 
-Here, all genes correspond to `Phylostratum 1` (PS1) representing the taxonomic category `cellular organisms`.
+Here, all genes corresponing to `Phylostratum 1` (PS1) represent the taxonomic category `cellular organisms`.
 
 
-The `taxonomy()` functions allows you to retrieve taxonomic classification information for any annotated organism of interest by specifying its `scientific name`, e.g. `Arabidopsis thaliana`, `Homo sapiens`, `Mus musculus`, etc. In case you would like to add more information to the underlying taxonomy, please consult the  [Taxonomy](https://github.com/HajkD/biomartr/blob/master/vignettes/Taxonomy.Rmd#taxonomic-information-retrieval) Vignette of the [biomartr](https://github.com/HajkD/biomartr#installation-guide) package.
+The `taxonomy()` function allows users to retrieve taxonomic classification information for any annotated organism of interest by specifying its `scientific name`, e.g. `Arabidopsis thaliana`, `Homo sapiens`, `Mus musculus`, etc. In case you would like to retrieve more information about each functionality and database connection implemented in the `taxonomy()`  function please consult the  [Taxonomy](Taxonomy.html) Vignette.
 
 
 The next step is to run the `createPsMap.pl` script (see also [Drost et al., 2015](https://github.com/HajkD/Active-maintenance-of-phylotranscriptomic-hourglasses)).
 
 Now the following steps have to be done to create a `Phylostratigraphic Map` for _A. thaliana_:
     
-1) Make sure that [BLAST](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/release/2.2.21/) is installed on your machine.
+1) Make sure that [BLAST](ftp://ftp.ncbi.nlm.nih.gov/blast/executables/release/2.2.21/), [Perl](https://www.perl.org/), and [BioPerl](http://www.bioperl.org/wiki/Installing_BioPerl) are installed on your machine.
 
-2) Download the sequence database [phyloBlastDB_Drost_Gabel_Grosse_Quint.fa](http://msbi.ipb-halle.de/download/phyloBlastDB_Drost_Gabel_Grosse_Quint.fa.tbz) used for BLAST searches and unpack it (`tar xfvj phyloBlastDB_Drost_Gabel_Grosse_Quint.fa.tbz`).
+2) Download the sequence database [phyloBlastDB_Drost_Gabel_Grosse_Quint.fa](http://msbi.ipb-halle.de/download/phyloBlastDB_Drost_Gabel_Grosse_Quint.fa.tbz) used for BLAST searches and unpack it by opening the Terminal application and typing `tar xfvj phyloBlastDB_Drost_Gabel_Grosse_Quint.fa.tbz`.
 
-3) Make sure that the header of your FASTA-files (e.g. Athaliana_167_protein.fa) fullfills the following specification:<br />
+3) Make sure that the header of your FASTA-files (e.g. Athaliana_167_protein.fa) fulfills the following specification:<br />
   <code>>GeneID | [organism_name] | [taxonomy]</code><br />
   Notice, the taxonomy begins after the node "Cellular organisms" e.g.
   
@@ -220,7 +216,7 @@ Arguments:
 -e,--evalue         e-value threshold for BLAST 
 ```
 
-__Note__ that `Phylostratigraphy` needs large computational resources, because of thousands of sequence comparisons between genes of the query organism and thousands of classified proteomes stored in the curated data base. For this task we use a computing cluster with several thousand nodes to be able to solve this task in a few hours to days. Hence, when running the `createPsMap.pl` script on a laptop or local machine with a small number of computing cores, the task will likely take weeks or months to terminate.
+__Note__ that `Phylostratigraphy` needs large computational resources, because of thousands of sequence comparisons between genes of the query organism and thousands of classified proteomes stored in the curated data base. For this task we use a computing cluster with several thousand nodes to be able to solve this task in a few hours to days. Hence, when running the `createPsMap.pl` script on a laptop or local machine with a small number of computing cores, the task will likely take weeks or months to terminate. Users aiming to adapt the `createPsMap.pl` to their own computing environment need to be able to parallelize the `createPsMap.pl` on each node of the computing cluster.
 
 ### Performing Divergence Stratigraphy
 
@@ -232,7 +228,7 @@ be found in the [Divergence Stratigraphy Vignette](https://github.com/HajkD/orth
 
 Following steps summarize the `Divergence Stratigraphy` algorithm:
 
-1) Orthology Inference using BLAST reciprocal best hit based on `blastp` algorithm
+1) Orthology Inference using BLAST reciprocal best hit based on the `blastp` algorithm
 
 2) Pairwise global amino acid alignments of orthologous genes using the [Needleman-Wunsch algorithm](http://www.sciencedirect.com/science/article/pii/0022283670900574)
 
@@ -244,6 +240,7 @@ Following steps summarize the `Divergence Stratigraphy` algorithm:
 
 
 #### Step by Step Instructions: `Divergence Stratigraphy`
+
 
 The first step is to install the [orthologr](https://github.com/HajkD/orthologr) package on your machine. In the following example we will compute a `Divergence Map` for _A. thaliana_ versus _A. lyrata_.
 
@@ -258,6 +255,8 @@ download.file( url      = "ftp://ftp.jgi-psf.org/pub/compgen/phytozome/v9.0/Atha
 download.file( url      = "ftp://ftp.jgi-psf.org/pub/compgen/phytozome/v9.0/Alyrata/annotation/Alyrata_107_cds.fa.gz", 
                destfile = "Alyrata_107_cds.fa.gz" )
 ```
+
+Now the files `Athaliana_167_cds.fa.gz` and `Alyrata_107_cds.fa.gz` need to be unpacked.
 
 Compute the `Divergence Map` of `A. thaliana` versus `A. lyrata`:
 
@@ -295,7 +294,7 @@ For a more detailed tutorial on how to use the `divergence_stratigraphy()` funct
 
 ## `PhyloExpressionSet` and `DivergenceExpressionSet`
 
-All functions implemented in the `myTAI` package expect a specific data format as input data. These standardized data formats are referred to as __PhyloExpressionSet__ and __DivergenceExpressionSet__. The following sections will give you an overview about these data formats.
+All functions implemented in the `myTAI` package expect a specific data format as input data. These standardized data formats are referred to as __PhyloExpressionSet__ and __DivergenceExpressionSet__. The following sections will give users an overview about these data formats.
 
 
 ### `PhyloExpressionSet` Specifications
@@ -329,18 +328,21 @@ and a
 
 In this example the `gene expression set` covers seven stages of _A. thaliana_ embryo development. This data format is defined as `ExpressionMatrix` in the `myTAI` data format specification.
 
-The function `MatchMap()` allows you to join a `Phylostratigraphic Map` with an `ExpressionMatrix` to obtain a `PhyloExpressionSet`. In some cases, the GeneIDs stored in the `ExpressionMatrix` and in the `Phylostratigraphic Map` do not match. This is due to GeneID mappings between different data bases and annotations. To map non matching GeneIDs between data bases and annotations, please consult the [Functional Annotation Vignette](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) in the [biomartr](https://github.com/HajkD/biomartr) package. The `biomartr` package allows you to map GeneIDs between data base annotations.
+The function `MatchMap()` allows users to join a `Phylostratigraphic Map` with an `ExpressionMatrix` to obtain a `PhyloExpressionSet`. In some cases, the GeneIDs stored in the `ExpressionMatrix` and in the `Phylostratigraphic Map` do not match. This is due to GeneID mappings between different data bases and annotations. To map non matching GeneIDs between data bases and annotations, please consult the [Functional Annotation Vignette](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) in the [biomartr](https://github.com/HajkD/biomartr) package. The `biomartr` package allows users to map GeneIDs between data base annotations.
 
 
 ```{r,eval=FALSE}
 library(myTAI)
 
+# load the example data set
 data(PhyloExpressionSetExample)
 
+# construct an example Phylostratigraphic Map 
 Example.PhylostratigraphicMap <- PhyloExpressionSetExample[ , 1:2]
+# construct an example ExpressionMatrix
 Example.ExpressionMatrix <- PhyloExpressionSetExample[ , 2:9]
 
-# join a PhylostratigraphicMap with an ExpressionMatrix
+# join a PhylostratigraphicMap with an ExpressionMatrix using MatchMap()
 Example.PhyloExpressionSet <- MatchMap(Example.PhylostratigraphicMap, Example.ExpressionMatrix)
 
 # look at a standard PhyloExpressionSet
@@ -354,9 +356,9 @@ Phylostratum      GeneID    Zygote  Quadrant  Globular    Heart  Torpedo     Ben
 3            3 at1g01030.1  819.4880  771.6396  810.8717 866.7780 773.7893 747.9941 785.6105
 ```
 
-As you can see, a standard PhyloExpressionSet is a `data.frame` storing the Phylostratum assignment of a given gene in the first column, the gene id of the corresponding gene in the second column, and the entire gene expression set (time series or treatments) starting with the third column. This format is crucial for all functions that are implemented in the `myTAI` package.
+After matching a `Phylostratigraphic Map` with an `ExpressionMatrix` using the `MatchMap()` function, a standard `PhyloExpressionSet` is returned storing the Phylostratum assignment of a given gene in the first column, the _gene id_ of the corresponding gene in the second column, and the entire gene expression set (time series or treatments) starting with the third column. This format is crucial for all functions that are implemented in the `myTAI` package.
 
-Each function checks, whether the PhyloExpressionSet standard is fulfilled.
+Each function implemented in `myTAI` checks whether or not the PhyloExpressionSet standard is fulfilled.
 
 ```{r,eval=FALSE}
 # used by all myTAI functions to check the validity of the PhyloExpressionSet standard
@@ -396,9 +398,9 @@ The `PhyloExpressionSetExample` data set stored within the `myTAI` package store
 
 ### `DivergenceExpressionSet` Specifications
 
-A `DivergenceExpressionSet` specifies the combination of a `Divergence Map` with an `Gene Expression Set`. A `DivergenceExpressionSet` can be generated analogous to a `PhyloExpressionSet` by joining a `Divergence Map` with an `ExpressionMatrix` using the `MatchMap()` function. In some cases, the GeneIDs stored in the `ExpressionMatrix` and in the `Divergence Map` do not match. This is due to GeneID mappings between different data bases and annotations. To map non matching GeneIDs between data bases and annotations, please consult the [Functional Annotation Vignette](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) in the [biomartr](https://github.com/HajkD/biomartr) package. The `biomartr` package allows you to map GeneIDs between data base annotations.
+A `DivergenceExpressionSet` specifies the combination of a `Divergence Map` with an `Gene Expression Set`. A `DivergenceExpressionSet` can be generated analogous to a `PhyloExpressionSet` by joining a `Divergence Map` with an `ExpressionMatrix` using the `MatchMap()` function. In some cases, the GeneIDs stored in the `ExpressionMatrix` and in the `Divergence Map` do not match. This is due to GeneID mappings between different data bases and annotations. To map non matching GeneIDs between data bases and annotations, please consult the [Functional Annotation Vignette](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) in the [biomartr](https://github.com/HajkD/biomartr) package.
 
-The following `DivergenceExpressionSet` example shows the standard `DivergenceExpressionSet` data set format.
+The following `DivergenceExpressionSet` example illustrates the standard `DivergenceExpressionSet` data set format.
 
 ```{r,eval=FALSE}
 # head of an example standard DivergenceExpressionSet
@@ -413,7 +415,9 @@ head(DivergenceExpressionSetExample, 3)
 
 ```
 
-Analogous to a standard `PhyloExpressionSet`, a standard `DivergenceExpressionSet` is a `data.frame` storing the Divergence Stratum assignment of a given gene in the first column, the gene id of the corresponding gene in the second column, and the entire gene expression set (time series or treatments) starting with the third column. __This format is crucial for all functions that are implemented in the `myTAI` package__.
+Analogous to a standard `PhyloExpressionSet`, a standard `DivergenceExpressionSet` is a `data.frame` storing the Divergence Stratum assignment of a given gene in the first column, the gene id of the corresponding gene in the second column, and the entire gene expression set (time series or treatments) starting with the third column. 
+
+__The PhyloExpressionSet and DivergenceExpressioNSet formats are crucial for all functions that are implemented in the `myTAI` package__.
 
 Keeping these standard data formats in mind will provide you with the most important requirements to get started with the `myTAI` package.
 
@@ -422,8 +426,10 @@ __Note__, that within the code of each function, the argument `ExpressionSet` al
 
 ## Skip `Phylostratigraphy` and `Divergence Stratigraphy` and Download Already Published `PhyloExpressionSets` or `DivergenceExpressionSets`
 
-The `myTAI` package provides the statistical framework for existing PhyloExpressionSets or DivergenceExpressionSets. To re-analyze, reproduce, or further investigate phenomena of existing PhyloExpressionSets or DivergenceExpressionSets, you can use the following
-procedure to download published datasets. In this example we will download `Supplementary Table S3` from Drost et al., 2015. A list of published `Phylostratigraphic Maps` and `Divergence Maps` can be found [here](https://github.com/HajkD/published_phylomaps).
+The `myTAI` package also provides the statistical framework for existing PhyloExpressionSets or DivergenceExpressionSets. To re-analyze, reproduce, or further investigate phenomena of existing PhyloExpressionSets or DivergenceExpressionSets, you can use the following
+procedure to download published datasets. In this example we will download `Supplementary Table S3` from Drost et al., 2015. 
+
+Users can find a detailed list of [published Phylostratigraphic Maps and Divergence Maps](https://github.com/HajkD/published_phylomaps) by following the link.
 
 
 
@@ -468,7 +474,7 @@ TAI(Athaliana_PhyloExpressionSet)
 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334 
 ```
 
-You can also use already published `Phylostratigraphic Maps` and `Divergence Maps` that can be found [here](https://github.com/HajkD/published_phylomaps) and match them with your transcriptome data of interest using the `MatchMap()` function. This procedure allows you to generate your own `PhyloExpressionSet` and `DivergenceExpressionSet` to perform phylotranscriptomic analyses with `myTAI`.
+Users can also use [published Phylostratigraphic Maps and Divergence Maps](https://github.com/HajkD/published_phylomaps) and match them with their own transcriptome data of interest using the `MatchMap()` function. This procedure allows users to generate custom `PhyloExpressionSet` and `DivergenceExpressionSet` to perform phylotranscriptomic analyses with `myTAI`.
 
 
 ## Performing a Standard Workflow for Phylotranscriptomics Analyses 
@@ -495,7 +501,7 @@ PlotDistribution( PhyloExpressionSet = PhyloExpressionSetExample,
 ```
 
 
-Another important feature to check is whether the Phylostratum assignment and Divergence-Stratum assignment of the genes stored within the PhyloExpressionSet and DivergenceExpressionSet are correlated (linear dependent). This is important to be able to assume the linear independence of __TAI__ and __TDI__ measures.
+Another important feature to check is whether the Phylostratum assignment and Divergence-Stratum assignment of the genes stored within the PhyloExpressionSet and DivergenceExpressionSet are correlated (linear dependent). This is important to be able to assume the linear independence of __TAI__ and __TDI__ measures. This step is useful, because the TAI and TDI measures aim to quantify different signals of evolutionary conservation. Whereas the TAI measure aims to quantify evolutionary signals based on gene origin along the tree of life, the TDI measure is based on quantifying the selection pressure acting on orthologous genes between closely related species.
 
 
 For this purpose the `PlotCorrelation()` function was implemented:
@@ -516,7 +522,7 @@ In this case Phylostratum and Divergence-Stratum assignments of the intersecting
 __Note__: The `PlotCorrelation()` function always takes a PhyloExpressionSet as __first argument__ and a DivergenceExpressionSet as __second argument__.
 
 
-### 1) Plotting the _Transcriptome Age Index_ and the _Transcriptome Divergence Index_
+### Visualizing the _Transcriptome Age Index_ and the _Transcriptome Divergence Index_
 
 
 Mathematically the _Transcriptome Age Index_ (TAI) introduced by Domazet-Loso and Tautz, 2010 represents a weighted arithmetic mean of the transcriptome age during a corresponding developmental stage _s_. 
@@ -543,7 +549,7 @@ A lower value of TDI describes an more conserved transcriptome (in terms of sequ
 ### Flat Line Test
 
 
-The `PlotPattern()` function first computes the `TAI` (given a PhyloExpressionSet) or the `TDI` (given a DivergenceExpressionSet) to visualize the TAI or TDI profile, their standard deviation and statistical significance.
+The `PlotPattern()` function first computes the `TAI` (given a PhyloExpressionSet) or the `TDI` (given a DivergenceExpressionSet) to visualize the TAI or TDI profile, their standard deviation, and statistical significance.
 
 ```{r, fig.width= 7, fig.height= 5,eval=FALSE}
 # Plot the Transcriptome Age Index of a given PhyloExpressionSet 
@@ -556,7 +562,7 @@ PlotPattern( ExpressionSet = PhyloExpressionSetExample,
 ```
 
 The p-value (`p_flt`) above the TAI curve is returned by the `FlatLineTest`. As described in the
-documentation of `PlotPattern()` (`?PlotPattern` or `?FlatLineTest`), the `FlatLineTest` is the default statistical test to quantify the statistical significance of the observed phylotranscriptomic pattern. In detail, the test quantifies any statistically significant deviation of the phylotranscriptomic pattern from a flat line. Here, we define any significant deviation of a phylotranscriptomic pattern from a flat line as evolutionary signal. Furthermore, we define corresponding stages of deviation as evolutionary conserved or variable (less conserved) depending on the magnitude of `TAI` values.
+documentation of `PlotPattern()` (`?PlotPattern` or `?FlatLineTest`), the `FlatLineTest` is the default statistical test to quantify the statistical significance of the observed phylotranscriptomic pattern. In detail, the test quantifies any statistically significant deviation of the phylotranscriptomic pattern from a flat line. Here, we define any significant deviation of a phylotranscriptomic pattern from a flat line as evolutionary signal. Furthermore, we define corresponding stages of deviation as evolutionary conserved or variable (less conserved) depending on the magnitude of `TAI` and corresponding p-values.
 
 ### Reductive Hourglass Test
 
@@ -604,8 +610,8 @@ PlotPattern( ExpressionSet = PhyloExpressionSetExample,
              ylab          = "TAI" )
 ```
 
-__Note__, defining a priori knowledge for the `ReductiveHourglassTest` using the `modules` argument, modules need to start at stage 1, ..., N and do not correspond to the column position in the _PhyloExpressionSet/DivergenceExpressionSet_
-which in contrast would start at position 3, ... N.
+__Note__ that for defining a priori knowledge for the `ReductiveHourglassTest` using the `modules` argument, modules need to start at stage 1, ..., N and do not correspond to the column position in the _PhyloExpressionSet/DivergenceExpressionSet_
+which in contrast would start at position 3, ... N + 2.
 
 
 ### Reductive Early Conservation Test
@@ -646,8 +652,8 @@ which is different from the p-value returned by the `FlatLineTest` (`p_flt`) and
 Since the present TAI pattern of the _PhyloExpressionSetExample_ doesn't support the Early Conservation Hypothesis,
 the p-value `p_ect` = 1.
 
-Also __note__, that defining a priori knowledge for the `EarlyConservationTest` using the `modules` argument, modules need to start at stage 1, ..., N and do not correspond to the column position in the _PhyloExpressionSet/DivergenceExpressionSet_
-which in contrast would start at position 3, ... N.
+Again __note__ that for defining a priori knowledge for the `EarlyConservationTest` using the `modules` argument, modules need to start at stage 1, ..., N and do not correspond to the column position in the _PhyloExpressionSet/DivergenceExpressionSet_
+which in contrast would start at position 3, ... N + 2.
 
 
 To obtain the numerical _TAI_ values, the `TAI()` function can be used:
@@ -727,7 +733,209 @@ TDI(DivergenceExpressionSetExample)
 4.532029 4.563200 4.485705 4.500868 4.466477 4.530704 4.690292
 
 ```
-### 2) Mean Expression and Relative Expression of single phylostrata or divergence-strata
+
+### `Phylostratum` or `Divergence Stratum` specific contribution to the global transcriptome index profile
+
+Another way to visualize the cumulative contribution of each `Phylostratum` or `Divergence Stratum` to the global Transcriptome Age Index or Transcriptome Divergence Index profile was introduced by Domazet-Loso and Tautz, 2010 (Fig. 1b). The advantage of visualizing the cumulative contribution of each `Phylostratum` or `Divergence Stratum` to the global pattern is to study how the final (global) TAI or TDI
+profile emerges from the cumulative distribution of each `Phylostratum` or `Divergence Stratum`. This `Phylostratum` or `Divergence Stratum` specific contribution on the global TAI or TDI pattern can be visualized using `PlotContribution()`:
+
+#### Example: `Phylostrata`
+
+```{r,eval = FALSE}
+# visualize phylostrata contribution to the global TAI pattern
+ PlotContribution( ExpressionSet = PhyloExpressionSetExample,
+                   legendName    = "PS",
+                   lwd           = 6,
+                   cex           = 0.5)
+```
+
+The exact values of the `Phylostratum` specific cumulative TAI profiles can be obtained
+using the `pTAI()` function:
+
+```{r,eval = FALSE}
+pTAI(PhyloExpressionSetExample)
+```
+ 
+```
+      Zygote  Quadrant  Globular     Heart   Torpedo      Bent    Mature
+1  0.3929533 0.3935308 0.4142106 0.4115399 0.4216806 0.4178302 0.3883815
+2  0.9521021 0.9547833 0.9748522 0.9674842 0.9632213 0.9285336 0.8661883
+3  1.0502814 1.0477016 1.0576104 1.0556300 1.0549156 1.0187303 0.9722031
+4  1.3861830 1.3810595 1.3837548 1.3928030 1.3876006 1.3632945 1.3656170
+5  1.5527473 1.5489829 1.5360986 1.5500708 1.5468767 1.5531699 1.5769758
+6  1.8114772 1.8171167 1.7806803 1.7968463 1.8020203 1.8223456 1.9207232
+7  1.8766090 1.8739449 1.8317327 1.8530276 1.8573216 1.8776292 1.9952325
+8  1.9417254 1.9357499 1.8877436 1.9089144 1.9117438 1.9478303 2.0778287
+9  2.0339192 2.0294517 1.9823091 1.9982678 1.9915249 2.0413791 2.1878074
+10 2.4215868 2.4361137 2.3489524 2.3347670 2.3028346 2.3797112 2.5142773
+11 2.4900201 2.5079107 2.4104647 2.3980760 2.3651571 2.4422093 2.5961316
+12 3.2299418 3.2256139 3.1071348 3.1166934 3.0739935 3.1765113 3.3903336
+```
+
+#### Example: `Divergence Strata`
+
+Analogously, the `Divergence Stratum` specific influence on the global TDI pattern can be visualized using:
+
+```{r,eval = FALSE}
+# visualize divergence stratum contribution to global TDI
+ PlotContribution( ExpressionSet = DivergenceExpressionSetExample,
+                   legendName    = "DS",
+                   lwd           = 6,
+                   cex           = 0.5)
+```
+
+The exact values of the `Divergence Stratum` specific cumulative TDI values can be obtained
+using the `pTDI()` function:
+
+```{r,eval = FALSE}
+pTDI(DivergenceExpressionSetExample)
+```
+
+```
+      Zygote  Quadrant  Globular     Heart   Torpedo      Bent    Mature
+1  0.2174378 0.2207644 0.2309211 0.2214881 0.2195601 0.2047938 0.1704023
+2  0.4800055 0.4762352 0.4821244 0.4752145 0.4799418 0.4695871 0.4288670
+3  0.7742988 0.7597816 0.7797646 0.7826244 0.8033702 0.8034316 0.7769026
+4  1.1463780 1.1285545 1.1408903 1.1528497 1.1694967 1.1784113 1.1933157
+5  1.5652686 1.5489672 1.5545589 1.5698173 1.5934158 1.6003011 1.6330444
+6  2.0899161 2.0609661 2.0666314 2.1015199 2.1163138 2.1306059 2.1932280
+7  2.6262330 2.6035894 2.6012719 2.6453427 2.6477490 2.6664143 2.8085434
+8  3.2211299 3.1990804 3.1767694 3.2319604 3.2292835 3.2693046 3.4412353
+9  3.8396769 3.8299654 3.7793476 3.8353941 3.8272391 3.8971210 4.0753877
+10 4.5320286 4.5632002 4.4857052 4.5008685 4.4664774 4.5307040 4.6902921
+```
+
+In both cases (`Phylostrata` and `Divergence Strata`) the `pTAI()` and `pTDI()`
+functions return a numeric matrix storing the cumulative TAI or TDI values
+for each `Phylostratum` and `Divergence Stratum`. Note, that the TAI values
+of `Phylostratum` 12 (in the `pTAI()` matrix) are equivalent to `TAI(PhyloExpressionSetExample)`.
+
+```{r,eval = FALSE}
+# show that the cumulative TAI value of PS 12 is
+# equavalent to the global TAI() values
+pTAI(PhyloExpressionSetExample)[12 , ]
+
+# >  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
+# > 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334 
+
+TAI(PhyloExpressionSetExample)
+
+# >  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
+# > 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334
+```
+
+This can be explained by the definition of the TAI. Here the sum of all
+partial TAI values over all `Phylostrata` is equals the global TAI values:
+
+```{r,eval = FALSE}
+
+# show that the colSum() of partial TAI values
+# over all Phylostrata equals the global TAI() values
+apply(pStrata(PhyloExpressionSetExample) , 2 , sum)
+
+# >  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
+# > 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334
+
+```
+
+Now, the `PlotContribution()` only differs from `apply(pStrata(PhyloExpressionSetExample) , 2 , sum)` by exchanging the `sum()` by `cumsum()`.
+
+
+```{r,eval = FALSE}
+
+# show that apply(pStrata(PhyloExpressionSetExample) , 2 , cumsum)
+# is equivalent to pTAI()
+apply(pStrata(PhyloExpressionSetExample) , 2 , cumsum)
+
+```
+
+```
+      Zygote  Quadrant  Globular     Heart   Torpedo      Bent    Mature
+1  0.3929533 0.3935308 0.4142106 0.4115399 0.4216806 0.4178302 0.3883815
+2  0.9521021 0.9547833 0.9748522 0.9674842 0.9632213 0.9285336 0.8661883
+3  1.0502814 1.0477016 1.0576104 1.0556300 1.0549156 1.0187303 0.9722031
+4  1.3861830 1.3810595 1.3837548 1.3928030 1.3876006 1.3632945 1.3656170
+5  1.5527473 1.5489829 1.5360986 1.5500708 1.5468767 1.5531699 1.5769758
+6  1.8114772 1.8171167 1.7806803 1.7968463 1.8020203 1.8223456 1.9207232
+7  1.8766090 1.8739449 1.8317327 1.8530276 1.8573216 1.8776292 1.9952325
+8  1.9417254 1.9357499 1.8877436 1.9089144 1.9117438 1.9478303 2.0778287
+9  2.0339192 2.0294517 1.9823091 1.9982678 1.9915249 2.0413791 2.1878074
+10 2.4215868 2.4361137 2.3489524 2.3347670 2.3028346 2.3797112 2.5142773
+11 2.4900201 2.5079107 2.4104647 2.3980760 2.3651571 2.4422093 2.5961316
+12 3.2299418 3.2256139 3.1071348 3.1166934 3.0739935 3.1765113 3.3903336
+```
+
+```{r,eval = FALSE}
+
+pTAI(PhyloExpressionSetExample)
+```
+
+```
+      Zygote  Quadrant  Globular     Heart   Torpedo      Bent    Mature
+1  0.3929533 0.3935308 0.4142106 0.4115399 0.4216806 0.4178302 0.3883815
+2  0.9521021 0.9547833 0.9748522 0.9674842 0.9632213 0.9285336 0.8661883
+3  1.0502814 1.0477016 1.0576104 1.0556300 1.0549156 1.0187303 0.9722031
+4  1.3861830 1.3810595 1.3837548 1.3928030 1.3876006 1.3632945 1.3656170
+5  1.5527473 1.5489829 1.5360986 1.5500708 1.5468767 1.5531699 1.5769758
+6  1.8114772 1.8171167 1.7806803 1.7968463 1.8020203 1.8223456 1.9207232
+7  1.8766090 1.8739449 1.8317327 1.8530276 1.8573216 1.8776292 1.9952325
+8  1.9417254 1.9357499 1.8877436 1.9089144 1.9117438 1.9478303 2.0778287
+9  2.0339192 2.0294517 1.9823091 1.9982678 1.9915249 2.0413791 2.1878074
+10 2.4215868 2.4361137 2.3489524 2.3347670 2.3028346 2.3797112 2.5142773
+11 2.4900201 2.5079107 2.4104647 2.3980760 2.3651571 2.4422093 2.5961316
+12 3.2299418 3.2256139 3.1071348 3.1166934 3.0739935 3.1765113 3.3903336
+```
+
+This `pTAI()` matrix is what is being visualized inside `PlotContribution()`.
+
+__Note__ that the `pStrata()` function returns the partial TAI or TDI values 
+for each `Phylostratum` or `Divergence Stratum`, whereas `pMatrix()` returns
+the partial TAI or TDI value for each gene.
+
+```{r,eval = FALSE}
+# compute partial TAI values for each Phylostratum
+pStrata(PhyloExpressionSetExample)
+```
+
+```
+       Zygote   Quadrant   Globular      Heart    Torpedo       Bent     Mature
+1  0.39295331 0.39353082 0.41421061 0.41153988 0.42168061 0.41783018 0.38838151
+2  0.55914875 0.56125250 0.56064163 0.55594427 0.54154068 0.51070341 0.47780681
+3  0.09817938 0.09291830 0.08275821 0.08814585 0.09169432 0.09019669 0.10601483
+4  0.33590159 0.33335787 0.32614435 0.33717297 0.33268496 0.34456426 0.39341385
+5  0.16656429 0.16792339 0.15234382 0.15726786 0.15927610 0.18987539 0.21135880
+6  0.25872990 0.26813378 0.24458170 0.24677547 0.25514358 0.26917571 0.34374736
+7  0.06513175 0.05682826 0.05105236 0.05618130 0.05530130 0.05528356 0.07450933
+8  0.06511643 0.06180498 0.05601089 0.05588683 0.05442226 0.07020109 0.08259620
+9  0.09219381 0.09370185 0.09456557 0.08935340 0.07978112 0.09354879 0.10997873
+10 0.38766762 0.40666192 0.36664326 0.33649918 0.31130963 0.33833215 0.32646984
+11 0.06843326 0.07179705 0.06151227 0.06330899 0.06232254 0.06249801 0.08185437
+12 0.73992167 0.71770319 0.69667019 0.71861745 0.70883635 0.73430205 0.79420194
+```
+
+```{r,eval = FALSE}
+# compute partial TAI values for each gene
+dplyr::glimpse(pMatrix(PhyloExpressionSetExample))
+```
+
+```
+Observations: 25260
+Variables:
+$ Zygote   (dbl) 3.597950e-05, 2.484581e-05, 2.007498e-05, 1.683276e-05, 1.891073e-...
+$ Quadrant (dbl) 3.203218e-05, 3.045853e-05, 2.066542e-05, 1.569402e-05, 2.812062e-...
+$ Globular (dbl) 2.013329e-05, 2.909027e-05, 1.640631e-05, 2.063608e-05, 6.003300e-...
+$ Heart    (dbl) 2.311604e-05, 2.800871e-05, 1.663988e-05, 2.379714e-05, 7.119708e-...
+$ Torpedo  (dbl) 1.813626e-05, 2.713080e-05, 1.566972e-05, 2.525094e-05, 1.019572e-...
+$ Bent     (dbl) 1.685284e-05, 1.950712e-05, 1.535178e-05, 2.254055e-05, 1.172208e-...
+$ Mature   (dbl) 2.684331e-05, 1.695727e-05, 1.415911e-05, 1.362810e-05, 1.229886e-...
+```
+
+You can receive all gene specific partial TAI values by typing `pMatrix(PhyloExpressionSetExample)`.
+
+Analogously, `pStrata()` and `pMatrix()` can be used for `Divergence Strata` by substituting `PhyloExpressionSetExample` by `DivergenceExpressionSetExample`.
+
+
+### Mean Expression and Relative Expression of Single Phylostrata or Divergence Strata
 
 
 
@@ -735,11 +943,11 @@ __TAI__ or __TDI__ patterns are very useful to gain a first insight into the mea
 
 To further investigate the origins of the global __TAI__ or __TDI__ pattern it is useful to visualize the mean gene expression of each Phylostratum or Divergence-Stratum class.
 
-#### Visualizing the Mean Expression Levels of a PhyloExpressionSet and DivergenceExpressionSet
+#### Mean Expression Levels of a PhyloExpressionSet and DivergenceExpressionSet
 
 
 
-Visualizing the mean gene expression of genes corresponding to the same Phylostratum or Divergence-Stratum class allows to detect development specific groups of Phylostrata or Divergence-Strata that are most expressed during the underlying developmental process. This might lead to correlating specific groups of Phylostrata or Divergence-Strata sharing similar evolutionary origins with common functions or functional contributions to a specific developmental process. 
+Visualizing the mean gene expression of genes corresponding to the same Phylostratum or Divergence Stratum class allows users to detect biological process specific groups of Phylostrata or Divergence Strata that are most expressed during the underlying biological process. This might lead to correlating specific groups of Phylostrata or Divergence Strata sharing similar evolutionary origins with common functions or functional contributions to a specific developmental process. 
 
 ```{r, fig.width= 7, fig.height= 5,eval=FALSE}
 # Visualizing the mean gene expression of each Phylostratum class
@@ -754,9 +962,9 @@ PlotMeans( ExpressionSet = PhyloExpressionSetExample,
 
 Here we see that the mean gene expression of Phylostratum group: PS1-3 (genes evolved before the establishment of embryogenesis in plants) are more expressed during _A. thaliana_ embryogenesis than PS4-12 (genes evolved during or after the establishment of embryogenesis in plants).
 
-In different developmental processes different Phylostratum groups or combination of groups might resemble the majority of expressed genes. 
+In different biological processes different Phylostratum groups or combination of groups might resemble the majority of expressed genes. 
 
-So the `PlotMeans()` function takes an PhyloExpressionSet or DivergenceExpressionSet and plots for each Phylostratum the mean expression levels of all genes corresponding to this Phylostratum. The `Groups` argument takes a list storing the Phylostrata (classified into the same group) that shall be visualized on the same plot.
+The `PlotMeans()` function takes an PhyloExpressionSet or DivergenceExpressionSet and visualizes for each Phylostratum the mean expression levels of all genes that correspond to this Phylostratum. The `Groups` argument takes a list storing the Phylostrata (classified into the same group) that shall be visualized on the same plot.
 
 For this example we separate groups of Phylostrata into __evolutionary old Phylostrata__ (PS1-3) in one plot versus __evolutionary younger Phylostrata__ (PS4-12) into another plot:
 
@@ -803,7 +1011,7 @@ Here the `age.apply()` function (`?age.apply`) takes a function as argument that
 For a DivergenceExpressionSet run:
 
 ```{r, fig.width= 7, fig.height= 5,eval=FALSE}
-# Visualizing the mean gene expression of each Divergence-Stratum class
+# Visualizing the mean gene expression of each Divergence Stratum class
 PlotMeans( ExpressionSet = DivergenceExpressionSetExample, 
            Groups        = list(1:10), 
            legendName    = "DS",
@@ -813,11 +1021,11 @@ PlotMeans( ExpressionSet = DivergenceExpressionSetExample,
            lwd           = 5 ) 
 ```
 
-To obtain the numerical values (mean expression levels for all Divergence-Strata) run:
+To obtain the numerical values (mean expression levels for all Divergence Strata) run:
 
 ```{r,eval=FALSE}
 # Using the age.apply() function to compute the mean expression levels
-# of all Divergence-Strata
+# of all Divergence Strata
 age.apply( ExpressionSet = DivergenceExpressionSetExample, 
            FUN           = colMeans ) 
 ```
@@ -837,11 +1045,15 @@ age.apply( ExpressionSet = DivergenceExpressionSetExample,
 10 1660.750 1735.086 1605.275 1473.854 1398.067 1438.258 1541.633
 
 ```
-#### Visualizing the Relative Expression Levels of a PhyloExpressionSet and DivergenceExpressionSet
+#### Relative Expression Levels of a PhyloExpressionSet and DivergenceExpressionSet
 
 
 
-Introduced by Domazet-Loso and Tautz, (2010), relative expression levels are defined as a linear transformation of the mean expression levels (of each Phylostratum or Divergence-Stratum) into the interval $[0,1]$ (Quint et al. (2012)). This allows the comparability between mean expression patterns  between Phylostrata or Divergence-Strata independent from their actual magnitude.
+Introduced by Domazet-Loso and Tautz, (2010), relative expression levels are defined as a linear transformation of the mean expression levels (of each Phylostratum or Divergence-Stratum) into the interval $[0,1]$ (Quint et al., 2012 and Drost et al., 2015). This procedure allows users to compare mean expression patterns between Phylostrata or Divergence Strata independent from their actual magnitude. Hence, relative expression
+profiles aim to correlate the mean expression profiles of groups of Phylostrata or
+Divergence Strata due to the assumption that genes or groups of genes sharing a similar
+expression profile might be regulated by similar gene regulatory mechanisms or contribute
+to similar biological processes.
 
 The `PlotRE()` function can be used (analogous to the `PlotMeans()` function) to visualize the relative expression levels of a given PhyloExpressionSet and DivergenceExpressionSet:
 
@@ -857,7 +1069,7 @@ PlotRE( ExpressionSet = PhyloExpressionSetExample,
 ```
 
 ```{r, fig.width= 7, fig.height= 5,eval=FALSE}
-# Visualizing the mean gene expression of each Divergence-Stratum class
+# Visualizing the mean gene expression of each Divergence Stratum class
 PlotRE( ExpressionSet = DivergenceExpressionSetExample, 
         Groups        = list(1:10), 
         legendName    = "DS",
@@ -867,7 +1079,7 @@ PlotRE( ExpressionSet = DivergenceExpressionSetExample,
         lwd           = 5 ) 
 ```
 
-or again by assigning Phylostratum or Divergence-Stratum groups that shall be visualized in different plots:
+or again by assigning Phylostratum or Divergence Stratum groups that shall be visualized in different plots:
 
 ```{r,fig.height=5, fig.width=9,eval=FALSE}
 # Visualizing the mean gene expression of each Phylostratum class
@@ -1038,6 +1250,29 @@ PlotPattern( ExpressionSet = PhyloExpressionSetExample,
 ```
 
 These arguments can analogously be used for all other plot functions, e.g. `PlotMeans()`, `PlotRE()`, etc.
+
+### Saving Plots on Local Machine
+
+To save plots generated with `myTAI` on a local machine users can use the following functions
+implemented in the R language: `png`, `pdf`, `svg`.
+
+```{r, fig.width= 7, fig.height= 5,eval=FALSE}
+
+# save the TAI profile to a local machine with png()
+png("ExampleTAIProfile.png", width = 800, height = 600)
+
+PlotPattern( ExpressionSet = PhyloExpressionSetExample, 
+             type          = "l", 
+             lwd           = 6, 
+             xlab          = "Ontogeny", 
+             ylab          = "TAI",
+             cex           = 1, 
+             cex.lab       = 1, 
+             cex.axis      = 1.2 )
+
+dev.off()
+```
+
 
 ## References
 

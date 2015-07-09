@@ -64,6 +64,17 @@ BEGIN_RCPP
     return __result;
 END_RCPP
 }
+// cpp_harmonic_mean
+double cpp_harmonic_mean(NumericVector x);
+RcppExport SEXP myTAI_cpp_harmonic_mean(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    __result = Rcpp::wrap(cpp_harmonic_mean(x));
+    return __result;
+END_RCPP
+}
 // cpp_omitMatrix
 NumericMatrix cpp_omitMatrix(NumericMatrix ExpressionSet, NumericVector AgeVector);
 RcppExport SEXP myTAI_cpp_omitMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {

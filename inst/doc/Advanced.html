@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2015-05-24" />
+<meta name="date" content="2015-07-09" />
 
 <title>Advanced Phylotranscriptomics Analyses</title>
 
@@ -52,19 +52,19 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <div id="header">
 <h1 class="title">Advanced Phylotranscriptomics Analyses</h1>
-<h4 class="date"><em>2015-05-24</em></h4>
+<h4 class="date"><em>2015-07-09</em></h4>
 </div>
 
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p>In the <a href="https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd">Introduction</a> vignette you learned how to perform the most fundamental computations and visualizations for phylotranscriptomics analyses using the <code>myTAI</code> package. Especially the <em>Introduction</em> vignette showed you how to perform <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code> as well as the construction of <code>PhyloExpressionSets</code> and <code>DivergenceExpressionSets</code>.</p>
-<p>In the <a href="https://github.com/HajkD/myTAI/blob/master/vignettes/Intermediate.Rmd">Intermediate</a> vignette you learned about more detailed analyses and more specialized techniques to investigate the observed phylotranscriptomics patterns (<code>TAI</code>, <code>TDI</code>, <code>RE</code>, etc.).</p>
-<p>This vignette shows you how to retrieve already published <code>Phylostratigraphic Maps</code> and <code>Divergence Maps</code> and how you can integrate these data sets into your phylotranscriptomics pipeline.</p>
+<p>In the <a href="Introduction.html">Introduction</a> vignette users learned how to perform the most fundamental computations and visualizations for phylotranscriptomics analyses using the <code>myTAI</code> package. Especially in the <em>Introduction</em> vignette we demonstrated how to perform <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code> as well as the construction of <code>PhyloExpressionSets</code> and <code>DivergenceExpressionSets</code>.</p>
+<p>In the <a href="Intermediate.html">Intermediate</a> vignette users learned about more detailed analyses and more specialized techniques to investigate the observed phylotranscriptomics patterns (<code>TAI</code>, <code>TDI</code>, <code>RE</code>, etc.).</p>
+<p>This vignette aims to provide users with in-depth tutorials on how to retrieve published <code>Phylostratigraphic Maps</code> and <code>Divergence Maps</code> and how they can integrate these data sets into their own phylotranscriptomics pipeline.</p>
 </div>
 <div id="biological-sequence-retrieval-with-biomartr" class="section level2">
 <h2>Biological Sequence Retrieval with <code>biomartr</code></h2>
-<p>Both methods <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code> need genome or proteome information for their analyses. This section will show you how to retrieve biological sequences in <code>*.fasta</code> format to be able to perform <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code>.</p>
+<p>Both methods <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code> need genome or proteome information for their analyses. This section will show users how to retrieve biological sequences in <code>*.fasta</code> format to be able to perform <code>Phylostratigraphy</code> and <code>Divergence Stratigraphy</code>.</p>
 <p>The <em>classical</em> way to download biological sequences is via the <code>Terminal</code>:</p>
 <pre class="shell"><code>
 # download CDS file of A. thaliana
@@ -80,7 +80,7 @@ Arabidopsis_lyrata.v.1.0.23.cds.all.fa.gz
 -o Arabidopsis_lyrata.v.1.0.23.cds.all.fa.gz
 
 </code></pre>
-<p>Alternatively, you can use the Biological Data Retrieval package <a href="https://github.com/HajkD/biomartr">biomartr</a> to download proteomes from the refseq database (see <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd">Sequence Retrieval Vignette</a> for details).</p>
+<p>Alternatively, users can use the Biological Data Retrieval package <a href="https://github.com/HajkD/biomartr">biomartr</a> to download proteomes from the refseq database (see <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Sequence_Retrieval.Rmd">Sequence Retrieval Vignette</a> for details).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;devtools&quot;)</span>
 
 <span class="co"># install the current version of biomartr on your system</span>

@@ -22,7 +22,7 @@
 #' @param \dots default plot parameters.
 #' @details 
 #' 
-#' #' This function computes a permutation test quantifying the statistical significance of the prensent phylotranscriptomics pattern. 
+#' This function computes a permutation test quantifying the statistical significance of the prensent phylotranscriptomics pattern. 
 #' The user can choose between the \code{\link{FlatLineTest}}, \code{\link{ReductiveHourglassTest}}, or \code{\link{EarlyConservationTest}}. 
 #' The \code{\link{FlatLineTest}} tests for any significant deviation from a flat line. 
 #' Each period or stage that significantly deviates from a flat line, might be governed by stronger selective pressure (in terms of natural selection) compared to other stages or periods of development.
@@ -166,21 +166,19 @@ PlotPattern <- function(ExpressionSet,
         
         if (is.null(TestStatistic)){
                 
-                plot(TAI(ExpressionSet), xaxt = "n", ...)
-                axis(1,1:(ncol(ExpressionSet)-2),names(ExpressionSet)[3:ncol(ExpressionSet)])
-                
+                graphics::plot(TAI(ExpressionSet), xaxt = "n", ...)
+                graphics::axis(1,1:(ncol(ExpressionSet)-2),names(ExpressionSet)[3:ncol(ExpressionSet)])
         } else {
-        
         
         if (!(is.element(TestStatistic, c("FlatLineTest","ReductiveHourglassTest","EarlyConservationTest")))){
                 stop("Please enter a correct string for the test statistic: 'FlatLineTest', 'EarlyConservationTest' or 'ReductiveHourglassTest'.")
         }
         
         if ((is.element(TestStatistic,c("ReductiveHourglassTest","EarlyConservationTest"))) & is.null(modules))
-                stop("Please specify the modules for the ReductiveHourglassTest or EarlyConservationTest: modules = list(early = ..., mid = ..., late = ...).")
+                stop ("Please specify the modules for the ReductiveHourglassTest or EarlyConservationTest: modules = list(early = ..., mid = ..., late = ...).")
         
         if ((!is.null(modules)) & (TestStatistic == "FlatLineTest"))
-                warning("You don't need to specify the modules argument for the FlatLineTest.")
+                warning ("You don't need to specify the modules argument for the FlatLineTest.")
         
         nCols <- dim(ExpressionSet)[2]
         resList <- vector("list", length = 2)
@@ -325,26 +323,27 @@ PlotPattern <- function(ExpressionSet,
                                       labels = format(seq(ylim.range[1],ylim.range[2],length.out = y.ticks),digits = digits.ylab)), 
                                  dots[!is.element(names(dots),c(plot.args,legend.args))]))
         
+        
         # age + std.err
-        lines(age + sd_vals,lwd = 2,col = "darkgrey")
+        graphics::lines(age + sd_vals,lwd = 2,col = "darkgrey")
         # age - std.err
-        lines(age - sd_vals,lwd = 2,col = "darkgrey")
+        graphics::lines(age - sd_vals,lwd = 2,col = "darkgrey")
         
         if(p.value == TRUE){
                 
                 if(TestStatistic == "FlatLineTest"){
-                        do.call(graphics::legend,c(x = "topleft",bty = "n",legend = paste("p_flt = ",format(pval,digits = 3),sep = ""),
-                                           dots[!is.element(names(dots),c(plot.args,axis.args))]))
+                        do.call(graphics::legend,c(list(x = "topleft",bty = "n",legend = paste("p_flt = ",format(pval,digits = 3),sep = ""),
+                                           dots[!is.element(names(dots),c(plot.args,axis.args))])))
                 }
                 
                 if(TestStatistic == "ReductiveHourglassTest"){
-                        do.call(graphics::legend,c(x = "topleft",bty = "n",legend = paste("p_rht = ",format(pval,digits = 3),sep = ""),
-                                                   dots[!is.element(names(dots),c(plot.args,axis.args))]))
+                        do.call(graphics::legend,c(list(x = "topleft",bty = "n",legend = paste("p_rht = ",format(pval,digits = 3),sep = ""),
+                                                   dots[!is.element(names(dots),c(plot.args,axis.args))])))
                 }
                 
                 if(TestStatistic == "EarlyConservationTest"){
-                        do.call(graphics::legend,c(x = "topleft",bty = "n",legend = paste("p_ect = ",format(pval,digits = 3),sep = ""),
-                                                   dots[!is.element(names(dots),c(plot.args,axis.args))]))
+                        do.call(graphics::legend,c(list(x = "topleft",bty = "n",legend = paste("p_ect = ",format(pval,digits = 3),sep = ""),
+                                                   dots[!is.element(names(dots),c(plot.args,axis.args))])))
                 }
                 
         }
@@ -355,11 +354,11 @@ PlotPattern <- function(ExpressionSet,
         if(shaded.area == TRUE){
                 #abline(v=c(mid[1],mid[length(mid)]),col="black",lty="dotted")
                 col2alpha <- function (color, alpha = 0.2){
-                        rgbCode <- col2rgb(color)[,1]
-                        rgb(rgbCode[1], rgbCode[2], rgbCode[3], 255 * alpha, maxColorValue = 255)
+                        rgbCode <- grDevices::col2rgb(color)[,1]
+                        grDevices::rgb(rgbCode[1], rgbCode[2], rgbCode[3], 255 * alpha, maxColorValue = 255)
                 }
-                usr <- par('usr')
-                rect(modules[[2]][1], usr[3], modules[[2]][length(modules[[2]])], usr[4], col = col2alpha("midnightblue",alpha = 0.2)) 
+                usr <- graphics::par('usr')
+                graphics::rect(modules[[2]][1], usr[3], modules[[2]][length(modules[[2]])], usr[4], col = col2alpha("midnightblue",alpha = 0.2)) 
         }
         }
 }

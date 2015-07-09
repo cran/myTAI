@@ -16,12 +16,14 @@ of evolutionary conservation or constraint in developmental processes of extant 
 
 ## Tutorials
 
-Three tutorials will get you started with this package:
+These tutorials will get you started with this package:
 
 - [A Brief Introduction to the myTAI Package](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd)
 - [Intermediate Concepts of Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Intermediate.Rmd)
 - [Advanced Topics of Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Advanced.Rmd)
-
+- [Perform Age Enrichment Analyses](https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd)
+- [Gene Expression Analysis with myTAI](https://github.com/HajkD/myTAI/blob/master/vignettes/Expression.Rmd)
+- [Taxonomic Information Retrieval](https://github.com/HajkD/myTAI/blob/master/vignettes/Taxonomy.Rmd)
 
 You can also read the tutorials within ([RStudio](http://www.rstudio.com/)) :
 
@@ -30,6 +32,12 @@ You can also read the tutorials within ([RStudio](http://www.rstudio.com/)) :
 # first install the myTAI package 
 # -> see "Fast Installation Guide" for the current development version
 install.packages("myTAI", build_vignettes = TRUE, dependencies = TRUE)
+
+# to perform differential gene expression analyses with myTAI
+# please install the edgeR package
+# install edgeR
+source("http://bioconductor.org/biocLite.R")
+biocLite("edgeR")
 
 # source the myTAI package
 library(myTAI)
@@ -40,16 +48,24 @@ browseVignettes("myTAI")
 
 # or as single tutorials
 
-# open tutorial: Introduction
+# open tutorial: Introduction to Phylotranscriptomics and myTAI
  vignette("Introduction", package = "myTAI")
 
-# open tutorial: Intermediate
+# open tutorial: Intermediate Concepts of Phylotranscriptomics
  vignette("Intermediate", package = "myTAI")
 
-# open tutorial: Advanced
+# open tutorial: Advanced Concepts of Phylotranscriptomics
  vignette("Advanced", package = "myTAI")
 
-
+# open tutorial: Age Enrichment Analyses
+ vignette("Enrichment", package = "myTAI")
+ 
+# open tutorial: Gene Expression Analysis with myTAI
+ vignette("Expression", package = "myTAI")
+ 
+ # open tutorial: Taxonomic Information Retrieval with myTAI
+ vignette("Taxonomy", package = "myTAI")
+ 
 ```
 
 In the `myTAI` framework you can find:
@@ -60,6 +76,10 @@ In the `myTAI` framework you can find:
 * `TDI()` : Function to compute the Transcriptome Divergence Index (TDI)
 * `REMatrix()` : Function to compute the relative expression profiles of all phylostrata or divergence-strata
 * `RE()` : Function to transform mean expression levels to relative expression levels
+* `pTAI()` : Compute the Phylostratum Contribution to the global TAI
+* `pTDI()` : Compute the Divergence Stratum Contribution to the global TDI
+* `pMatrix()` : Compute Partial TAI or TDI Values
+* `pStrata()` : Compute Partial Strata Values
 
 #### Visualization and Analytics Tools:
 
@@ -69,6 +89,9 @@ In the `myTAI` framework you can find:
 * `PlotBarRE()` : Function to plot the mean relative expression levels of phylostratum or divergence-stratum classes as barplot
 * `PlotMeans()` : Function to plot the mean expression profiles of phylostrata or divergence-strata
 * `PlotDistribution()` : Function to plot the frequency distribution of genes within the corresponding phylostratigraphic map or divergence map
+* `PlotContribution()` : Plot the Phylostratum or Divergence Stratum Contribution to the Global TAI/TDI Pattern
+* `PlotEnrichment()` : Plot the Phylostratum or Divergence Stratum Enrichment of a given Gene Set
+* `PlotGeneSet()` : Plot the Expression Profiles of a Gene Set
 
 
 #### A Statistical Framework and Test Statistics:
@@ -77,12 +100,33 @@ In the `myTAI` framework you can find:
 phylotranscriptomics pattern (significant deviation from a frat line = evolutionary signal)
 * `ReductiveHourglassTest()` : Function to perform the __Reductive Hourglass Test__ that statistically evaluates the existence of a phylotranscriptomic hourglass pattern (hourglass model)
 * `EarlyConservationTest()` : Function to perform the __Reductive Early Conservation Test__ that statistically evaluates the existence of a monotonically increasing phylotranscriptomic pattern (early conservation model)
+* `EnrichmentTest()` : Phylostratum or Divergence Stratum Enrichment of a given Gene Set based on Fisher's Test
+* `bootMatrix()` : Compute a Permutation Matrix for Test Statistics
 
 All three functions also include visual analytics tools to quantify the goodness of test statistics.
 
+#### Differential Gene Expression Analysis
+
+* `DiffGenes()` : Implements Popular Methods for Differential Gene Expression Analysis
+* `CollapseReplicates()` : Combine Replicates in an ExpressionSet
+* `CombinatorialSignificance()` : Compute the Statistical Significance of Each Replicate Combination
+* `Expressed()` : Filter Expression Levels in Gene Expression Matrices (define expressed genes)
+* `SelectGeneSet()` : Select a Subset of Genes in an ExpressionSet
+
+#### Taxonomic Information Retrieval
+
+* `taxonomy()` : Retrieve Taxonomic Information for any Organism of Interest
+
 #### Minor Functions for Better Usibility and Additional Analyses
 
-`age.apply()`, `bootMatrix()`, `CollapseReplicates()`,`CombinatorialSignificance()`, `ecScore()`, `FilterRNASeqCT()`, `MatchMap()`, `omitMatrix()`, `pMatrix()`, `pStrata()`, `rhScore()`, and `tf()`
+* `MatchMap()` : Match a Phylostratigraphic Map or Divergence Map with a ExpressionMatrix
+* `tf()` : Transform Gene Expression Levels
+* `age.apply()` : Age Category Specific apply Function
+* `ecScore()` : Compute the Hourglass Score for the EarlyConservationTest
+* `geom.mean()` : Geometric Mean
+* `harm.mean()` : Harmonic Mean
+* `omitMatrix()` : Compute TAI or TDI Profiles Omitting a Given Gene
+* `rhScore()` : Compute the Hourglass Score for the Reductive Hourglass Test
 
 
 ## Install Developer Version of myTAI

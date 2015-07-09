@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="date" content="2015-07-09" />
+
+<title>Enrichment Analyses</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%7D%0Apre%20%7B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+<div id="header">
+<h1 class="title">Enrichment Analyses</h1>
+<h4 class="date"><em>2015-07-09</em></h4>
+</div>
+
+
+<div id="performing-phylostratum-and-divergence-stratum-enrichment-analyses" class="section level2">
+<h2>Performing <code>Phylostratum</code> and <code>Divergence Stratum</code> Enrichment Analyses</h2>
+<p><code>Phylostratum</code> and <code>Divergence Stratum</code> enrichment analyses have been performed by several studies to correlate organ or metabolic pathway evolution with the origin of organ or pathway specific genes (Sestak and Domazet-Loso, 2015).</p>
+<p>In detail, <code>Phylostratum</code> and <code>Divergence Stratum</code> enrichment analyses can be performed analogously to <a href="http://geneontology.org/page/go-enrichment-analysis">Gene Ontology</a> and <a href="http://www.genome.jp/kegg/">Kegg</a> enrichment analyses to study the enrichment of evolutionary age or sequence divergence in a set of selected genes against the entire genome/transcriptome. In case specific age categories are significantly over- or underrepresented in the selected gene set, assumptions or potential correlations between the evolutionary origin of a particular organ or metabolic pathway can be implied.</p>
+<p>In this vignette we will use the data set published by Sestak and Domazet-Loso, 2015 to demonstrate how to perform enrichment analyses using <code>myTAI</code>.</p>
+</div>
+<div id="enrichment-analyses-using-plotenrichment" class="section level2">
+<h2>Enrichment Analyses using <code>PlotEnrichment()</code></h2>
+<p>The <code>PlotEnrichment()</code> function implemented in <code>myTAI</code> computes and visualizes the significance of enriched (over- or underrepresented) <code>Phylostrata</code> or <code>Divergence Strata</code> within an input set of process/tissue specific genes. In detail this function takes the <code>Phylostratum</code> or <code>Divergence Stratum</code> distribution of all genes stored in the input <code>ExpressionSet</code> as background set and the <code>Phylostratum</code> or <code>Divergence Stratum</code> distribution of the specific gene set and performs a Fisher’s exact test for each <code>Phylostratum</code> or <code>Divergence Stratum</code> to quantify the statistical significance of over- or under-represented <code>Phylostrata</code> or <code>Divergence Strata</code> within the set of selected genes. In other words, the frequency distribution of <code>Phylostrata</code> or <code>Divergence Strata</code> in the complete sample is compared with the frequency distribution of <code>Phylostrata</code> or <code>Divergence Strata</code> in the set of selected genes and over- or under-representation is visualized by log-odds (or odds), where a log-odd of zero means that both frequency distributions are equal (see also Sestak and Domazet-Loso, 2015).</p>
+<div id="example-data-set-retrieval" class="section level3">
+<h3>Example Data Set Retrieval</h3>
+<p>Before using the <code>PlotEnrichment()</code> function, we need to download the example data set from Sestak and Domazet-Loso, 2015.</p>
+<p>Download the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># download the Phylostratigraphic Map of Danio rerio</span>
+<span class="co"># from Sestak and Domazet-Loso, 2015</span>
+<span class="kw">download.file</span>( <span class="dt">url      =</span> <span class="st">&quot;http://mbe.oxfordjournals.org/content/suppl/2014/11/17/msu319.DC1/TableS3-2.xlsx&quot;</span>, 
+               <span class="dt">destfile =</span> <span class="st">&quot;MBE_2015a_Drerio_PhyloMap.xlsx&quot;</span> )
+               </code></pre>
+<p>Read the <code>*.xlsx</code> file storing the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> and format it for the use with <code>myTAI</code>:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install the readxl package</span>
+<span class="kw">install.packages</span>(<span class="st">&quot;readxl&quot;</span>)
+
+<span class="co"># load package readxl</span>
+<span class="kw">library</span>(readxl)
+
+<span class="co"># read the excel file</span>
+DrerioPhyloMap.MBEa &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;MBE_2015a_Drerio_PhyloMap.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">1</span>, <span class="dt">skip =</span> <span class="dv">4</span>)
+
+<span class="co"># format Phylostratigraphic Map for use with myTAI</span>
+Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class="dv">1</span>:<span class="dv">2</span>]
+
+<span class="co"># have a look at the final format</span>
+<span class="kw">head</span>(Drerio.PhyloMap)</code></pre>
+<pre><code>  Phylostrata            ZFIN_ID
+1           1 ZDB-GENE-000208-13
+2           1 ZDB-GENE-000208-17
+3           1 ZDB-GENE-000208-18
+4           1 ZDB-GENE-000208-23
+5           1  ZDB-GENE-000209-3
+6           1  ZDB-GENE-000209-4</code></pre>
+<p>Now, <code>Drerio.PhyloMap</code> stores the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> which is used as background set to perform enrichment analyses with <code>PlotEnrichment()</code>.</p>
+</div>
+<div id="enrichment-analyses" class="section level3">
+<h3>Enrichment Analyses</h3>
+<p>Now, the <code>PlotEnrichment()</code> function visualizes the over- and underrepresented <code>Phylostrata</code> of brain specific genes when compared with the total number of genes stored in the <code>Phylostratigraphic Map</code> of <em>D. rerio</em>.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># read expression data (organ specific genes) from Sestak and Domazet-Loso, 2015</span>
+Drerio.OrganSpecificExpression &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;MBE_2015a_Drerio_PhyloMap.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">2</span>, <span class="dt">skip =</span> <span class="dv">3</span>)
+
+<span class="co"># select only brain specific genes</span>
+Drerio.Brain.Genes &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">na.omit</span>(Drerio.OrganSpecificExpression[ , <span class="st">&quot;brain&quot;</span>]))
+
+<span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span>
+<span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
+               <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
+               <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
+<p>Here, the first argument is either a standard <code>ExpressionSet</code> object (in case <code>use.only.map = FALSE</code>: default) or a <code>Phylostratigraphic Map</code> or <code>Divergence Map</code> (in case <code>use.only.map = TRUE</code>; see <a href="Introduction.html">Introduction</a> for details). The second argument <code>test.set</code> specifies the gene ids also stored in the corresponding <code>ExpressionSet</code> or <code>Phylostratigraphic Map/ Divergence Map</code> for which enrichment shall be quantified and visualized.</p>
+<p>To visualize the odds or log-odds of over- or underrepresented genes within the <code>test.set</code> the following procedure is performed:</p>
+<ul>
+<li><p><span class="math">\(N_{ij}\)</span> denotes the number of genes in group j and deriving from PS <span class="math">\(i\)</span>, with <span class="math">\(i = 1, .. , n\)</span> and where <span class="math">\(j = 1\)</span> denotes the background set and <span class="math">\(j = 2\)</span> denotes the <code>test.set</code></p></li>
+<li><p><span class="math">\(N_{i.}\)</span> denotes the total number of genes within PS <span class="math">\(i\)</span></p></li>
+<li><p><span class="math">\(N_{.j}\)</span> denotes the total number of genes within group <span class="math">\(j\)</span></p></li>
+<li><p><span class="math">\(N_{..}\)</span> is the total number of genes within all groups <span class="math">\(j\)</span> and all PS <span class="math">\(i\)</span></p></li>
+<li><span class="math">\(f_{ij}\)</span> = <span class="math">\(N_{ij}\)</span> / <span class="math">\(N_{..}\)</span> and <span class="math">\(g_{ij}\)</span> = <span class="math">\(f_{ij}\)</span> / <span class="math">\(f_{.j}\)</span> denote relative frequencies between groups</li>
+<li><p><span class="math">\(f_{i.}\)</span> denotes the between group sum of <span class="math">\(f_{ij}\)</span></p></li>
+</ul>
+<p>The result is the <strong>fold-change value</strong> (odds; <code>measure = &quot;foldchange&quot;</code>) denoted as <span class="math">\(C_2 = g_{i2} / f_{i.}\)</span> which is visualized above and below zero or the <strong>log fold-change</strong> value (log-odds; <code>measure = &quot;log-foldchange&quot;</code>), where <span class="math">\(log_2\)</span>(C) = <span class="math">\(log_2\)</span>(<span class="math">\(g_{i2}\)</span>) - <span class="math">\(log_2\)</span>(<span class="math">\(f_{i.}\)</span>) which is visualized symmetrically above and below zero by <code>PlotEnrichment()</code>. Analogously, <span class="math">\(C_1 = g_{i1} / f_{i.}\)</span> but is not visualized by this function.</p>
+<p>Internally, <code>PlotEnrichment()</code> performs a Fisher’s exact test for each <code>Phylostratum</code> or <code>Divergence Stratum</code> separately, to quantify the significance of over- or under-representation of corresponding <code>Phylostrata</code> or <code>Divergence Strata</code> within the <code>test.set</code> when compared with the entire <code>ExpressionSet</code>. <code>PlotEnrichment()</code> visualizes significantly enriched (over- or underrepresented) <code>Phylostrata</code> or <code>Divergence Strata</code> with asterisks ’*’.</p>
+<p>Notation:</p>
+<ul>
+<li>’*’ = P-Value <span class="math">\(&lt;=\)</span> 0.05</li>
+<li>’**’ = P-Value <span class="math">\(&lt;=\)</span> 0.005</li>
+<li>’***’ = P-Value <span class="math">\(&lt;=\)</span> 0.0005</li>
+</ul>
+<p>Users will notice that when performing the <code>PlotEnrichment()</code> function, the p-values and the enrichment matrix (storing <span class="math">\(C_1\)</span> and <span class="math">\(C_2\)</span>) will be returned.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
+               <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
+               <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
+<pre><code>$p.values
+         PS1          PS2          PS3          PS4          PS5          PS6 
+8.283490e-01 8.362880e-05 6.778981e-02 1.373816e-02 7.946309e-13 6.017041e-01 
+         PS7          PS8          PS9         PS10         PS11         PS12 
+2.185021e-03 2.281194e-03 8.943147e-01 5.699612e-01 4.717058e-02 9.367759e-01 
+        PS13         PS14 
+3.929949e-03 1.593834e-05 
+
+$enrichment.matrix
+           BG_Set     Test_Set
+PS1  -0.001132832  0.007668216
+PS2   0.023733936 -0.172380714
+PS3  -0.040879607  0.250587496
+PS4  -0.048920465  0.294399729
+PS5  -0.114888949  0.603817643
+PS6   0.008678915 -0.060350168
+PS7  -0.062948352  0.367240944
+PS8   0.115630474 -1.206210187
+PS9  -0.007353969  0.048964218
+PS10 -0.031971192  0.200141519
+PS11  0.039742253 -0.303363314
+PS12 -0.002418079  0.016311853
+PS13  0.101449988 -0.984621732
+PS14  0.098211044 -0.938724783</code></pre>
+<p>In case users are only interested in the p-values of the Fisher test and the enrichment matrix without illustrating the bar plot, they can specify the <code>plot.bars = FALSE</code> argument to only retrieve the numeric results.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># specify plot.bars = FALSE to retrieve only numeric results</span>
+EnrichmentResult &lt;-<span class="st"> </span><span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
+                                   <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+                                   <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
+                                   <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
+                                   <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>,
+                                   <span class="dt">plot.bars    =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># access p-values quantifying the enrichment for each Phylostratum</span>
+EnrichmentResult$p.values</code></pre>
+<pre><code>         PS1          PS2          PS3          PS4          PS5          PS6 
+8.283490e-01 8.362880e-05 6.778981e-02 1.373816e-02 7.946309e-13 6.017041e-01 
+         PS7          PS8          PS9         PS10         PS11         PS12 
+2.185021e-03 2.281194e-03 8.943147e-01 5.699612e-01 4.717058e-02 9.367759e-01 
+        PS13         PS14 
+3.929949e-03 1.593834e-05</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># access enrichment matrix storing C_1 and C_2</span>
+EnrichmentResult$enrichment.matrix</code></pre>
+<pre><code>           BG_Set     Test_Set
+PS1  -0.001132832  0.007668216
+PS2   0.023733936 -0.172380714
+PS3  -0.040879607  0.250587496
+PS4  -0.048920465  0.294399729
+PS5  -0.114888949  0.603817643
+PS6   0.008678915 -0.060350168
+PS7  -0.062948352  0.367240944
+PS8   0.115630474 -1.206210187
+PS9  -0.007353969  0.048964218
+PS10 -0.031971192  0.200141519
+PS11  0.039742253 -0.303363314
+PS12 -0.002418079  0.016311853
+PS13  0.101449988 -0.984621732
+PS14  0.098211044 -0.938724783</code></pre>
+</div>
+<div id="defining-the-background-set" class="section level3">
+<h3>Defining the Background Set</h3>
+<p>The Fisher test which is performed inside <code>PlotEnrichment()</code> assumes that all genes stored in the input <code>ExpressionSet</code> or <code>Phylostratigraphic Map</code>/<code>Divergence Map</code> are used to define the background set for constructing the test statistic. However, since in most cases the <code>test.set</code> is an subset of the input <code>ExpressionSet</code> or <code>Phylostratigraphic Map</code>/<code>Divergence Map</code> one could also specify the <code>complete.bg</code> argument to remove all <code>test.set</code> genes from the background set when performing the Fisher test and visualization.</p>
+<p>The following two examples allow users to compare the results when retaining all genes as background set compared with the option to remove <code>test.set</code> genes from the background set.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># complete.bg = TRUE (default) -&gt; retain test.set genes in background set</span>
+<span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
+               <span class="dt">complete.bg  =</span> <span class="ot">TRUE</span>,
+               <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
+               <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># complete.bg = FALSE -&gt; remove test.set genes from background set</span>
+<span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
+               <span class="dt">complete.bg  =</span> <span class="ot">FALSE</span>,
+               <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
+               <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
+<p>Users will notice that although some p-values change, the qualitative result did not change. In border line cases however, the results might influence whether or not some <code>Phylostrata</code> or <code>Divergence Strata</code> are denoted as significantly enriched or not. So always be aware of the interpretation when retaining or removing the <code>test.set</code> from the background set, because both options are valid and have advantages and disadvantages and depend on a valid interpretation.</p>
+</div>
+</div>
+<div id="interpretation-of-enrichment-results" class="section level2">
+<h2>Interpretation of Enrichment Results</h2>
+<p>For the <em>D. rerio</em> brain genes example you can see that PS4, PS5, and PS7 are significantly over-represented in the set of brain specific genes.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">measure      =</span> <span class="st">&quot;foldchange&quot;</span>,
+               <span class="dt">complete.bg  =</span> <span class="ot">TRUE</span>,
+               <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
+               <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
+<p>Again, we retrieve the <em>D. rerio</em> specific taxonomy represented by PS1-14 using the <code>taxonomy()</code> funtion (see <a href="Introduction.html">Introduction</a> and <a href="Taxonomy.html">Taxonomy</a> for details).</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># retrieve the taxonomy of D. rerio</span>
+<span class="kw">taxonomy</span>(<span class="dt">organism =</span> <span class="st">&quot;Danio rerio&quot;</span>)</code></pre>
+<pre><code>                    id         name    rank
+1   cellular organisms      no rank  131567
+2            Eukaryota superkingdom    2759
+3         Opisthokonta      no rank   33154
+4              Metazoa      kingdom   33208
+5            Eumetazoa      no rank    6072
+6            Bilateria      no rank   33213
+7        Deuterostomia      no rank   33511
+8             Chordata       phylum    7711
+9             Craniata    subphylum   89593
+10          Vertebrata      no rank    7742
+11       Gnathostomata      no rank    7776
+12          Teleostomi      no rank  117570
+13        Euteleostomi      no rank  117571
+14      Actinopterygii   superclass    7898
+15         Actinopteri        class  186623
+16         Neopterygii     subclass   41665
+17           Teleostei   infraclass   32443
+18 Osteoglossocephalai      no rank 1489341
+19       Clupeocephala      no rank  186625
+20           Otomorpha      no rank  186634
+21        Ostariophysi      no rank   32519
+22            Otophysa      no rank  186626
+23       Cypriniphysae   superorder  186627
+24       Cypriniformes        order    7952
+25         Cyprinoidea  superfamily   30727
+26          Cyprinidae       family    7953
+27               Danio        genus    7954
+28         Danio rerio      species    7955</code></pre>
+<p>Sestak and Domazet-Loso, 2015 collapsed these 28 taxonomic nodes into 14 taxonomic nodes (see <code>Figure 2</code> in Sestak and Domazet-Loso, 2015) and labelled them as phylostrata 1 to phylostrata 14, where PS1 represents <code>cellular organisms</code> and PS14 represents <code>D. rerio</code> specific genes. Based on the phylostratum categorization of Sestak and Domazet-Loso, 2015, PS4 represents <code>Holozoa (= Metazoa + allies)</code>, PS5 represents <code>Metazoa</code>, and PS7 represents <code>Bilateria</code>.</p>
+<p>Now, the over-representation results of brain specific genes returned by <code>PlotEnrichment()</code> provide evidence, that brain specific genes might indeed have originated during the emergence of the nervous system at the metazoan-eumetazoan transition leading to the interpretation that the vertebrate brain has a step wise adaptive history where most of its extant organization was already present in the chordate ancestor as argued by Sestak and Domazet-Loso, 2015.</p>
+<p>This example shall illustrate how the <code>PlotEnrichment()</code> function can be used to trace the evolutionary origin of tissue or process specific genes by investigating their age enrichment.</p>
+<p>In case users have an <code>ExpressionSet</code> storing the <code>Phylostratigraphic Map</code> of <em>D. rerio</em> as well as an expression set, they can furthermore use the <code>PlotGeneSet()</code> function implemented in <code>myTAI</code> to visualize the expression levels of brain specific genes which have been shown to be significantly enriched in <code>Metazoa</code> specific phylostrata.</p>
+<p>Example:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the best parameter setting to visualize this plot:</span>
+<span class="co"># png(&quot;DrerioBrainSpecificGeneExpression.png&quot;,700,400)</span>
+<span class="kw">PlotGeneSet</span>(<span class="dt">ExpressionSet =</span> DrerioPhyloExpressionSet,
+            <span class="dt">gene.set      =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+            <span class="dt">plot.legend   =</span> <span class="ot">FALSE</span>,
+            <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>,
+            <span class="dt">lty           =</span> <span class="dv">1</span>,
+            <span class="dt">lwd           =</span> <span class="dv">4</span>,
+            <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>,
+            <span class="dt">ylab          =</span> <span class="st">&quot;Expression Level&quot;</span>)
+
+<span class="co"># dev.off()</span></code></pre>
+<p>Here <code>DrerioPhyloExpressionSet</code> denotes a hypothetical <code>ExpressionSet</code> of <em>D. rerio</em> development.</p>
+<p>Additionally, the <code>SelectGeneSet()</code> function allows users to obtain the <code>ExpresisonSet</code> subset of selected genes (<code>gene.set</code>) for subsequent analyses.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select the ExpressionSet subset of Brain specific genes</span>
+Brain.PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">SelectGeneSet</span>( <span class="dt">ExpressionSet =</span> DrerioPhyloExpressionSet,
+                                           <span class="dt">gene.set      =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>] )
+        
+<span class="kw">head</span>(Brain.PhyloExpressionSet)</code></pre>
+<div id="adjust-p-values-for-multiple-comparisons" class="section level3">
+<h3>Adjust P-values for Multiple Comparisons</h3>
+<p>In case a large number of Phylostrata or Divergence Strata is included in the input <code>ExpressionSet</code>, p-values returned by <code>PlotEnrichment()</code> should be adjusted for multiple comparisons. For this purpose <code>PlotEnrichment()</code> includes the argument <code>p.adjust.method</code>. Here, all methods implemented in <code>?p.adjust</code> can be specified:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># adjust p-values for multiple comparisons with Benjamini &amp; Hochberg (1995)</span>
+<span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
+               <span class="dt">test.set        =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">measure         =</span> <span class="st">&quot;log-foldchange&quot;</span>,
+               <span class="dt">complete.bg     =</span> <span class="ot">FALSE</span>,
+               <span class="dt">use.only.map    =</span> <span class="ot">TRUE</span>,
+               <span class="dt">legendName      =</span> <span class="st">&quot;PS&quot;</span>,
+               <span class="dt">p.adjust.method =</span> <span class="st">&quot;BH&quot;</span>)</code></pre>
+<p>Please consult these reviews (<a href="http://www.biostathandbook.com/multiplecomparisons.html">Biostatistics Handbook</a>, <a href="http://www.stat.columbia.edu/~gelman/research/published/multiple2f.pdf">Gelman et al., 2008</a>, and <a href="http://www.gs.washington.edu/academics/courses/akey/56008/lecture/lecture10.pdf">Slides</a>) to decide whether or not to apply p-value adjustment to your own dataset.</p>
+</div>
+</div>
+<div id="combine-functional-annotation-with-enrichment-analyses" class="section level2">
+<h2>Combine Functional Annotation with Enrichment Analyses</h2>
+<p>The greatest advantage of <code>Phylostratum</code> and <code>Divergence Stratum</code> enrichment analyses can be unfolded when it is based on the functional annotation of the <code>test.set</code>. The <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd">Functional Annotation</a> and <a href="https://github.com/HajkD/biomartr/blob/master/vignettes/Phylotranscriptomics.Rmd">Phylotranscriptomics</a> vignettes of our <a href="https://github.com/HajkD/biomartr">biomartr</a> package provide detailed tutorials on how to retrieve functional annotation for a subset of genes. Categorizing genes into common functional groups or processes via <code>biomartr</code> will then allow users to search for genes deriving from enriched <code>Phylostrata</code> or <code>Divergence Strata</code>. The <a href="Introduction.html">Introduction</a> vignette illustrated how <code>Phylostrata</code> or <code>Divergence Strata</code> can be linked with the origin of evolutionary events. This correlation between the predicted origin of genes (<code>Phylostratigraphic Map</code>) or its current state of selection between closely related species (<code>Divergence Map</code>) and their functional annotation furthermore allows users to detect signals of potential evolutionary origins of specific biological functions, processes, or tissues and their active maintenance between closely related species.</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Sestak MS and Domazet-Loso T. <strong>Phylostratigraphic Profiles in Zebrafish Uncover Chordate Origins of the Vertebrate Brain</strong>. <em>Mol. Biol. Evol.</em> (2015) 32 (2): 299-312.</p>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
