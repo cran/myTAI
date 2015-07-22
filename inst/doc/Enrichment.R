@@ -7,7 +7,7 @@
 #  
 #  # visualize enriched Phylostrata of genes annotated as brain specific
 #  PlotEnrichment(Drerio.PhyloMap,
-#                 test.set     = Drerio.Brain.Genes[ , 1],
+#                 test.set     = Drerio.Brain.Genes,
 #                 measure      = "log-foldchange",
 #                 use.only.map = TRUE,
 #                 legendName   = "PS")
@@ -15,7 +15,7 @@
 
 ## ----eval = FALSE--------------------------------------------------------
 #  PlotEnrichment(Drerio.PhyloMap,
-#                 test.set     = Drerio.Brain.Genes[ , 1],
+#                 test.set     = Drerio.Brain.Genes,
 #                 measure      = "log-foldchange",
 #                 use.only.map = TRUE,
 #                 legendName   = "PS")
@@ -23,7 +23,7 @@
 ## ----eval = FALSE--------------------------------------------------------
 #  # specify plot.bars = FALSE to retrieve only numeric results
 #  EnrichmentResult <- PlotEnrichment(Drerio.PhyloMap,
-#                                     test.set     = Drerio.Brain.Genes[ , 1],
+#                                     test.set     = Drerio.Brain.Genes,
 #                                     measure      = "log-foldchange",
 #                                     use.only.map = TRUE,
 #                                     legendName   = "PS",
@@ -40,7 +40,7 @@
 ## ----eval = FALSE--------------------------------------------------------
 #  # complete.bg = TRUE (default) -> retain test.set genes in background set
 #  PlotEnrichment(Drerio.PhyloMap,
-#                 test.set     = Drerio.Brain.Genes[ , 1],
+#                 test.set     = Drerio.Brain.Genes,
 #                 measure      = "log-foldchange",
 #                 complete.bg  = TRUE,
 #                 use.only.map = TRUE,
@@ -49,16 +49,15 @@
 ## ----eval = FALSE--------------------------------------------------------
 #  # complete.bg = FALSE -> remove test.set genes from background set
 #  PlotEnrichment(Drerio.PhyloMap,
-#                 test.set     = Drerio.Brain.Genes[ , 1],
+#                 test.set     = Drerio.Brain.Genes,
 #                 measure      = "log-foldchange",
 #                 complete.bg  = FALSE,
 #                 use.only.map = TRUE,
 #                 legendName   = "PS")
 
 ## ---- eval = FALSE-------------------------------------------------------
-#  
 #  PlotEnrichment(Drerio.PhyloMap,
-#                 test.set     = Drerio.Brain.Genes[ , 1],
+#                 test.set     = Drerio.Brain.Genes,
 #                 measure      = "foldchange",
 #                 complete.bg  = TRUE,
 #                 use.only.map = TRUE,
@@ -72,7 +71,7 @@
 #  # the best parameter setting to visualize this plot:
 #  # png("DrerioBrainSpecificGeneExpression.png",700,400)
 #  PlotGeneSet(ExpressionSet = DrerioPhyloExpressionSet,
-#              gene.set      = Drerio.Brain.Genes[ , 1],
+#              gene.set      = Drerio.Brain.Genes,
 #              plot.legend   = FALSE,
 #              type          = "l",
 #              lty           = 1,
@@ -85,14 +84,14 @@
 ## ---- eval = FALSE-------------------------------------------------------
 #  # select the ExpressionSet subset of Brain specific genes
 #  Brain.PhyloExpressionSet <- SelectGeneSet( ExpressionSet = DrerioPhyloExpressionSet,
-#                                             gene.set      = Drerio.Brain.Genes[ , 1] )
+#                                             gene.set      = Drerio.Brain.Genes )
 #  
 #  head(Brain.PhyloExpressionSet)
 
 ## ----eval = FALSE--------------------------------------------------------
 #  # adjust p-values for multiple comparisons with Benjamini & Hochberg (1995)
 #  PlotEnrichment(Drerio.PhyloMap,
-#                 test.set        = Drerio.Brain.Genes[ , 1],
+#                 test.set        = Drerio.Brain.Genes,
 #                 measure         = "log-foldchange",
 #                 complete.bg     = FALSE,
 #                 use.only.map    = TRUE,

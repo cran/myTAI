@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2015-07-09" />
+<meta name="date" content="2015-07-22" />
 
 <title>Enrichment Analyses</title>
 
@@ -52,7 +52,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <div id="header">
 <h1 class="title">Enrichment Analyses</h1>
-<h4 class="date"><em>2015-07-09</em></h4>
+<h4 class="date"><em>2015-07-22</em></h4>
 </div>
 
 
@@ -109,7 +109,7 @@ Drerio.Brain.Genes &lt;-<span class="st"> </span><span class="kw">unique</span>(
 
 <span class="co"># visualize enriched Phylostrata of genes annotated as brain specific</span>
 <span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
-               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes,
                <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
                <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
                <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
@@ -133,7 +133,7 @@ Drerio.Brain.Genes &lt;-<span class="st"> </span><span class="kw">unique</span>(
 </ul>
 <p>Users will notice that when performing the <code>PlotEnrichment()</code> function, the p-values and the enrichment matrix (storing <span class="math">\(C_1\)</span> and <span class="math">\(C_2\)</span>) will be returned.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
-               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes,
                <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
                <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
                <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
@@ -164,7 +164,7 @@ PS14  0.098211044 -0.938724783</code></pre>
 <p>In case users are only interested in the p-values of the Fisher test and the enrichment matrix without illustrating the bar plot, they can specify the <code>plot.bars = FALSE</code> argument to only retrieve the numeric results.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># specify plot.bars = FALSE to retrieve only numeric results</span>
 EnrichmentResult &lt;-<span class="st"> </span><span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
-                                   <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+                                   <span class="dt">test.set     =</span> Drerio.Brain.Genes,
                                    <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
                                    <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
                                    <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>,
@@ -202,14 +202,14 @@ PS14  0.098211044 -0.938724783</code></pre>
 <p>The following two examples allow users to compare the results when retaining all genes as background set compared with the option to remove <code>test.set</code> genes from the background set.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># complete.bg = TRUE (default) -&gt; retain test.set genes in background set</span>
 <span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
-               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes,
                <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
                <span class="dt">complete.bg  =</span> <span class="ot">TRUE</span>,
                <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
                <span class="dt">legendName   =</span> <span class="st">&quot;PS&quot;</span>)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># complete.bg = FALSE -&gt; remove test.set genes from background set</span>
 <span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
-               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes,
                <span class="dt">measure      =</span> <span class="st">&quot;log-foldchange&quot;</span>,
                <span class="dt">complete.bg  =</span> <span class="ot">FALSE</span>,
                <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
@@ -221,7 +221,7 @@ PS14  0.098211044 -0.938724783</code></pre>
 <h2>Interpretation of Enrichment Results</h2>
 <p>For the <em>D. rerio</em> brain genes example you can see that PS4, PS5, and PS7 are significantly over-represented in the set of brain specific genes.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
-               <span class="dt">test.set     =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">test.set     =</span> Drerio.Brain.Genes,
                <span class="dt">measure      =</span> <span class="st">&quot;foldchange&quot;</span>,
                <span class="dt">complete.bg  =</span> <span class="ot">TRUE</span>,
                <span class="dt">use.only.map =</span> <span class="ot">TRUE</span>,
@@ -266,7 +266,7 @@ PS14  0.098211044 -0.938724783</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the best parameter setting to visualize this plot:</span>
 <span class="co"># png(&quot;DrerioBrainSpecificGeneExpression.png&quot;,700,400)</span>
 <span class="kw">PlotGeneSet</span>(<span class="dt">ExpressionSet =</span> DrerioPhyloExpressionSet,
-            <span class="dt">gene.set      =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+            <span class="dt">gene.set      =</span> Drerio.Brain.Genes,
             <span class="dt">plot.legend   =</span> <span class="ot">FALSE</span>,
             <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>,
             <span class="dt">lty           =</span> <span class="dv">1</span>,
@@ -279,7 +279,7 @@ PS14  0.098211044 -0.938724783</code></pre>
 <p>Additionally, the <code>SelectGeneSet()</code> function allows users to obtain the <code>ExpresisonSet</code> subset of selected genes (<code>gene.set</code>) for subsequent analyses.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select the ExpressionSet subset of Brain specific genes</span>
 Brain.PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">SelectGeneSet</span>( <span class="dt">ExpressionSet =</span> DrerioPhyloExpressionSet,
-                                           <span class="dt">gene.set      =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>] )
+                                           <span class="dt">gene.set      =</span> Drerio.Brain.Genes )
         
 <span class="kw">head</span>(Brain.PhyloExpressionSet)</code></pre>
 <div id="adjust-p-values-for-multiple-comparisons" class="section level3">
@@ -287,7 +287,7 @@ Brain.PhyloExpressionSet &lt;-<span class="st"> </span><span class="kw">SelectGe
 <p>In case a large number of Phylostrata or Divergence Strata is included in the input <code>ExpressionSet</code>, p-values returned by <code>PlotEnrichment()</code> should be adjusted for multiple comparisons. For this purpose <code>PlotEnrichment()</code> includes the argument <code>p.adjust.method</code>. Here, all methods implemented in <code>?p.adjust</code> can be specified:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># adjust p-values for multiple comparisons with Benjamini &amp; Hochberg (1995)</span>
 <span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
-               <span class="dt">test.set        =</span> Drerio.Brain.Genes[ , <span class="dv">1</span>],
+               <span class="dt">test.set        =</span> Drerio.Brain.Genes,
                <span class="dt">measure         =</span> <span class="st">&quot;log-foldchange&quot;</span>,
                <span class="dt">complete.bg     =</span> <span class="ot">FALSE</span>,
                <span class="dt">use.only.map    =</span> <span class="ot">TRUE</span>,
