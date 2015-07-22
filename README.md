@@ -18,7 +18,7 @@ of evolutionary conservation or constraint in developmental processes of extant 
 
 ## Tutorials
 
-These tutorials will get you started with this package:
+These tutorials introduce users to `myTAI`:
 
 - [A Brief Introduction to the myTAI Package](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd)
 - [Intermediate Concepts of Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Intermediate.Rmd)
@@ -27,20 +27,34 @@ These tutorials will get you started with this package:
 - [Gene Expression Analysis with myTAI](https://github.com/HajkD/myTAI/blob/master/vignettes/Expression.Rmd)
 - [Taxonomic Information Retrieval](https://github.com/HajkD/myTAI/blob/master/vignettes/Taxonomy.Rmd)
 
-You can also read the tutorials within ([RStudio](http://www.rstudio.com/)) :
+Users can also read the tutorials within ([RStudio](http://www.rstudio.com/)) :
+
+## Installation
+
+Users can download `myTAI` from [CRAN](https://cran.r-project.org/web/packages/myTAI/index.html) :
 
 ```r
+# install myTAI 0.2.1 from CRAN
+install.packages("myTAI",
+                 repos        = "https://cran.rstudio.com/",
+                 dependencies = TRUE,
+                 type         = "source")
+```
 
-# first install the myTAI package 
-# -> see "Fast Installation Guide" for the current development version
-install.packages("myTAI", repos = "https://cran.rstudio.com/", dependencies = TRUE, type = "source")
+### Package Dependencies
 
+
+```r
 # to perform differential gene expression analyses with myTAI
 # please install the edgeR package
 # install edgeR
 source("http://bioconductor.org/biocLite.R")
 biocLite("edgeR")
+```
 
+## Getting started with `myTAI`
+
+```r
 # source the myTAI package
 library(myTAI)
 
@@ -70,7 +84,7 @@ browseVignettes("myTAI")
  
 ```
 
-In the `myTAI` framework you can find:
+In the `myTAI` framework users can find:
 
 #### Phylotranscriptiomics Measures:
 
@@ -94,7 +108,7 @@ In the `myTAI` framework you can find:
 * `PlotContribution()` : Plot the Phylostratum or Divergence Stratum Contribution to the Global TAI/TDI Pattern
 * `PlotEnrichment()` : Plot the Phylostratum or Divergence Stratum Enrichment of a given Gene Set
 * `PlotGeneSet()` : Plot the Expression Profiles of a Gene Set
-
+* `PlotCategoryExpr()` : Plot the Expression Levels of each Age or Divergence Category as Barplot or Violinplot
 
 #### A Statistical Framework and Test Statistics:
 
@@ -105,7 +119,7 @@ phylotranscriptomics pattern (significant deviation from a frat line = evolution
 * `EnrichmentTest()` : Phylostratum or Divergence Stratum Enrichment of a given Gene Set based on Fisher's Test
 * `bootMatrix()` : Compute a Permutation Matrix for Test Statistics
 
-All three functions also include visual analytics tools to quantify the goodness of test statistics.
+All functions also include visual analytics tools to quantify the goodness of test statistics.
 
 #### Differential Gene Expression Analysis
 
@@ -114,6 +128,7 @@ All three functions also include visual analytics tools to quantify the goodness
 * `CombinatorialSignificance()` : Compute the Statistical Significance of Each Replicate Combination
 * `Expressed()` : Filter Expression Levels in Gene Expression Matrices (define expressed genes)
 * `SelectGeneSet()` : Select a Subset of Genes in an ExpressionSet
+* `PlotReplicateQuality()` : Plot the Quality of Biological Replicates
 
 #### Taxonomic Information Retrieval
 
@@ -131,7 +146,10 @@ All three functions also include visual analytics tools to quantify the goodness
 * `rhScore()` : Compute the Hourglass Score for the Reductive Hourglass Test
 
 
-## Install Developer Version of myTAI
+## Developer Version of `myTAI`
+
+The developer version of `myTAI` might include more functionality than the stable version on CRAN.
+Hence users can download the current developer version of `myTAI` by typing:
 
 ```r
 # The developer version can be installed directly from github:

@@ -202,6 +202,29 @@
 #  Deviance.DEGs.adj
 
 ## ----eval=FALSE----------------------------------------------------------
+#  data(PhyloExpressionSetExample)
+#  
+#  # visualize the sd() between replicates
+#  PlotReplicateQuality(ExpressionSet = PhyloExpressionSetExample[ , 1:8],
+#                       nrep          = 2,
+#                       legend.pos   = "topright",
+#                       ylim          = c(0,0.2),
+#                       lwd           = 6)
+#  
+
+## ----eval=FALSE----------------------------------------------------------
+#  data(PhyloExpressionSetExample)
+#  
+#  # visualize the mad() between replicates
+#  PlotReplicateQuality(ExpressionSet = PhyloExpressionSetExample[ , 1:8],
+#                       nrep          = 2,
+#                       FUN           = mad,
+#                       legend.pos    = "topright",
+#                       ylim          = c(0,0.015),
+#                       lwd           = 6)
+#  
+
+## ----eval=FALSE----------------------------------------------------------
 #  library(myTAI)
 #  
 #  # load example data

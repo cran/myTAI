@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="date" content="2015-07-22" />
+<meta name="date" content="2015-07-30" />
 
 <title>Enrichment Analyses</title>
 
@@ -52,7 +52,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 <div id="header">
 <h1 class="title">Enrichment Analyses</h1>
-<h4 class="date"><em>2015-07-22</em></h4>
+<h4 class="date"><em>2015-07-30</em></h4>
 </div>
 
 
@@ -127,9 +127,9 @@ Drerio.Brain.Genes &lt;-<span class="st"> </span><span class="kw">unique</span>(
 <p>Internally, <code>PlotEnrichment()</code> performs a Fisher’s exact test for each <code>Phylostratum</code> or <code>Divergence Stratum</code> separately, to quantify the significance of over- or under-representation of corresponding <code>Phylostrata</code> or <code>Divergence Strata</code> within the <code>test.set</code> when compared with the entire <code>ExpressionSet</code>. <code>PlotEnrichment()</code> visualizes significantly enriched (over- or underrepresented) <code>Phylostrata</code> or <code>Divergence Strata</code> with asterisks ’*’.</p>
 <p>Notation:</p>
 <ul>
-<li>’*’ = P-Value <span class="math">\(&lt;=\)</span> 0.05</li>
-<li>’**’ = P-Value <span class="math">\(&lt;=\)</span> 0.005</li>
-<li>’***’ = P-Value <span class="math">\(&lt;=\)</span> 0.0005</li>
+<li>’*’ = P-Value <span class="math">\(\leq\)</span> 0.05</li>
+<li>’**’ = P-Value <span class="math">\(\leq\)</span> 0.005</li>
+<li>’***’ = P-Value <span class="math">\(\leq\)</span> 0.0005</li>
 </ul>
 <p>Users will notice that when performing the <code>PlotEnrichment()</code> function, the p-values and the enrichment matrix (storing <span class="math">\(C_1\)</span> and <span class="math">\(C_2\)</span>) will be returned.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">PlotEnrichment</span>(Drerio.PhyloMap,
