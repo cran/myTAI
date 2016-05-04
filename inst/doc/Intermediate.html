@@ -7,9 +7,10 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2015-07-30" />
+<meta name="date" content="2016-05-03" />
 
 <title>Intermediate Phylotranscriptomics Analyses</title>
 
@@ -17,32 +18,45 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
+div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; }
-code > span.dt { color: #902000; }
-code > span.dv { color: #40a070; }
-code > span.bn { color: #40a070; }
-code > span.fl { color: #40a070; }
-code > span.ch { color: #4070a0; }
-code > span.st { color: #4070a0; }
-code > span.co { color: #60a0b0; font-style: italic; }
-code > span.ot { color: #007020; }
-code > span.al { color: #ff0000; font-weight: bold; }
-code > span.fu { color: #06287e; }
-code > span.er { color: #ff0000; font-weight: bold; }
-</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 </style>
 
 
-<link href="data:text/css,body%20%7B%0A%20%20background%2Dcolor%3A%20%23fff%3B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20max%2Dwidth%3A%20700px%3B%0A%20%20overflow%3A%20visible%3B%0A%20%20padding%2Dleft%3A%202em%3B%0A%20%20padding%2Dright%3A%202em%3B%0A%20%20font%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0A%20%20font%2Dsize%3A%2014px%3B%0A%20%20line%2Dheight%3A%201%2E35%3B%0A%7D%0A%0A%23header%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0A%0A%23TOC%20%7B%0A%20%20clear%3A%20both%3B%0A%20%20margin%3A%200%200%2010px%2010px%3B%0A%20%20padding%3A%204px%3B%0A%20%20width%3A%20400px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20border%2Dradius%3A%205px%3B%0A%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20font%2Dsize%3A%2013px%3B%0A%20%20line%2Dheight%3A%201%2E3%3B%0A%7D%0A%20%20%23TOC%20%2Etoctitle%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%20%20font%2Dsize%3A%2015px%3B%0A%20%20%20%20margin%2Dleft%3A%205px%3B%0A%20%20%7D%0A%0A%20%20%23TOC%20ul%20%7B%0A%20%20%20%20padding%2Dleft%3A%2040px%3B%0A%20%20%20%20margin%2Dleft%3A%20%2D1%2E5em%3B%0A%20%20%20%20margin%2Dtop%3A%205px%3B%0A%20%20%20%20margin%2Dbottom%3A%205px%3B%0A%20%20%7D%0A%20%20%23TOC%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dleft%3A%20%2D2em%3B%0A%20%20%7D%0A%20%20%23TOC%20li%20%7B%0A%20%20%20%20line%2Dheight%3A%2016px%3B%0A%20%20%7D%0A%0Atable%20%7B%0A%20%20margin%3A%201em%20auto%3B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dcolor%3A%20%23DDDDDD%3B%0A%20%20border%2Dstyle%3A%20outset%3B%0A%20%20border%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0A%20%20border%2Dwidth%3A%202px%3B%0A%20%20padding%3A%205px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0A%20%20border%2Dwidth%3A%201px%3B%0A%20%20border%2Dstyle%3A%20inset%3B%0A%20%20line%2Dheight%3A%2018px%3B%0A%20%20padding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0A%20%20border%2Dleft%2Dstyle%3A%20none%3B%0A%20%20border%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%2E5em%200%3B%0A%7D%0A%0Ablockquote%20%7B%0A%20%20background%2Dcolor%3A%20%23f6f6f6%3B%0A%20%20padding%3A%200%2E25em%200%2E75em%3B%0A%7D%0A%0Ahr%20%7B%0A%20%20border%2Dstyle%3A%20solid%3B%0A%20%20border%3A%20none%3B%0A%20%20border%2Dtop%3A%201px%20solid%20%23777%3B%0A%20%20margin%3A%2028px%200%3B%0A%7D%0A%0Adl%20%7B%0A%20%20margin%2Dleft%3A%200%3B%0A%7D%0A%20%20dl%20dd%20%7B%0A%20%20%20%20margin%2Dbottom%3A%2013px%3B%0A%20%20%20%20margin%2Dleft%3A%2013px%3B%0A%20%20%7D%0A%20%20dl%20dt%20%7B%0A%20%20%20%20font%2Dweight%3A%20bold%3B%0A%20%20%7D%0A%0Aul%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%7D%0A%20%20ul%20li%20%7B%0A%20%20%20%20list%2Dstyle%3A%20circle%20outside%3B%0A%20%20%7D%0A%20%20ul%20ul%20%7B%0A%20%20%20%20margin%2Dbottom%3A%200%3B%0A%20%20%7D%0A%0Apre%2C%20code%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20color%3A%20%23333%3B%0A%7D%0Apre%20%7B%0A%20%20white%2Dspace%3A%20pre%2Dwrap%3B%20%20%20%20%2F%2A%20Wrap%20long%20lines%20%2A%2F%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20margin%3A%205px%200px%2010px%200px%3B%0A%20%20padding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0A%20%20background%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0A%0Acode%20%7B%0A%20%20font%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0A%20%20font%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0A%20%20padding%3A%202px%200px%3B%0A%7D%0A%0Adiv%2Efigure%20%7B%0A%20%20text%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0A%20%20background%2Dcolor%3A%20%23FFFFFF%3B%0A%20%20padding%3A%202px%3B%0A%20%20border%3A%201px%20solid%20%23DDDDDD%3B%0A%20%20border%2Dradius%3A%203px%3B%0A%20%20border%3A%201px%20solid%20%23CCCCCC%3B%0A%20%20margin%3A%200%205px%3B%0A%7D%0A%0Ah1%20%7B%0A%20%20margin%2Dtop%3A%200%3B%0A%20%20font%2Dsize%3A%2035px%3B%0A%20%20line%2Dheight%3A%2040px%3B%0A%7D%0A%0Ah2%20%7B%0A%20%20border%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20padding%2Dbottom%3A%202px%3B%0A%20%20font%2Dsize%3A%20145%25%3B%0A%7D%0A%0Ah3%20%7B%0A%20%20border%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0A%20%20padding%2Dtop%3A%2010px%3B%0A%20%20font%2Dsize%3A%20120%25%3B%0A%7D%0A%0Ah4%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0A%20%20margin%2Dleft%3A%208px%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Ah5%2C%20h6%20%7B%0A%20%20border%2Dbottom%3A%201px%20solid%20%23ccc%3B%0A%20%20font%2Dsize%3A%20105%25%3B%0A%7D%0A%0Aa%20%7B%0A%20%20color%3A%20%230033dd%3B%0A%20%20text%2Ddecoration%3A%20none%3B%0A%7D%0A%20%20a%3Ahover%20%7B%0A%20%20%20%20color%3A%20%236666ff%3B%20%7D%0A%20%20a%3Avisited%20%7B%0A%20%20%20%20color%3A%20%23800080%3B%20%7D%0A%20%20a%3Avisited%3Ahover%20%7B%0A%20%20%20%20color%3A%20%23BB00BB%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%20%20a%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0A%20%20%20%20text%2Ddecoration%3A%20underline%3B%20%7D%0A%0A%2F%2A%20Class%20described%20in%20https%3A%2F%2Fbenjeffrey%2Ecom%2Fposts%2Fpandoc%2Dsyntax%2Dhighlighting%2Dcss%0A%20%20%20Colours%20from%20https%3A%2F%2Fgist%2Egithub%2Ecom%2Frobsimmons%2F1172277%20%2A%2F%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Keyword%20%2A%2F%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%2F%2A%20DataType%20%2A%2F%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%2F%2A%20DecVal%20%28decimal%20values%29%20%2A%2F%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20BaseN%20%2A%2F%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Float%20%2A%2F%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20Char%20%2A%2F%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%2F%2A%20String%20%2A%2F%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%2F%2A%20Comment%20%2A%2F%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%2F%2A%20OtherToken%20%2A%2F%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20AlertToken%20%2A%2F%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%2F%2A%20Function%20calls%20%2A%2F%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%2F%2A%20ErrorTok%20%2A%2F%0A%0A" rel="stylesheet" type="text/css" />
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -50,9 +64,12 @@ code > span.er { color: #ff0000; font-weight: bold; }
 
 
 
-<div id="header">
+<div class="fluid-row" id="header">
+
+
 <h1 class="title">Intermediate Phylotranscriptomics Analyses</h1>
-<h4 class="date"><em>2015-07-30</em></h4>
+<h4 class="date"><em>2016-05-03</em></h4>
+
 </div>
 
 
@@ -71,60 +88,60 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <h3>Flat Line Test</h3>
 <p>The <strong>Flat Line Test</strong> is a permutation test quantifying the statistical significance of an observed phylotranscriptomic pattern. The goal is to detect any evolutionary signal within a developmental time course that significantly deviates from a flat line.</p>
 <p>To build the test statistic we start with a standard PhyloExpressionSet. The <code>myTAI</code> package provides an example PhyloExpressionSet named <code>PhyloExpressionSetExample</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
 
 <span class="co"># load an example PhyloExpressionSet stored in the myTAI package</span>
 <span class="kw">data</span>(PhyloExpressionSetExample) 
 
 <span class="co"># look at the standardized data set format</span>
-<span class="kw">head</span>(PhyloExpressionSetExample, <span class="dv">3</span>) </code></pre>
+<span class="kw">head</span>(PhyloExpressionSetExample, <span class="dv">3</span>) </code></pre></div>
 <pre><code>  Phylostratum      GeneID   Zygote Quadrant Globular     Heart  Torpedo      Bent    Mature
 1            1 at1g01040.2 2173.635 1911.200 1152.555 1291.4224 1000.253  962.9772 1696.4274
 2            1 at1g01050.1 1501.014 1817.309 1665.309 1564.7612 1496.321 1114.6435 1071.6555
 3            1 at1g01070.1 1212.793 1233.002  939.200  929.6195  864.218  877.2060  894.8189
 </code></pre>
 <p>Users will observe that the first column of the <code>PhyloExpressionSetExample</code> stores the Phylostratum assignments of the corresponding genes. The permutation test is based on random sampling of the Phylostratum assignment of genes. The underlying assumption is that the <code>TAI</code> profile of correctly assigned Phylostrata is significantly deviating from <code>TAI</code> profiles based on randomly assigned Phylostrata.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># TAI profile of correctly assigned Phylostrata</span>
-<span class="kw">TAI</span>(PhyloExpressionSetExample) </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># TAI profile of correctly assigned Phylostrata</span>
+<span class="kw">TAI</span>(PhyloExpressionSetExample) </code></pre></div>
 <pre><code>  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334
 </code></pre>
 <p>Visualization:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualize the TAI profile of correctly assigned Phylostrata</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualize the TAI profile of correctly assigned Phylostrata</span>
 <span class="kw">PlotPattern</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
              <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>, 
              <span class="dt">lwd           =</span> <span class="dv">6</span>, 
-             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># randomly permute the Phylostratum assignment of all genes </span>
+             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># randomly permute the Phylostratum assignment of all genes </span>
 randomPhyloExpressionSetExample &lt;-<span class="st"> </span><span class="kw">data.frame</span>( <span class="kw">sample</span>(PhyloExpressionSetExample[ , <span class="st">&quot;Phylostratum&quot;</span>]), 
                                                PhyloExpressionSetExample[, <span class="dv">2</span>:<span class="dv">9</span>] )
 
 <span class="co"># TAI profile based on randomly assigned Phylostrata</span>
-<span class="kw">TAI</span>(randomPhyloExpressionSetExample) </code></pre>
+<span class="kw">TAI</span>(randomPhyloExpressionSetExample) </code></pre></div>
 <pre><code>  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
 3.543700 3.573999 3.554707 3.543376 3.582905 3.562813 3.523409 
 </code></pre>
 <p>Visualization:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualize the TAI profile based on randomly assigned Phylostrata</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualize the TAI profile based on randomly assigned Phylostrata</span>
 <span class="kw">PlotPattern</span>( <span class="dt">ExpressionSet =</span>  randomPhyloExpressionSetExample, 
              <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>, 
              <span class="dt">lwd           =</span> <span class="dv">6</span>, 
-             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre>
+             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre></div>
 <p>Users will observe that the visual pattern of the correctly assigned <code>TAI</code> profile and the randomly assigned <code>TAI</code> profile differ qualitatively.</p>
 <p>Now we investigate the variance of the two observed patterns.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Variance of the TAI profile based on correctly assigned Phylostrata</span>
-<span class="kw">var</span>(<span class="kw">TAI</span>(PhyloExpressionSetExample)) </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Variance of the TAI profile based on correctly assigned Phylostrata</span>
+<span class="kw">var</span>(<span class="kw">TAI</span>(PhyloExpressionSetExample)) </code></pre></div>
 <pre><code>[1] 0.01147725</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Variance of the TAI profile based on randomly assigned Phylostrata</span>
-<span class="kw">var</span>(<span class="kw">TAI</span>(randomPhyloExpressionSetExample)) </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Variance of the TAI profile based on randomly assigned Phylostrata</span>
+<span class="kw">var</span>(<span class="kw">TAI</span>(randomPhyloExpressionSetExample)) </code></pre></div>
 <pre><code>[1] 0.0004102549</code></pre>
 <p>We observe that the variance of the randomly assigned TAI profile is much smaller than the variance of the correctly assigned TAI profile. Here we use the variance to quantify the <em>flatness</em> of a given TAI profile. In theory the variance of a perfect flat line would be zero. So any TAI profile that is close to zero would resemble a flat line. But how exactly are the variances of randomly assigned TAI profiles distributed? For this purpose the <code>bootMatrix()</code> function was implemented.</p>
 <p>The <code>bootMatrix()</code> takes an PhyloExpressionSet or DivergenceExpressionSet as input and computes N <code>TAI</code> or <code>TDI</code> profiles based on randomly assigned Phylostrata or Divergence-Strata.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute 1000 TAI profiles based on randomly assigned Phylostrata</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Compute 1000 TAI profiles based on randomly assigned Phylostrata</span>
 randomTAIs &lt;-<span class="st"> </span><span class="kw">bootMatrix</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
                           <span class="dt">permutations  =</span> <span class="dv">1000</span> )
 
-<span class="kw">head</span>(randomTAIs)</code></pre>
+<span class="kw">head</span>(randomTAIs)</code></pre></div>
 <pre><code>    Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature
 1 3.578000 3.577732 3.552230 3.556756 3.555627 3.553580 3.510978
 2 3.590339 3.564544 3.589012 3.598754 3.583721 3.597553 3.633530
@@ -134,13 +151,13 @@ randomTAIs &lt;-<span class="st"> </span><span class="kw">bootMatrix</span>( <sp
 6 3.539454 3.543827 3.595298 3.588149 3.582898 3.588062 3.565487
 </code></pre>
 <p>Based on this <code>booMatrix</code> we can compute the variance of each random TAI profile.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute the variance of the random TAI profile for each row</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compute the variance of the random TAI profile for each row</span>
 variance_vector &lt;-<span class="st"> </span><span class="kw">apply</span>(randomTAIs, <span class="dv">1</span> , var)
 
 <span class="co"># and visualize the distribution of variances</span>
-<span class="kw">hist</span>(variance_vector, <span class="dt">breaks =</span> <span class="dv">100</span>)</code></pre>
+<span class="kw">hist</span>(variance_vector, <span class="dt">breaks =</span> <span class="dv">100</span>)</code></pre></div>
 <p>Now it is interesting to see where we can find the variance of the correctly assigned TAI.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># variance of the TAI profile based on correctly assigned Phylostrata</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># variance of the TAI profile based on correctly assigned Phylostrata</span>
 var_real &lt;-<span class="st"> </span><span class="kw">var</span>(<span class="kw">TAI</span>(PhyloExpressionSetExample)) 
 
 <span class="co"># visualize the distribution of variances</span>
@@ -151,15 +168,15 @@ var_real &lt;-<span class="st"> </span><span class="kw">var</span>(<span class="
 
 <span class="co"># and plot a red line at the position where we can find the </span>
 <span class="co"># real variance</span>
-<span class="kw">abline</span>(<span class="dt">v =</span> var_real, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
+<span class="kw">abline</span>(<span class="dt">v =</span> var_real, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
 <p>This plot illustrates that variances based on random <code>TAI</code> profiles seem to have a smaller variance than the variance based on the correct <code>TAI</code> profile. To obtain a p-value that now quantifies this difference, we need to fit the histogram of <code>variance_vector</code> with a specific probability distribution.</p>
 <p>Visually it would be possible to choose a gamma distribution to fit the histogram of <code>variance_vector</code>. To validate this choice a <a href="https://openlibrary.org/works/OL1978341W/Probabilistic_techniques_in_exposure_assessment">Cullen and Frey graph</a> provided by the <strong>fitdistrplus</strong> package can be used.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;fitdistrplus&quot;)</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages(&quot;fitdistrplus&quot;)</span>
 
 <span class="co"># plot a Cullen and Frey graph</span>
-fitdistrplus::<span class="kw">descdist</span>(variance_vector)</code></pre>
+fitdistrplus::<span class="kw">descdist</span>(variance_vector)</code></pre></div>
 <p>Based on the observation that a gamma distribution is a suitable fit for <code>variance_vector</code>, we can now estimate the parameters of the gamma distribution that fits the data.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># estimate the parameters: shape and rate using 'moment matching estimation'</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># estimate the parameters: shape and rate using 'moment matching estimation'</span>
 gamma_MME &lt;-<span class="st"> </span>fitdistrplus::<span class="kw">fitdist</span>(variance_vector,<span class="dt">distr =</span> <span class="st">&quot;gamma&quot;</span>, <span class="dt">method =</span> <span class="st">&quot;mme&quot;</span>)
 <span class="co"># estimate shape:</span>
 shape &lt;-<span class="st"> </span>gamma_MME$estimate[<span class="dv">1</span>]
@@ -182,24 +199,24 @@ histogram &lt;-<span class="st"> </span><span class="kw">hist</span>(variance_ve
 <span class="kw">rug</span>(variance_vector)
 
 <span class="co"># plot a red line at the position where we can find the real variance</span>
-<span class="kw">abline</span>(<span class="dt">v =</span> var_real, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
+<span class="kw">abline</span>(<span class="dt">v =</span> var_real, <span class="dt">lwd =</span> <span class="dv">5</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
 <p>Using the gamma distribution with estimated parameters the corresponding p-value of <code>var_real</code> can be computed.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># p-value of var_real</span>
-<span class="kw">pgamma</span>(var_real, <span class="dt">shape =</span> shape,<span class="dt">rate =</span> rate, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># p-value of var_real</span>
+<span class="kw">pgamma</span>(var_real, <span class="dt">shape =</span> shape,<span class="dt">rate =</span> rate, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>Hence, the variance of the correct TAI profile significantly deviates from random TAI profiles and this allows us to assume that the underlying TAI profile captures a real evolutionary signal.</p>
 </div>
 <div id="using-the-flatlinetest-function" class="section level3">
 <h3>Using the <code>FlatLineTest()</code> Function</h3>
 <p>This entire procedure of computing the p-value having the variance of TAI profiles as test statistic is done by the <code>FlatLineTest()</code> function.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform the FlatLineTest</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform the FlatLineTest</span>
 <span class="kw">FlatLineTest</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
-              <span class="dt">permutations  =</span> <span class="dv">1000</span> )</code></pre>
+              <span class="dt">permutations  =</span> <span class="dv">1000</span> )</code></pre></div>
 <p>This function returns the p-value of the test statistic.</p>
 <p>Additionally the <code>FlatLineTest()</code> function allows to investigate the goodness of the test statistic.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># perform the FlatLineTest and investigate the goodness of the test statistic</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># perform the FlatLineTest and investigate the goodness of the test statistic</span>
 <span class="kw">FlatLineTest</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
               <span class="dt">permutations  =</span> <span class="dv">1000</span>, 
-              <span class="dt">plotHistogram =</span> <span class="ot">TRUE</span> )</code></pre>
+              <span class="dt">plotHistogram =</span> <span class="ot">TRUE</span> )</code></pre></div>
 <p>The <code>plotHistogram</code> argument specifies whether analytics plots shall be drawn to quantify the goodness of the test statistic returned by the <code>FlatLineTest</code>.</p>
 <p>The three resulting plots show:</p>
 <ul>
@@ -213,38 +230,38 @@ histogram &lt;-<span class="st"> </span><span class="kw">hist</span>(variance_ve
 <h3>Reductive Hourglass Test</h3>
 <p>The <strong>Reductive Hourglass Test</strong> has been developed to statistically evaluate the existence of a phylotranscriptomic hourglass pattern based on TAI or TDI computations. The corresponding p-value quantifies the probability that a given TAI or TDI pattern (or any phylotranscriptomics pattern) does not follow an hourglass like shape. A p-value &lt; 0.05 indicates that the corresponding phylotranscriptomics pattern does indeed follow an hourglass (high-low-high) shape.</p>
 <p>To build the test statistic again we start with a standard PhyloExpressionSet.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
 
 <span class="co"># load an example PhyloExpressionSet stored in the myTAI package</span>
 <span class="kw">data</span>(PhyloExpressionSetExample) 
 
 <span class="co"># look at the standardized data set format</span>
-<span class="kw">head</span>(PhyloExpressionSetExample, <span class="dv">3</span>) </code></pre>
+<span class="kw">head</span>(PhyloExpressionSetExample, <span class="dv">3</span>) </code></pre></div>
 <pre><code>  Phylostratum      GeneID   Zygote Quadrant Globular     Heart  Torpedo      Bent    Mature
 1            1 at1g01040.2 2173.635 1911.200 1152.555 1291.4224 1000.253  962.9772 1696.4274
 2            1 at1g01050.1 1501.014 1817.309 1665.309 1564.7612 1496.321 1114.6435 1071.6555
 3            1 at1g01070.1 1212.793 1233.002  939.200  929.6195  864.218  877.2060  894.8189
 </code></pre>
 <p>And again compute the <code>TAI()</code> profile of the <code>PhyloExpressionSetExample</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># TAI profile of correctly assigned Phylostrata</span>
-<span class="kw">TAI</span>(PhyloExpressionSetExample) </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># TAI profile of correctly assigned Phylostrata</span>
+<span class="kw">TAI</span>(PhyloExpressionSetExample) </code></pre></div>
 <pre><code>  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334 
 </code></pre>
 <p>Visualization:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualize the TAI profile of correctly assigned Phylostrata</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualize the TAI profile of correctly assigned Phylostrata</span>
 <span class="kw">PlotPattern</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
              <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>, 
              <span class="dt">lwd           =</span> <span class="dv">6</span>, 
-             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre>
+             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre></div>
 <p>The Reductive Hourglass Test is a permutation test based on the following test statistic.</p>
 <ol style="list-style-type: decimal">
 <li><p>A set of developmental stages is partitioned into three modules - <code>early</code>, <code>mid</code>, and <code>late</code> - based on prior biological knowledge (see Drost et al., 2015 for details).</p></li>
-<li><p>The mean TAI or TDI value for each of the three modules <span class="math">\(T_{early}\)</span>, <span class="math">\(T_{mid}\)</span>, and <span class="math">\(T_{late}\)</span> are computed.</p></li>
-<li><p>The two differences D1 = <span class="math">\(T_{early}\)</span> - <span class="math">\(T_{mid}\)</span> and D2 = <span class="math">\(T_{late}\)</span> - <span class="math">\(T_{mid}\)</span> are calculated.</p></li>
-<li><p>The minimum <span class="math">\(D_{min}\)</span> of D1 and D2 is computed as final test statistic of the <strong>Reductive Hourglass Test</strong>.</p></li>
+<li><p>The mean TAI or TDI value for each of the three modules <span class="math inline">\(T_{early}\)</span>, <span class="math inline">\(T_{mid}\)</span>, and <span class="math inline">\(T_{late}\)</span> are computed.</p></li>
+<li><p>The two differences D1 = <span class="math inline">\(T_{early}\)</span> - <span class="math inline">\(T_{mid}\)</span> and D2 = <span class="math inline">\(T_{late}\)</span> - <span class="math inline">\(T_{mid}\)</span> are calculated.</p></li>
+<li><p>The minimum <span class="math inline">\(D_{min}\)</span> of D1 and D2 is computed as final test statistic of the <strong>Reductive Hourglass Test</strong>.</p></li>
 </ol>
-<p>In order to determine the statistical significance of an observed minimum difference <span class="math">\(D_{min}\)</span> the following permutation test was performed. Based on the <code>bootMatrix()</code> <span class="math">\(D_{min}\)</span> is calculated from each of the permuted TAI or TDI profiles, approximated by a Gaussian distribution with method of moments estimated parameters returned by <code>fitdistrplus::fitdist()</code>, and the corresponding p-value is computed by <code>pnorm</code> given the estimated parameters of the Gaussian distribution. The goodness of fit for the random vector <span class="math">\(D_{min}\)</span> is statistically quantified by a <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality.</p>
+<p>In order to determine the statistical significance of an observed minimum difference <span class="math inline">\(D_{min}\)</span> the following permutation test was performed. Based on the <code>bootMatrix()</code> <span class="math inline">\(D_{min}\)</span> is calculated from each of the permuted TAI or TDI profiles, approximated by a Gaussian distribution with method of moments estimated parameters returned by <code>fitdistrplus::fitdist()</code>, and the corresponding p-value is computed by <code>pnorm</code> given the estimated parameters of the Gaussian distribution. The goodness of fit for the random vector <span class="math inline">\(D_{min}\)</span> is statistically quantified by a <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality.</p>
 <p>To perform the <strong>Reductive Hourglass Test</strong> you can use the <code>ReductiveHourglassTest()</code> function. Using this function you need to divide the given phylotranscriptomic pattern into three developmental modules:</p>
 <ul>
 <li>early module</li>
@@ -257,23 +274,23 @@ histogram &lt;-<span class="st"> </span><span class="kw">hist</span>(variance_ve
 <li>mid module: Stages 3 - 5 = Globular, Heart, and Torpedo</li>
 <li>late module: Stages 6 - 7 = Bent and Mature</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform the Reductive Hourglass Test</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform the Reductive Hourglass Test</span>
 <span class="kw">ReductiveHourglassTest</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
                         <span class="dt">modules       =</span> <span class="kw">list</span>(<span class="dt">early =</span> <span class="dv">1</span>:<span class="dv">2</span>, <span class="dt">mid =</span> <span class="dv">3</span>:<span class="dv">5</span>, <span class="dt">late =</span> <span class="dv">6</span>:<span class="dv">7</span>),
-                        <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre>
+                        <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre></div>
 <p>The corresponding output shows the p-value returned by the <strong>Reductive Hourglass Test</strong>, the standard deviation of randomly permuted TAI profiles returned by <code>bootMatrix()</code> (<code>apply(bootMatrix(PhyloExpressionSetExample) , 2 , sd)</code>) and in case the argument <code>lillie.test = TRUE</code>, a logical value representing the goodness of fit statistic returned by the <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality. In case <code>lillie.test</code> is <code>TRUE</code> the corresponding <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov)</a> test passed the goodness of fit criterion. In case <code>lillie.test</code> is <code>FALSE</code> the corresponding goodness of fit by a normal distribution is not statistically significant.</p>
 <p>Analogous to the <code>plotHistogram</code> argument that is present in the <code>FlatLineTest()</code> function, the <code>ReductiveHourglassTest()</code> function also takes an argument <code>plotHistogram</code>. When <code>plotHistogram = TRUE</code>, the <code>ReductiveHourglassTest()</code> function returns a multi-plot showing:</p>
 <ul>
-<li><p>A Cullen and Frey skewness-kurtosis plot. This plot illustrates which distributions seem plausible to fit the resulting permutation vector <span class="math">\(D_{min}\)</span>. Here a normal distribution seems most plausible.</p></li>
-<li><p>A histogram of <span class="math">\(D_{min}\)</span> combined with the density plot is visualized. <span class="math">\(D_{min}\)</span> is then fitted by a normal distribution. The corresponding parameters are estimated by moment matching estimation.</p></li>
+<li><p>A Cullen and Frey skewness-kurtosis plot. This plot illustrates which distributions seem plausible to fit the resulting permutation vector <span class="math inline">\(D_{min}\)</span>. Here a normal distribution seems most plausible.</p></li>
+<li><p>A histogram of <span class="math inline">\(D_{min}\)</span> combined with the density plot is visualized. <span class="math inline">\(D_{min}\)</span> is then fitted by a normal distribution. The corresponding parameters are estimated by moment matching estimation.</p></li>
 <li><p>A plot showing the p-values for N independent runs to verify that a specific p-value is biased by a specific permutation order.</p></li>
 <li><p>A bar plot showing the number of cases in which the underlying goodness of fit (returned by <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality) has shown to be significant (<code>TRUE</code>) or not significant (<code>FALSE</code>). This allows to quantify the permutation bias and their implications on the goodness of fit.</p></li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># perform the Reductive Hourglass Test and plot the test statistic</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># perform the Reductive Hourglass Test and plot the test statistic</span>
 <span class="kw">ReductiveHourglassTest</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
                         <span class="dt">modules       =</span> <span class="kw">list</span>(<span class="dt">early =</span> <span class="dv">1</span>:<span class="dv">2</span>, <span class="dt">mid =</span> <span class="dv">3</span>:<span class="dv">5</span>, <span class="dt">late =</span> <span class="dv">6</span>:<span class="dv">7</span>),
                         <span class="dt">plotHistogram =</span> <span class="ot">TRUE</span>, 
-                        <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre>
+                        <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre></div>
 <p>The corresponding output shows the <code>summary statistics</code> of the fitted normal distribution as well as the p-value, standard deviation, and <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> result.</p>
 <p>This example output nicely illustrates that although the Lilliefors (Kolmogorov-Smirnov) test for normality is violated for some permutations, the Cullen and Frey graph shows that there is no better approximation than a normal distribution (which is also supported visually by investigating the fitted frequency distribution). The corresponding p-value returned by <code>ReductiveHourglassTest()</code> is significant and illustrates that the observed phylotranscriptomic pattern of PhyloExpressionSetExample does follow the Hourglass Model assumption.</p>
 </div>
@@ -281,33 +298,33 @@ histogram &lt;-<span class="st"> </span><span class="kw">hist</span>(variance_ve
 <h3>Reductive Early Conservation Test</h3>
 <p>The Early Conservation Test has been developed to statistically evaluate the existence of a monotonically increasing phylotranscriptomic pattern based on TAI or TDI computations. The corresponding p-value quantifies the probability that a given TAI or TDI pattern (or any phylotranscriptomic pattern) does not follow an early conservation like pattern. A p-value &lt; 0.05 indicates that the corresponding phylotranscriptomics pattern does indeed follow an early conservation (low-high-high) shape.</p>
 <p>To build the test statistic again we start with a standard PhyloExpressionSet.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
 
 <span class="co"># load an example PhyloExpressionSet stored in the myTAI package</span>
 <span class="kw">data</span>(PhyloExpressionSetExample) 
 
 <span class="co"># look at the standardized data set format</span>
-<span class="kw">head</span>(PhyloExpressionSetExample, <span class="dv">3</span>) </code></pre>
+<span class="kw">head</span>(PhyloExpressionSetExample, <span class="dv">3</span>) </code></pre></div>
 <p>And again compute the <code>TAI()</code> profile of the <code>PhyloExpressionSetExample</code>.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># TAI profile of correctly assigned Phylostrata</span>
-<span class="kw">TAI</span>(PhyloExpressionSetExample) </code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># TAI profile of correctly assigned Phylostrata</span>
+<span class="kw">TAI</span>(PhyloExpressionSetExample) </code></pre></div>
 <pre><code>  Zygote Quadrant Globular    Heart  Torpedo     Bent   Mature 
 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334
 </code></pre>
 <p>Visualization:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualize the TAI profile of correctly assigned Phylostrata</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Visualize the TAI profile of correctly assigned Phylostrata</span>
 <span class="kw">PlotPattern</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample, 
              <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>, 
              <span class="dt">lwd           =</span> <span class="dv">6</span>, 
-             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre>
+             <span class="dt">p.value       =</span> <span class="ot">FALSE</span> ) </code></pre></div>
 <p>The reductive early conservation test is a permutation test based on the following test statistic.</p>
 <ol style="list-style-type: decimal">
 <li><p>A set of developmental stages is partitioned into three modules - <code>early</code>, <code>mid</code>, and <code>late</code> - based on prior biological knowledge.</p></li>
-<li><p>The mean TAI or TDI value for each of the three modules <span class="math">\(T_{early}\)</span>, <span class="math">\(T_{mid}\)</span>, and <span class="math">\(T_{late}\)</span> are computed.</p></li>
-<li><p>The two differences D1 = <span class="math">\(T_{mid}\)</span> - <span class="math">\(T_{early}\)</span> and D2 = <span class="math">\(T_{late}\)</span> - <span class="math">\(T_{early}\)</span> are calculated.</p></li>
-<li><p>The minimum <span class="math">\(D_{min}\)</span> of D1 and D2 is computed as final test statistic of the <strong>Reductive Early Conservation Test</strong>.</p></li>
+<li><p>The mean TAI or TDI value for each of the three modules <span class="math inline">\(T_{early}\)</span>, <span class="math inline">\(T_{mid}\)</span>, and <span class="math inline">\(T_{late}\)</span> are computed.</p></li>
+<li><p>The two differences D1 = <span class="math inline">\(T_{mid}\)</span> - <span class="math inline">\(T_{early}\)</span> and D2 = <span class="math inline">\(T_{late}\)</span> - <span class="math inline">\(T_{early}\)</span> are calculated.</p></li>
+<li><p>The minimum <span class="math inline">\(D_{min}\)</span> of D1 and D2 is computed as final test statistic of the <strong>Reductive Early Conservation Test</strong>.</p></li>
 </ol>
-<p>In order to determine the statistical significance of an observed minimum difference <span class="math">\(D_{min}\)</span> the following permutation test was performed. Based on the <code>bootMatrix()</code> <span class="math">\(D_{min}\)</span> is calculated from each of the permuted TAI or TDI profiles, approximated by a Gaussian distribution with method of moments estimated parameters returned by <code>fitdistrplus::fitdist()</code>, and the corresponding p-value is computed by <code>pnorm</code> given the estimated parameters of the Gaussian distribution. The goodness of fit for the random vector <span class="math">\(D_{min}\)</span> is statistically quantified by an <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality.</p>
+<p>In order to determine the statistical significance of an observed minimum difference <span class="math inline">\(D_{min}\)</span> the following permutation test was performed. Based on the <code>bootMatrix()</code> <span class="math inline">\(D_{min}\)</span> is calculated from each of the permuted TAI or TDI profiles, approximated by a Gaussian distribution with method of moments estimated parameters returned by <code>fitdistrplus::fitdist()</code>, and the corresponding p-value is computed by <code>pnorm</code> given the estimated parameters of the Gaussian distribution. The goodness of fit for the random vector <span class="math inline">\(D_{min}\)</span> is statistically quantified by an <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality.</p>
 <p>To perform the <strong>Reductive Early Conservation Test</strong> you can use the <code>EarlyConservationTest()</code> function. Using this function you need to divide the given phylotranscriptomics pattern into three developmental modules:</p>
 <ul>
 <li>early module</li>
@@ -320,22 +337,22 @@ histogram &lt;-<span class="st"> </span><span class="kw">hist</span>(variance_ve
 <li>mid module: Stages 3 - 5 = Globular, Heart, and Torpedo</li>
 <li>late module: Stages 6 - 7 = Bent and Mature</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform the Reductive Early Conservation Test</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Perform the Reductive Early Conservation Test</span>
 <span class="kw">EarlyConservationTest</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
                        <span class="dt">modules       =</span> <span class="kw">list</span>(<span class="dt">early =</span> <span class="dv">1</span>:<span class="dv">2</span>, <span class="dt">mid =</span> <span class="dv">3</span>:<span class="dv">5</span>, <span class="dt">late =</span> <span class="dv">6</span>:<span class="dv">7</span>),
-                       <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre>
+                       <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre></div>
 <p>Analogous to the <code>plotHistogram</code> argument that is present in the <code>FlatLineTest()</code> and <code>ReductiveHourglassTest()</code> function, the <code>EarlyConservationTest()</code> function also takes an argument <code>plotHistogram</code>. When <code>plotHistogram = TRUE</code>, the <code>EarlyConservationTest()</code> function returns a multi-plot showing:</p>
 <ul>
-<li><p>A Cullen and Frey skewness-kurtosis plot. This plot illustrates which distributions seem plausible to fit the resulting permutation vector <span class="math">\(D_{min}\)</span>. Again a normal distribution seems most appropriate.</p></li>
-<li><p>A histogram of <span class="math">\(D_{min}\)</span> combined with the density plot is visualized. <span class="math">\(D_{min}\)</span> is then fitted by a normal distribution. The corresponding parameters are estimated by moment matching estimation.</p></li>
+<li><p>A Cullen and Frey skewness-kurtosis plot. This plot illustrates which distributions seem plausible to fit the resulting permutation vector <span class="math inline">\(D_{min}\)</span>. Again a normal distribution seems most appropriate.</p></li>
+<li><p>A histogram of <span class="math inline">\(D_{min}\)</span> combined with the density plot is visualized. <span class="math inline">\(D_{min}\)</span> is then fitted by a normal distribution. The corresponding parameters are estimated by moment matching estimation.</p></li>
 <li><p>A plot showing the p-values for N independent runs to verify that a specific p-value is biased by a specific permutation order.</p></li>
 <li><p>A bar plot showing the number of cases in which the underlying goodness of fit (returned by <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality) has shown to be significant (<code>TRUE</code>) or not significant (<code>FALSE</code>). This allows to quantify the permutation bias and their implications on the goodness of fit.</p></li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># perform the Reductive Early Conservation Test and plot the test statistic</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># perform the Reductive Early Conservation Test and plot the test statistic</span>
 <span class="kw">EarlyConservationTest</span>( <span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
                        <span class="dt">modules       =</span> <span class="kw">list</span>(<span class="dt">early =</span> <span class="dv">1</span>:<span class="dv">2</span>, <span class="dt">mid =</span> <span class="dv">3</span>:<span class="dv">5</span>, <span class="dt">late =</span> <span class="dv">6</span>:<span class="dv">7</span>),
                        <span class="dt">plotHistogram =</span> <span class="ot">TRUE</span>, 
-                       <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre>
+                       <span class="dt">lillie.test   =</span> <span class="ot">TRUE</span> ) </code></pre></div>
 <p>This example output nicely illustrates that although the <a href="http://amstat.tandfonline.com/doi/abs/10.1080/00031305.1986.10475419#.VDjzFCl_vek">Lilliefors (Kolmogorov-Smirnov) test</a> for normality is violated, the <a href="https://openlibrary.org/works/OL1978341W/Probabilistic_techniques_in_exposure_assessment">Cullen and Frey graph</a> shows that there is no better approximation than a normal distribution (which is also supported visually by investigating the fitted frequency distribution). The corresponding p-value returned by the <code>EarlyConservationTest()</code> is highly non-significant and illustrates that the observed phylotranscriptomic pattern of <code>PhyloExpressionSetExample</code> does not follow the Early Conservation Model assumption.</p>
 <p>This example shall illustrate that finding the right test statistic is a multi-step process of investigating different properties of the underlying permutation test. Although single aspects might fit or fit not corresponding criteria, the overall impression (sum of all individual analyses) must be considered to obtain a valid p-value.</p>
 </div>
@@ -347,7 +364,7 @@ histogram &lt;-<span class="st"> </span><span class="kw">hist</span>(variance_ve
 <p>The purpose of the <code>tf()</code> function is to allow the user to study the qualitative impact of different transformation functions on the global TAI and TDI pattern, or on any subsequent phylotranscriptomic analysis.</p>
 <p>The examples using the <code>PhyloExpressionSetExample</code> data set show that using common gene expression transformation functions: log2 (Quackenbush, 2001 and 2002), sqrt (Yeung et al., 2001), boxcox, or inverse hyperbolic sine transformation, each transformation results in qualitatively different patterns. Nevertheless, for each resulting pattern the statistical significance can be tested using either the <code>FlatLineTest()</code>, <code>ReductiveHourglassTest()</code>, or <code>EarlyConservationTest()</code> (Drost et al., 2015) to quantify the significance of observed patterns.</p>
 <p>The <code>tf()</code> function takes a standard <code>PhyloExpressionSet</code> or <code>DivergenceExpressionSet</code> and transformation function and returns the corresponding <code>ExpressionSet</code> with transformed gene expression levels.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(myTAI)
 
 <span class="kw">data</span>(PhyloExpressionSetExample)
 
@@ -356,7 +373,7 @@ histogram &lt;-<span class="st"> </span><span class="kw">hist</span>(variance_ve
 
 PES.sqrt &lt;-<span class="st"> </span><span class="kw">tf</span>(PhyloExpressionSetExample, sqrt)
 
-<span class="kw">head</span>(PES.sqrt)</code></pre>
+<span class="kw">head</span>(PES.sqrt)</code></pre></div>
 <pre><code>#&gt;   Phylostratum      GeneID    Zygote  Quadrant  Globular     Heart   Torpedo      Bent   Mature
 #&gt; 1            1 at1g01040.2  46.62226  43.71728  33.94930  35.93637  31.62678  31.03187 41.18771
 #&gt; 2            1 at1g01050.1  38.74292  42.62990  40.80820  39.55706  38.68230  33.38628 32.73615
@@ -364,9 +381,9 @@ PES.sqrt &lt;-<span class="st"> </span><span class="kw">tf</span>(PhyloExpressio
 #&gt; 4            1 at1g01080.2  31.88919  30.60039  34.37060  36.46195  37.31813  35.88836 29.34724
 #&gt; 5            1 at1g01090.1 106.88576 129.53057 185.38244 199.43831 237.13197 258.80566 88.16213
 #&gt; 6            1 at1g01120.1  29.05239  28.06409  29.31939  30.52242  30.70579  29.50021 28.15589</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">PES.log2 &lt;-<span class="st"> </span><span class="kw">tf</span>(PhyloExpressionSetExample, log2)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">PES.log2 &lt;-<span class="st"> </span><span class="kw">tf</span>(PhyloExpressionSetExample, log2)
 
-<span class="kw">head</span>(PES.log2)</code></pre>
+<span class="kw">head</span>(PES.log2)</code></pre></div>
 <pre><code>  Phylostratum      GeneID    Zygote  Quadrant  Globular     Heart   Torpedo      Bent    Mature
 1            1 at1g01040.2 11.085894 10.900263 10.170620 10.334745  9.966149  9.911358 10.728284
 2            1 at1g01050.1 10.551722 10.827588 10.701574 10.611727 10.547204 10.122367 10.065625
@@ -374,7 +391,7 @@ PES.sqrt &lt;-<span class="st"> </span><span class="kw">tf</span>(PhyloExpressio
 4            1 at1g01080.2  9.989991  9.870956 10.206206 10.376639 10.443610 10.330888  9.750306
 5            1 at1g01090.1 13.479852 14.034298 15.068722 15.279598 15.779093 16.031451 12.924174
 6            1 at1g01120.1  9.721170  9.621306  9.747567  9.863595  9.880877  9.765307  9.630730</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># in case a given PhyloExpressionSet already stores gene expression levels</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># in case a given PhyloExpressionSet already stores gene expression levels</span>
 <span class="co"># that are log2 transformed and need to be re-transformed to absolute</span>
 <span class="co"># expression levels, to perform subsequent phylotranscriptomics analyses</span>
 <span class="co"># (that are defined for absolute expression levels), </span>
@@ -384,7 +401,7 @@ PES.absolute &lt;-<span class="st"> </span><span class="kw">tf</span>(PES.log2 ,
 
 <span class="co"># which should be the same as  PhyloExpressionSetExample :</span>
 <span class="kw">head</span>(PhyloExpressionSetExample)
-<span class="kw">head</span>(PES.absolute)</code></pre>
+<span class="kw">head</span>(PES.absolute)</code></pre></div>
 <pre><code>&gt; head(PhyloExpressionSetExample)
   Phylostratum      GeneID     Zygote   Quadrant   Globular      Heart    Torpedo       Bent    Mature
 1            1 at1g01040.2  2173.6352  1911.2001  1152.5553  1291.4224  1000.2529   962.9772 1696.4274
@@ -402,9 +419,9 @@ PES.absolute &lt;-<span class="st"> </span><span class="kw">tf</span>(PES.log2 ,
 5            1 at1g01090.1 11424.5667 16778.1685 34366.6493 39775.6405 56231.5689 66980.3673 7772.5617
 6            1 at1g01120.1   844.0414   787.5929   859.6267   931.6180   942.8453   870.2625  792.7542</code></pre>
 <p>When transforming the <code>ExpressionMatrix</code> of the <code>PhyloExpressionSetExample</code> using different transformation functions, the resulting phylotranscriptomic patterns qualitatively differ:</p>
-<div id="log2-transformation" class="section level3">
-<h3>log2 transformation</h3>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(PhyloExpressionSetExample)
+<div id="log2-transformation-tai" class="section level3">
+<h3>log2 transformation (TAI)</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(PhyloExpressionSetExample)
 
 <span class="co"># plotting the TAI using log2 transformed expression levels</span>
 <span class="co"># and performing the Flat Line Test to obtain the p-value</span>
@@ -413,11 +430,11 @@ PES.absolute &lt;-<span class="st"> </span><span class="kw">tf</span>(PES.log2 ,
              <span class="dt">lwd           =</span> <span class="dv">5</span>,  
              <span class="dt">TestStatistic =</span> <span class="st">&quot;FlatLineTest&quot;</span>,
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
-             <span class="dt">ylab          =</span> <span class="st">&quot;TAI&quot;</span> )</code></pre>
+             <span class="dt">ylab          =</span> <span class="st">&quot;TAI&quot;</span> )</code></pre></div>
 </div>
-<div id="sqrt-transformation" class="section level3">
-<h3>sqrt transformation</h3>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(PhyloExpressionSetExample)
+<div id="sqrt-transformation-tai" class="section level3">
+<h3>sqrt transformation (TAI)</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(PhyloExpressionSetExample)
 
 <span class="co"># plotting the TAI using sqrt transformed expression levels</span>
 <span class="co"># and performing the Flat Line Test to obtain the p-value</span>
@@ -426,14 +443,14 @@ PES.absolute &lt;-<span class="st"> </span><span class="kw">tf</span>(PES.log2 ,
              <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>, 
              <span class="dt">lwd           =</span> <span class="dv">5</span>,
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
-             <span class="dt">ylab          =</span> <span class="st">&quot;TAI&quot;</span> )</code></pre>
+             <span class="dt">ylab          =</span> <span class="st">&quot;TAI&quot;</span> )</code></pre></div>
 <p>For the <code>PhyloExpressionSetExample</code> all transformations result in a significant phylotranscriptomics pattern deviating from a flat line.</p>
 <p>Nevertheless, it is not clear which transformation is the most appropriate one since the original TAI and TDI measure were defined for absolute expression levels.</p>
 <p>The same accounts for <code>TDI</code> profiles:</p>
 </div>
-<div id="log2-transformation-1" class="section level3">
-<h3>log2 transformation</h3>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(DivergenceExpressionSetExample)
+<div id="log2-transformation-tdi" class="section level3">
+<h3>log2 transformation (TDI)</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(DivergenceExpressionSetExample)
 
 <span class="co"># plotting the TDI using log2 transformed expression levels</span>
 <span class="co"># and performing the Flat Line Test to obtain the p-value</span>
@@ -442,11 +459,11 @@ PES.absolute &lt;-<span class="st"> </span><span class="kw">tf</span>(PES.log2 ,
              <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>, 
              <span class="dt">lwd           =</span> <span class="dv">5</span>,
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
-             <span class="dt">ylab          =</span> <span class="st">&quot;TDI&quot;</span> )</code></pre>
+             <span class="dt">ylab          =</span> <span class="st">&quot;TDI&quot;</span> )</code></pre></div>
 </div>
-<div id="sqrt-transformation-1" class="section level3">
-<h3>sqrt transformation</h3>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(DivergenceExpressionSetExample)
+<div id="sqrt-transformation-tdi" class="section level3">
+<h3>sqrt transformation (TDI)</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(DivergenceExpressionSetExample)
 
 <span class="co"># plotting the TDI using sqrt transformed expression levels</span>
 <span class="co"># and performing the Flat Line Test to obtain the p-value</span>
@@ -455,7 +472,7 @@ PES.absolute &lt;-<span class="st"> </span><span class="kw">tf</span>(PES.log2 ,
              <span class="dt">type          =</span> <span class="st">&quot;l&quot;</span>, 
              <span class="dt">lwd           =</span> <span class="dv">5</span>,
              <span class="dt">xlab          =</span> <span class="st">&quot;Ontogeny&quot;</span>, 
-             <span class="dt">ylab          =</span> <span class="st">&quot;TDI&quot;</span> )</code></pre>
+             <span class="dt">ylab          =</span> <span class="st">&quot;TDI&quot;</span> )</code></pre></div>
 <p>As a result, observed patterns should always be quantified using statistical tests (for ex. <code>FlatLineTest()</code>, <code>ReductiveHourglassTest()</code>, and <code>EarlyConservationTest()</code>). In case the observed pattern is significant, qualitative differences of the observed patterns based on different data transformations must be investigated in more detail, since most data transformations are known to cause different effects on a measure that isn’t robust against data transformations.</p>
 </div>
 </div>

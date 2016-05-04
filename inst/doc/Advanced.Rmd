@@ -106,7 +106,7 @@ For this purpose, the `PlotCategoryExpr()` aims to visualize the expression leve
 
 This way of visualizing the gene expression distribution of each age (PS) or divergence (DS) category during all developmental stages or experiments allows users to detect specific age or divergence categories contributing significant levels of gene expression to the underlying biological process (transcriptome).
 
-```{r,eval =FALSE}
+```{r,eval = TRUE, fig.width= 9, fig.height= 7}
 library(myTAI)
 
 data(PhyloExpressionSetExample)
@@ -144,7 +144,7 @@ __Please notice that users need to define the `legendName` argument as `PS` or `
 Alternatively, users can investigate the differences of gene expression __between__ all stages or experiments for __each__ age or divergence category by specifying `type = 'stage-centered'`.
 
 
-```{r,eval =FALSE}
+```{r,eval = TRUE, fig.width= 9, fig.height= 7}
 library(myTAI)
 
 data(PhyloExpressionSetExample)
@@ -188,7 +188,7 @@ on log2 expression levels. This way of visualization allows better visual compar
 Alternatively, instead of specifying `log.expr = TRUE` users can directly pass log2 transformed expression levels to `PlotCategoryExpr()` via `tf(PhyloExpressionSetExample,log2)` (when `log.expr = FALSE`):
 
 
-```{r,eval =FALSE}
+```{r,eval = TRUE, fig.width= 9, fig.height= 7}
 data(PhyloExpressionSetExample)
 
 # category-centered visualization of PS specific expression level distributions (log-scale)
@@ -207,7 +207,7 @@ category-centered "***"  "***"    "***"    "***" "***"   "***" "***"
 
 Or any other expression level transformation, e.g. `sqrt`.
 
-```{r,eval =FALSE}
+```{r,eval = TRUE, fig.width= 9, fig.height= 7}
 data(PhyloExpressionSetExample)
 
 # category-centered visualization of PS specific expression level distributions (sqrt-scale)
@@ -233,7 +233,8 @@ the gene ids of a subset of genes that shall be matched in the input `Expression
 expression level distributions shall be visualized.
 
 
-```{r,eval =FALSE}
+```{r,eval = TRUE, fig.width= 9, fig.height= 7}
+library(myTAI)
 data(PhyloExpressionSetExample)
 
 # define an example gene subset (500 genes) which
@@ -259,7 +260,9 @@ category-centered "*"    "*"      "*"      "*"   "*"     "*"  "n.s."
 Or analogously `stage-centered`:
 
 
-```{r,eval =FALSE}
+```{r,eval = TRUE, fig.width= 9, fig.height= 7}
+library(myTAI)
+
 data(PhyloExpressionSetExample)
 
 # define an example gene subset (500 genes) which
@@ -287,4 +290,72 @@ stage-centered "n.s."
 For example, users interested in the enrichment of PS or DS values in _D. rerio_ brain genes
 (see [Enrichment Vignette](Enrichment.html) for details) could also visualize their gene expression
 distributions throughout development with `PlotCategoryExpr()` in cases where expression data is available.
+
+
+## Computing the significant differences between gene expression distributions of PS or DS groups
+
+As proposed by Quint et al., 2012 in some cases users whish to compare the difference
+of group specific expression levels using a statsitical test.
+
+For this purpose, the `PlotGroupDiffs()` function performs a test to quantify the statistical significance between the global expression level distributions of groups of PS or DS. It therefore allows users to investigate significant groups of PS or DS that significantly differ in their gene expression level distibution within specific developmental stages or experiments.
+
+Analogous to the `PlotRE()` or `PlotMeans()` function (see [Introduction](Introduction.html) for details),
+users need to pass the `Groups` to `PlotGroupDiffs()` specifying the groups that shall be compared.
+
+```{r,eval= TRUE, fig.width= 7, fig.height= 7,warning=FALSE}
+library(myTAI)
+
+data(PhyloExpressionSetExample)
+
+PlotGroupDiffs(ExpressionSet = PhyloExpressionSetExample,
+               Groups        = list(group_1 = 1:3,group_2 = 4:12),
+               legendName    = "PS",
+               plot.type     = "p-vals",
+               type          = "b",
+               lwd           = 6,
+               xlab          = "Ontogeny")
+
+```
+
+In cases where no plot shall be drawn and only the resulting p-value shall be returned
+users can specify the `plot.type = NULL` argument to receive only p-values returned by the 
+underlying test statistic.
+
+```{r,eval= TRUE, fig.width= 9, fig.height= 7,warning=FALSE}
+library(myTAI)
+
+data(PhyloExpressionSetExample)
+
+# only receive the p-values without the corresponding plot
+PlotGroupDiffs(ExpressionSet = PhyloExpressionSetExample,
+               Groups        = list(group_1 = 1:3,group_2 = 4:12),
+               legendName    = "PS",
+               plot.type     = NULL)
+
+```
+
+Optionally, users can also visualize the difference in expression level distributions 
+of groups of PS/DS during each developmental stage by specifying the `plot.type = "boxplot"`
+argument.
+
+```{r,eval= TRUE,fig.width= 9, fig.height= 12,warning=FALSE}
+library(myTAI)
+
+data(PhyloExpressionSetExample)
+
+# visualize difference as boxplot
+PlotGroupDiffs(ExpressionSet = tf(PhyloExpressionSetExample,log2),
+               Groups        = list(group_1 = 1:3,group_2 = 4:12),
+               legendName    = "PS",
+               plot.type     = "boxplot")
+
+```
+
+Here, we use log2 transformed expression levels for better visualization (`tf(PhyloExpressionSetExample,log2)`).
+
+Internally, the `PlotGroupDiffs()` function performs a Wilcoxon Rank Sum test to quantify the statistical significance of PS/DS group expression. This quantification allows users to detect developmental stages of significant expression level differences between PS/DS groups. In this example we chose genes originated before the evolution of embryogenesis evolved in plants (Group1 = PS1-3) versus genes originated after the evolution of embryogenesis evolved in plants (Group2 = PS4-12). As a result, we observe that indeed the
+difference in total gene expression between these groups is significant throughout embryogenesis.
+In terms of the P-value quantification we observe that the P-value is minimized towards the phylotypic period. Hence, the expression level difference between the studied PS groups is maximized during the phylotypic period.
+
+
 
