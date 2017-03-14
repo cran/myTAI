@@ -2,23 +2,23 @@
 % Please edit documentation in R/PlotContribution.R
 \name{PlotContribution}
 \alias{PlotContribution}
-\title{Plot the Phylostratum or Divergence Stratum Contribution to the Global Pattern}
+\title{Plot Cumuative Transcriptome Index}
 \usage{
-PlotContribution(ExpressionSet, colors = NULL, legendName = NULL,
-  digits.ylab = 3, y.ticks = 5, ...)
+PlotContribution(ExpressionSet, legendName = NULL, xlab = "Ontogeny",
+  ylab = "Transcriptome Index", main = "", y.ticks = 10)
 }
 \arguments{
 \item{ExpressionSet}{a standard PhyloExpressionSet or DivergenceExpressionSet object.}
 
-\item{colors}{a character vector specifying the colors that should be used for each Phylostratum/Divergence Stratum. Default: \code{colors = NULL}, meaning that default colors are used.}
-
 \item{legendName}{a character string specifying whether "PS" or "DS" are used to compute relative expression profiles.}
 
-\item{digits.ylab}{a numeric value specifying the number of digits shown for the TAI or TDI values on the y-axis.}
+\item{xlab}{label of x-axis.}
+
+\item{ylab}{label of y-axis.}
+
+\item{main}{main title.}
 
 \item{y.ticks}{a numeric value specifying the number of ticks to be drawn on the y-axis.}
-
-\item{...}{additional \code{\link{plot}} parameters.}
 }
 \description{
 This function computes the cumulative contribution of each Phylostratum or Divergence Stratum to the global \code{\link{TAI}} or \code{\link{TDI}} profile.
@@ -38,13 +38,12 @@ Introduced by Domazet-Loso and Tautz (2010), this function allows users to visua
  PlotContribution(DivergenceExpressionSetExample, legendName = "DS")
  
 }
-\author{
-Hajk-Georg Drost
-}
 \references{
 Domazet-Loso T. and Tautz D. (2010). A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns. Nature (468): 815-818.
 }
 \seealso{
-\code{\link{pTAI}}, \code{\link{pTDI}}, \code{\link{TAI}}, \code{\link{TDI}}, \code{\link{PlotPattern}}
+\code{\link{pTAI}}, \code{\link{pTDI}}, \code{\link{TAI}}, \code{\link{TDI}}, \code{\link{PlotSignature}}
 }
-
+\author{
+Hajk-Georg Drost
+}

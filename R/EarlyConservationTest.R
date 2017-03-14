@@ -1,4 +1,4 @@
-#' @title Perform the Reductive Early Conservation Test
+#' @title Perform Reductive Early Conservation Test
 #' @description The \emph{Reductive Early Conservation Test} aims to statistically evaluate the
 #' existence of a monotonically increasing phylotranscriptomic pattern based on \code{\link{TAI}} or \code{\link{TDI}} computations.
 #' The corresponding p-value quantifies the probability that a given TAI or TDI pattern (or any phylotranscriptomics pattern) 
@@ -110,16 +110,17 @@ EarlyConservationTest <- function(ExpressionSet,
         is.ExpressionSet(ExpressionSet)
         
         if(is.null(modules))
-                stop("Please specify the three modules: early, mid, and late using the argument 'module = list(early = ..., mid = ..., late = ...)'.")
-        
-        if(length(modules) != 3)
-                stop("Please specify three modules: early, mid, and late to perform the EarlyConservationTest.")
-        
-        if(length(unlist(modules)) != (dim(ExpressionSet)[2] - 2))
-                stop("The number of stages classified into the three modules does not match the total number of stages stored in the given ExpressionSet.")
+                stop("Please specify the three modules: early, mid, and late using the argument 'module = list(early = ..., mid = ..., late = ...)'.", call. = FALSE)
         
         if(any(table(unlist(modules)) > 1))
-                stop("Intersecting modules are not defined for the EarlyConservationTest.")
+                stop("Intersecting modules are not defined for the EarlyConservationTest.", call. = FALSE)
+        
+        if(length(modules) != 3)
+                stop("Please specify three modules: early, mid, and late to perform the EarlyConservationTest.", call. = FALSE)
+        
+        if(length(unlist(modules)) != (dim(ExpressionSet)[2] - 2))
+                stop("The number of stages classified into the three modules does not match the total number of stages stored in the given ExpressionSet.", call. = FALSE)
+        
         
         nCols <- dim(ExpressionSet)[2]
         score_vector <- vector(mode = "numeric",length = permutations)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/FlatLineTest.R
 \name{FlatLineTest}
 \alias{FlatLineTest}
-\title{Perform the Flat Line Test}
+\title{Perform Flat Line Test}
 \usage{
 FlatLineTest(ExpressionSet, permutations = 1000, plotHistogram = FALSE,
   runs = 10, parallel = FALSE, custom.perm.matrix = NULL)
@@ -81,9 +81,6 @@ FlatLineTest(PhyloExpressionSetExample,
              custom.perm.matrix = custom_perm_matrix)
 
 }
-\author{
-Hajk-Georg Drost
-}
 \references{
 Drost HG et al.(2015). \emph{Evidence for Active Maintenance of Phylotranscriptomic Hourglass Patterns in Animal and Plant Embryogenesis}. Mol Biol Evol. 32 (5): 1221-1231 doi:10.1093/molbev/msv012.
 
@@ -99,21 +96,23 @@ Sokal RR and Rohlf FJ (1995) Biometry. W.H. Freeman and Company, USA, pp. 111-11
 
 Juergen Gross and bug fixes by Uwe Ligges (2012). nortest: Tests for Normality. R package version 1.0-2. 
 
-\url{http://CRAN.R-project.org/package=nortest}
+http://CRAN.R-project.org/package=nortest
 
 Dallal, G.E. and Wilkinson, L. (1986): An analytic approximation to the distribution of Lilliefors test for normality. The American Statistician, 40, 294-296.
 
 Stephens, M.A. (1974): EDF statistics for goodness of fit and some comparisons. Journal of the American Statistical Association, 69, 730-737.
 
-\url{http://stackoverflow.com/questions/4290081/fitting-data-to-distributions?rq=1}
+http://stackoverflow.com/questions/4290081/fitting-data-to-distributions?rq=1
 
-\url{http://stats.stackexchange.com/questions/45033/can-i-use-kolmogorov-smirnov-test-and-estimate-distribution-parameters}
+http://stats.stackexchange.com/questions/45033/can-i-use-kolmogorov-smirnov-test-and-estimate-distribution-parameters
 
-\url{http://cran.r-project.org/doc/contrib/Ricci-distributions-en.pdf}
+http://cran.r-project.org/doc/contrib/Ricci-distributions-en.pdf
 
-\url{http://cran.r-project.org/doc/contrib/Ricci-distributions-en.pdf}
+http://cran.r-project.org/doc/contrib/Ricci-distributions-en.pdf
 }
 \seealso{
 \code{\link{TAI}}, \code{\link{TDI}}, \code{\link{PlotPattern}}, \code{\link{bootMatrix}}
 }
-
+\author{
+Hajk-Georg Drost
+}

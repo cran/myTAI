@@ -2,7 +2,7 @@
 % Please edit documentation in R/GroupDiffs.R
 \name{GroupDiffs}
 \alias{GroupDiffs}
-\title{Quantify the significant differences between gene expression distributions of PS or DS groups}
+\title{Quantify the significant differences between gene expression distributions of age groups}
 \usage{
 GroupDiffs(ExpressionSet, Groups = NULL, legendName = NULL,
   stat.test = "wilcox.test", gene.set = NULL, ...)
@@ -58,10 +58,9 @@ GroupDiffs(ExpressionSet = PhyloExpressionSetExample,
 
 
 }
-\author{
-Hajk-Georg Drost
-}
 \seealso{
 \code{\link{PlotGroupDiffs}}, \code{\link{PlotMeans}}, \code{\link{PlotRE}}, \code{\link{PlotBarRE}}, \code{\link{PlotCategoryExpr}}
 }
-
+\author{
+Hajk-Georg Drost
+}

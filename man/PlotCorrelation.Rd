@@ -5,7 +5,8 @@
 \title{Plot the Correlation Between Phylostrata and Divergence Strata}
 \usage{
 PlotCorrelation(PhyloExpressionSet, DivergenceExpressionSet,
-  method = "pearson", linearModel = FALSE)
+  method = "pearson", linearModel = FALSE, xlab = "Phylostratum",
+  ylab = "Divergencestratum")
 }
 \arguments{
 \item{PhyloExpressionSet}{a standard PhyloExpressionSet object.}
@@ -16,6 +17,10 @@ PlotCorrelation(PhyloExpressionSet, DivergenceExpressionSet,
 
 \item{linearModel}{a boolean value specifying whether a linear model should be
 fitted to the data and furthermore, should be visualized in the corresponding plot.}
+
+\item{xlab}{label of x-axis.}
+
+\item{ylab}{label of y-axis.}
 }
 \value{
 a jitter-correlation-plot of PS and DS correlation.
@@ -29,21 +34,18 @@ linear correlated so that the independence of PS and DS can be assumed for
 subsequent analyses (Quint et al., 2012).
 }
 \examples{
-
- # read standard phylotranscriptomics data
- data(PhyloExpressionSetExample)
- data(DivergenceExpressionSetExample)
+# read standard phylotranscriptomics data
+data(PhyloExpressionSetExample)
+data(DivergenceExpressionSetExample)
  
 # plot the PS and DS correlation
-PlotCorrelation(PhyloExpressionSetExample, DivergenceExpressionSetExample, 
+PlotCorrelation(PhyloExpressionSetExample, 
+                DivergenceExpressionSetExample, 
                 method      = "pearson", 
                 linearModel = TRUE)
 
 
 
-}
-\author{
-Hajk-Georg Drost
 }
 \references{
 Quint M et al. (2012). \emph{A transcriptomic hourglass in plant embryogenesis}. Nature (490): 98-101.
@@ -52,4 +54,6 @@ Drost HG et al. (2015) \emph{Evidence for Active Maintenance of Phylotranscripto
 \seealso{
 \code{\link{cor}}
 }
-
+\author{
+Hajk-Georg Drost
+}

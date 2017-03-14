@@ -18,7 +18,7 @@ combine previously introduced techniques with _classic_ gene expression analyses
 
 In other words, phylotranscriptomics allows us to detect stages or periods of evolutionary conservation and is able to predict the evolutionary origin of process or trait specific genes
 based on enrichment analyses. By combining evolutionary enrichment analyses with the
-functional annotation of process or trait specific genes (see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) and [Phylotranscriptomics](https://github.com/HajkD/biomartr/blob/master/vignettes/Evolutionary_Transcriptomics.Rmd) for details) the detection of evolutionary signals can be correlated with 
+functional annotation of process or trait specific genes (see [Functional Annotation](https://github.com/HajkD/biomartr/blob/master/vignettes/Functional_Annotation.Rmd) for details) the detection of evolutionary signals can be correlated with 
 functional processes. Then, performing gene expression analyses on corresponding process or trait specific genes allows users to detect potential causes of stage/period specific evolutionary transcriptome conservation. 
 
 
@@ -625,7 +625,7 @@ can then apply this criteria to `PlotReplicateQuality()` by specifying the `FUN`
 After performing differential gene expression analyses, replicate expression levels
 are collapsed to a single stage specific expression level. For this purpose, `myTAI`
 implements the `CollapseReplicates()` function, allowing users to combine replicate
-expression levels stored in a standard `PhyloExpressionSet` or `DivergenceExpressionSet` object to a stage specific expression level using a specified [window function](http://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
+expression levels stored in a standard `PhyloExpressionSet` or `DivergenceExpressionSet` object to a stage specific expression level using a specified window function.
 
 
 ```{r,eval=FALSE}

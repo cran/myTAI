@@ -2,37 +2,29 @@ myTAI
 =====
 
 
-### Perform Evolutionary Transcriptomics with R
+### Evolutionary Transcriptomics with R
 
-> To put aside for a moment the matter-of-factness of an exact scientist,
-> I will confess that I frequently have the feeling in my experimental work of holding 
-> a dialogue with someone who is considerably brighter than me.
+Today, phenotypic phenomena such as morphological mutations, diseases or developmental processes are primarily investigated on the molecular level using transcriptomics approaches. Transcriptomes denote the total number of quantifiable transcripts present at a specific stage in a biological process. In disease or developmental (defect) studies transcriptomes are usually measured over several time points. In treatment studies aiming to quantify differences in the transcriptome due to biotic stimuli, abiotic stimuli, or diseases usually treatment / disease versus non-treatment / non-disease transcriptomes are being compared. In either case, comparing changes in transcriptomes over time or between treatments allows us to identify genes and gene regulatory mechanisms that might be involved in governing the biological process of investigation. Although transcriptomics studies are based on a powerful methodology little is known about the evolution of such transcriptomes. Understanding the evolutionary mechanism that change transcriptomes over time, however, might give us a new perspective on how diseases emerge in the first place or how morphological changes are triggered by changes of developmental transcriptomes.
+
+Evolutionary transcriptomics aims to capture and quantify the evolutionary conservation of genes that contribute to the transcriptome during a specific stage of the biological process of interest. This quantification on the highest level is achieved through transcriptome indices ([Domazet-Lošo and Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/abs/nature09632.html); [Drost et al., 2016a](http://biorxiv.org/content/early/2016/05/03/051565)) which denote weighted means of gene age or rate of protein substitutions. In general, evolutionary transcriptomics can be used as a method to quantify the evolutionary conservation of transcriptomes ([Drost et al., 2015](http://mbe.oxfordjournals.org/content/32/5/1221); [Drost et al., 2016a](http://biorxiv.org/content/early/2016/05/03/051565); [Drost et al., 2016b](http://mbe.oxfordjournals.org/content/early/2016/02/23/molbev.msw039.short?rss=1)) to investigate how transcriptomes underlying biological processes are constrained or channeled due to evolutionary history (Dollow's law).
+
+In principle, any transcriptome dataset published so far can be combined with evolutionary information. Thus, `myTAI` in combination with evolutionary information can be used to study corresponding transcriptomes with any available transcriptome dataset. 
+
+For the purpose of performing large scale evolutionary transcriptomics studies, the `myTAI` package implements frameworks to allow researchers to study the evolution of biological processes and to detect stages or periods of evolutionary conservation or variability. 
+
+I hope that `myTAI` will become the community standard tool to perform evolutionary transcriptomics studies and I am happy to add required functionality upon request.
+
+
+The following tutorials will provide use cases and detailed explainations of how to quantify transcriptome onservation with `myTAI` and how to interpret the results generated with this software tool.
+
+### Citation
+
+**Please cite one of the following references when using `myTAI` for your own research (depending on your application). This will allow me to continue
+working on this software tool and will motivate me to extend its functionality and usability. Many thanks in advance :)**
+
+> Drost HG, Bellstädt J, Ó'Maoiléidigh DS, Silva AT, Gabel A, Weinholdt C, Ryan PT, Dekkers BJW, Bentsink L, Hilhorst H, Ligterink W, Wellmer F, Grosse I, and Quint M. 2016. __Post-embryonic hourglass patterns mark ontogenetic transitions in plant development__. _Mol. Biol. Evol._ 33 (5): 1158-1163. [doi:10.1093/molbev/msw039](http://mbe.oxfordjournals.org/content/33/5/1158) 
 >
-> \- Hans Spemann
-
-Development is the major process establishing complex life on earth. 
-Hence, studying the evolution of developmental processes allows us to
-understand the key machanisms that control and constraint the evolution and 
-diversification of complex organisms on this planet. To study the evolution of developmental
-processes an evolutionary transcriptomics approach (= phylotranscriptomics) has been proposed 
-aiming to quantify the evolutionary conservation of developmental transcriptomes ([Drost et al., 2015 _Mol. Biol. Evol._](http://mbe.oxfordjournals.org/content/32/5/1221) ; [Drost et al., 2016 _Mol. Biol. Evol._](http://mbe.oxfordjournals.org/content/early/2016/02/23/molbev.msw039.short?rss=1)). 
-
-The `myTAI` package allows users to capture evolutionary information that is hidden in transcriptomes using an evolutionary transcriptomics approach.
-    
-This evolutionary transcriptomics approach (= phylotranscriptomics) defines the concept of combining genetic sequence conservation information with gene expression levels to quantify transcriptome conservation throughout biological processes ([Domazet-Loso and Tautz, 2010 _Nature_](http://www.nature.com/nature/journal/v468/n7325/full/nature09632.html) ; [Quint, Drost et al., 2012 _Nature_](http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html) ; [Drost et al., 2015 _Mol. Biol. Evol._](http://mbe.oxfordjournals.org/content/32/5/1221) ; [Drost et al., 2016 _Mol. Biol. Evol._](http://mbe.oxfordjournals.org/content/early/2016/02/23/molbev.msw039.short?rss=1)).
-
-This subfield of Evolutionary Developmental Biology aims to determine and investigate stages or periods
-of evolutionary conservation in biological processes of extant species. However, although
-motivated by and applied to developmental processes, the `myTAI` package is implemented
-to quantify transcriptome conservation in any transcriptome experiment of interest and
-therefore aims to provide a standard approach to investigate the evolution of biological
-processes in the context of transcriptome conservation.
-
-In particular, `myTAI` provides an easy to use and optimized software framework to perform phylostrancriptomic analyses for any annotated organism and developmental process of interest. Additionally, customized visualization functions implemented in `myTAI` allow users to generate publication quality plots for their own phylotranscriptomics research.
-
-The following tutorials will provide use cases and detailed explainations of how to quantify transcriptome
-conservation with `myTAI` and how to interpret the results generated with this software tool.
-
+> Drost HG, Gabel A, Grosse I, Quint M. 2015. __Evidence for Active Maintenance of Phylotranscriptomic Hourglass Patterns in Animal and Plant Embryogenesis__. _Mol. Biol. Evol._ 32 (5): 1221-1231. [doi:10.1093/molbev/msv012](http://mbe.oxfordjournals.org/content/32/5/1221.abstract?sid=767aea12-1eb3-40be-8c6a-e2861f159b46)
 
 ## Tutorials
 
@@ -54,7 +46,7 @@ functionality of each version of `myTAI` can be found in the [NEWS](https://gith
 
 ## Installation
 
-Users can download `myTAI` from [CRAN](https://cran.r-project.org/package=myTAI) :
+Users can download `myTAI` from CRAN :
 
 ```r
 # install myTAI 0.4.0 from CRAN
@@ -103,7 +95,6 @@ browseVignettes("myTAI")
  
  # open tutorial: Taxonomic Information Retrieval with myTAI
  vignette("Taxonomy", package = "myTAI")
- 
 ```
 
 In the `myTAI` framework users can find:
@@ -112,6 +103,7 @@ In the `myTAI` framework users can find:
 
 * `TAI()` : Function to compute the Transcriptome Age Index (TAI)
 * `TDI()` : Function to compute the Transcriptome Divergence Index (TDI)
+* `TPI()` : Function to compute the Transcriptome Polymorphism Index (TPI)
 * `REMatrix()` : Function to compute the relative expression profiles of all phylostrata or divergence-strata
 * `RE()` : Function to transform mean expression levels to relative expression levels
 * `pTAI()` : Compute the Phylostratum Contribution to the global TAI
@@ -121,16 +113,19 @@ In the `myTAI` framework users can find:
 
 #### Visualization and Analytics Tools:
 
-* `PlotPattern()` : Function to plot the TAI or TDI profiles and perform statistical tests
+* `PlotSignature()` : Main visualization function to plot evolutionary signatures across transcriptomes
+* `PlotPattern()` : Base graphics function to plot evolutionary signatures across transcriptomes
+* `PlotContribution()` : Plot Cumuative Transcriptome Index
 * `PlotCorrelation()` : Function to plot the correlation between phylostratum values and divergence-stratum values
 * `PlotRE()` : Function to plot the relative expression profiles
 * `PlotBarRE()` : Function to plot the mean relative expression levels of phylostratum or divergence-stratum classes as barplot
-* `PlotMeans()` : Function to plot the mean expression profiles of phylostrata or divergence-strata
-* `PlotDistribution()` : Function to plot the frequency distribution of genes within the corresponding phylostratigraphic map or divergence map
-* `PlotContribution()` : Plot the Phylostratum or Divergence Stratum Contribution to the Global TAI/TDI Pattern
+* `PlotMeans()` : Function to plot the mean expression profiles of age categories
+* `PlotMedians()` : Function to plot the median expression profiles of age categories
+* `PlotVars()` : Function to plot the expression variance profiles of age categories
+* `PlotDistribution()` : Function to plot the frequency distribution of genes within the corresponding age categories
+* `PlotCategoryExpr()` : Plot the Expression Levels of each Age or Divergence Category as Barplot or Violinplot
 * `PlotEnrichment()` : Plot the Phylostratum or Divergence Stratum Enrichment of a given Gene Set
 * `PlotGeneSet()` : Plot the Expression Profiles of a Gene Set
-* `PlotCategoryExpr()` : Plot the Expression Levels of each Age or Divergence Category as Barplot or Violinplot
 * `PlotGroupDiffs()` : Plot the significant differences between gene expression distributions of PS or DS groups
 * `PlotSelectedAgeDistr()` : Plot the PS or DS distribution of a selected set of genes
 
@@ -189,7 +184,7 @@ install_github("HajkD/myTAI", build_vignettes = TRUE, dependencies = TRUE)
 # install_github("HajkD/myTAI", build_vignettes = TRUE, dependencies = TRUE)
 
 # When working with Windows, first you need to install the
-# R package: rtools -> http://cran.r-project.org/bin/windows/Rtools/
+# R package: rtools 
 # or consult: http://www.rstudio.com/products/rpackages/devtools/
 
 # Afterwards you can install devtools -> install.packages("devtools")

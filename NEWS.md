@@ -1,3 +1,37 @@
+myTAI 0.5.0
+===========
+
+### New Functions
+
+- new function `PlotSignature()` allows users to plot evolutionary signatures across transcriptomes (based on ggplot2 -> new main visualization function aiming to replace the `PlotPattern()` function)
+
+- new function `TPI()` allows users to compute the Transcriptome Polymorphism Index introduced by `Gossmann et al., 2015`.
+
+- new function `PlotMedians()` allows users to compute and visualize the median expression of all age categories
+
+- new function `PlotVars()` allows users to compute and visualize the expression variance of all age categories
+
+### Updates
+
+- `PlotContribution()` is now based on ggplot2 and loses base graphics arguments
+
+- now R/RcppExports.R and src/rcpp_funcs.cpp are included in the package due to previous compilation problems (see also [stackoverflow discussion](http://stackoverflow.com/questions/34585560/travis-ci-r-package-error-in-documentation))
+
+- `MatchMap()` is now based on `dplyr::inner_join()` to match age category table with a gene expression dataset
+
+- `PlotCorrelation()` has been extended and optimized for producing high publication quality plots 
+
+- `PlotMeans()` is now based on ggplot2 and lost all base graphics arguments.
+
+- `PlotRE()` is now based on ggplot2 and lost all base graphics arguments.
+
+### Vignettes
+
+- In `Introduction` vignette: complete restructuring of the Introduction 
+- In `Introduction` vignette: add new ggplot2 based examples
+
+ 
+ 
 myTAI 0.4.0
 ===========
 

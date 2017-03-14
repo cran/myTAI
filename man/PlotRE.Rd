@@ -4,34 +4,47 @@
 \alias{PlotRE}
 \title{Plot Relative Expression Levels}
 \usage{
-PlotRE(ExpressionSet, Groups = NULL, legendName = NULL, colors = NULL,
-  ...)
+PlotRE(ExpressionSet, Groups = NULL, modules = NULL, legendName = "age",
+  xlab = "Ontogeny", ylab = "Relative Expression Level", main = "",
+  y.ticks = 10, adjust.range = TRUE, alpha = 0.008, ...)
 }
 \arguments{
 \item{ExpressionSet}{a standard PhyloExpressionSet or DivergenceExpressionSet object.}
 
-\item{Groups}{a list containing the phylostrata or divergence strata that correspond 
-to the same phylostratum class or divergence class.
-For ex. evolutionary old phylostrata: PS1-3 (Class 1) 
-and evolutionary young phylostrata: PS4-12 (Class 2). In this case, 
-the list could be assigned as, \code{Groups} = list(c(1:3), c(4:12)). 
-It is also possible to define more than 2 groups of evolutionary ages.}
+\item{Groups}{a list containing the age categories for which mean expression levels shall be drawn.
+For ex. evolutionary users can compare old phylostrata: PS1-3 (Class 1) and evolutionary young phylostrata: PS4-12 (Class 2). 
+In this example, the list could be assigned as, \code{Groups = list(c(1:3), c(4:12))}. 
+The group options is limited to 2 Groups.}
 
-\item{legendName}{a character string specifying whether "PS" or "DS" are used to compute relative expression profiles.}
+\item{modules}{a list storing three elements for specifying the modules: early, mid, and late. 
+Each element expects a numeric vector specifying the developmental stages 
+or experiments that correspond to each module. For example, 
+\code{module} = \code{list(early = 1:2, mid = 3:5, late = 6:7)} devides a dataset storing seven developmental stages into 3 modules. Default is \code{modules = NULL}. 
+But if specified, a shaded are will be drawn to illustrate stages corresponding to the mid module.}
 
-\item{colors}{colors for relative expression profiles. Default: \code{colors = NULL}, hence default colours are used.}
+\item{legendName}{a character string specifying the legend title.}
 
-\item{\dots}{default graphics parameters.}
+\item{xlab}{label of x-axis.}
+
+\item{ylab}{label of y-axis.}
+
+\item{main}{main text.}
+
+\item{y.ticks}{number of ticks that shall be drawn on the y-axis.}
+
+\item{adjust.range}{logical indicating whether or not the y-axis scale shall be adjusted to the same range in case two groups are specified. Default is \code{adjust.range = TRUE}.}
+
+\item{alpha}{transparency of the shaded area (between [0,1]). Default is \code{alpha = 0.1}.}
+
+\item{...}{place holder for old version of PlotRE that was based on base graphics instead of ggplot2.}
 }
 \value{
 a plot showing the relative expression profiles of phylostrata or divergence-strata belonging to the same group.
 }
 \description{
-This function computes for each phylostratum or divergence stratum the corresponding relative expression profile
-and plots the profiles in N different windows corresponding to the given phylostratum classes 
-or divergence-stratum classes that shall be compared.
+This function computes for each age category the corresponding relative expression profile.
 
-For each phylostratum or divergence-stratum the corresponding relative expression profile is being computed as follows:
+For each age category the corresponding relative expression profile is being computed as follows:
 
 \deqn{f_js = ( e_js - e_j min ) / ( e_j max - e_j min )}
 
@@ -58,40 +71,24 @@ data(PhyloExpressionSetExample)
 data(DivergenceExpressionSetExample)
 
 # example PhyloExpressionSet
-PlotRE(PhyloExpressionSetExample,Groups = list(c(1:3), c(4:12)), 
-       legendName = "PS", lty = 1, lwd = 5)
+PlotRE(PhyloExpressionSetExample,
+       Groups = list(c(1:3), c(4:12)), 
+       legendName = "PS")
 
 
 # or you can choose any combination of groups
-PlotRE(PhyloExpressionSetExample,Groups = list(c(1,7,9), c(2:6,8,10:12)),
-       legendName = "PS", lty = 1, lwd = 5)
-
-# or multiple groups
-PlotRE(PhyloExpressionSetExample,Groups = list(c(1,7,9), c(3:6,8),c(2,10:12)),
-       legendName = "PS", lty = 1, lwd = 5)
-       
-       
-       
-# example DivergenceExpressionSet
-PlotRE(DivergenceExpressionSetExample,Groups = list(c(1:5), c(6:10)), 
-       legendName = "DS", lty = 1, lwd = 5)
-
-
-
-# adding custom colors for relative expression levels:
-# -> colors should be ordered by PS/DS starting with PS1,2,3...
 PlotRE(PhyloExpressionSetExample,
-       Groups     = list(c(1:3), c(4:12)), 
-       legendName = "PS",
-       colors     = c("black","red","green","brown","darkmagenta",
-       "blue","darkred","darkblue","darkgreen", "orange",
-       "azure4","gold4"), 
-       lty        = 1, 
-       lwd        = 5)
+       Groups = list(c(1,7,9), c(2:6,8,10:12)),
+       legendName = "PS")
+
+    
+# example DivergenceExpressionSet
+PlotRE(DivergenceExpressionSetExample,
+       Groups = list(c(1:5), c(6:10)), 
+       legendName = "DS")
+
+
   
-}
-\author{
-Hajk-Georg Drost
 }
 \references{
 Domazet-Loso T and Tautz D. 2010. "A phylogenetically based transcriptome age index mirrors ontogenetic divergence patterns". Nature (468): 815-818.
@@ -101,4 +98,6 @@ Quint M et al. 2012. "A transcriptomic hourglass in plant embryogenesis". Nature
 \seealso{
 \code{\link{PlotBarRE}}, \code{\link{RE}}, \code{\link{REMatrix}}
 }
-
+\author{
+Hajk-Georg Drost
+}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PlotBarRE.R
 \name{PlotBarRE}
 \alias{PlotBarRE}
-\title{Plot the Mean Relative Expression Levels as Barplot}
+\title{Plot Mean Relative Expression Levels as Barplot}
 \usage{
 PlotBarRE(ExpressionSet, Groups = NULL, wLength = 0.1, ratio = FALSE,
   p.adjust.method = NULL, ...)
@@ -82,9 +82,6 @@ PlotBarRE(ExpressionSet = PhyloExpressionSetExample,
           ratio         = TRUE)
 
 }
-\author{
-Hajk-Georg Drost
-}
 \references{
 Quint M et al. 2012. "A transcriptomic hourglass in plant embryogenesis". Nature (490): 98-101.
 
@@ -95,4 +92,6 @@ Myles Hollander and Douglas A. Wolfe (1973), Nonparametric Statistical Methods. 
 \seealso{
 \code{\link{RE}}, \code{\link{REMatrix}},\code{\link{PlotRE}}, \code{\link{kruskal.test}}
 }
-
+\author{
+Hajk-Georg Drost
+}

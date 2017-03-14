@@ -1,11 +1,11 @@
 //#include <RcppArmadilloExtensions/sample.h>
 #include <Rcpp.h>
+#include <math.h>
 // // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::plugins(cpp11)]]
 
 using namespace Rcpp;
 using namespace std;
-
 
 /* This whole 'permut' function has been adapted and taken from:
    http://gallery.rcpp.org/articles/stl-random-shuffle/
@@ -14,14 +14,12 @@ using namespace std;
    - [0,n) as required by the STL algorithm
 
 */
-inline int randWrapper(const int n)
+inline int randWrapper(const int& n)
 { 
-  
   return floor(unif_rand() * n); 
-  
 }
 
-NumericVector permut(NumericVector a)
+NumericVector permut(const NumericVector& a)
 {
 
     // already added by sourceCpp(), but needed standalone
@@ -38,7 +36,7 @@ NumericVector permut(NumericVector a)
 
 // @export
 // [[Rcpp::export]]
- NumericVector cpp_TAI(NumericMatrix ExpressionSet, NumericVector Phylostratum)
+ NumericVector cpp_TAI(const NumericMatrix& ExpressionSet, const NumericVector& Phylostratum)
  {
  
     int nCols = ExpressionSet.ncol();
@@ -60,7 +58,7 @@ NumericVector permut(NumericVector a)
 
 // @export
 // [[Rcpp::export]]
-NumericMatrix cpp_bootMatrix(NumericMatrix ExpressionMatrix, NumericVector AgeVector, int permutations)
+NumericMatrix cpp_bootMatrix(const NumericMatrix& ExpressionMatrix, const NumericVector& AgeVector, const int& permutations)
 {
 
   int nCols = ExpressionMatrix.ncol();
@@ -109,7 +107,7 @@ NumericMatrix cpp_bootMatrix(NumericMatrix ExpressionMatrix, NumericVector AgeVe
 
 // @export
 // [[Rcpp::export]]
-  NumericMatrix cpp_pMatrix(NumericMatrix ExpressionSet,NumericVector AgeVector)
+  NumericMatrix cpp_pMatrix(const NumericMatrix& ExpressionSet,const NumericVector& AgeVector)
   {
     
     int nRows = ExpressionSet.nrow();
@@ -138,7 +136,7 @@ NumericMatrix cpp_bootMatrix(NumericMatrix ExpressionMatrix, NumericVector AgeVe
 
 // @export
 // [[Rcpp::export]]
-double cpp_std_error(NumericVector x)
+double cpp_std_error(const NumericVector& x)
 {
   
   return sd(x)/sqrt(x.size());
@@ -147,7 +145,7 @@ double cpp_std_error(NumericVector x)
   
 // @export 
 // [[Rcpp::export]] 
-double cpp_geom_mean(NumericVector x)
+double cpp_geom_mean(const NumericVector& x)
 {
   
   return exp(mean(log(x)));
@@ -157,7 +155,7 @@ double cpp_geom_mean(NumericVector x)
 
 // @export
 // [[Rcpp::export]] 
-double cpp_harmonic_mean(NumericVector x)
+double cpp_harmonic_mean(const NumericVector& x)
 {
         double sum_val = 0.0;
         
@@ -171,7 +169,7 @@ double cpp_harmonic_mean(NumericVector x)
 
 // @export
 // [[Rcpp::export]]
-  NumericMatrix cpp_omitMatrix(NumericMatrix ExpressionSet, NumericVector AgeVector){
+  NumericMatrix cpp_omitMatrix(const NumericMatrix& ExpressionSet, const NumericVector& AgeVector){
    
     int nRows = ExpressionSet.nrow();
     int nCols = ExpressionSet.ncol(); 
