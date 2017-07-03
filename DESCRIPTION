@@ -1,8 +1,8 @@
 Package: myTAI
 Type: Package
 Title: Evolutionary Transcriptomics Analyses
-Version: 0.5.0
-Date: 2017-03-07
+Version: 0.6.0
+Date: 2017-06-29
 Author: Hajk-Georg Drost
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
 Description: Investigate the evolution of biological processes by capturing evolutionary signatures in transcriptomes. The aim of this tool is to provide a transcriptome analysis environment for answering questions regarding the evolution of biological processes.
@@ -23,6 +23,6 @@ LinkingTo: Rcpp
 URL: https://github.com/HajkD/myTAI
 BugReports: https://github.com/HajkD/myTAI/issues
 RoxygenNote: 6.0.1
-Packaged: 2017-03-14 15:59:05 UTC; h-gd
+Packaged: 2017-07-03 13:46:27 UTC; h-gd
 Repository: CRAN
-Date/Publication: 2017-03-14 20:13:25
+Date/Publication: 2017-07-03 14:04:42 UTC

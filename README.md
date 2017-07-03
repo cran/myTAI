@@ -1,12 +1,13 @@
 myTAI
 =====
-
+[![Travis-CI Build Status](https://travis-ci.org/HajkD/myTAI.svg?branch=master)](https://travis-ci.org/HajkD/myTAI)
+ [![rpackages.io rank](https://www.rpackages.io/badge/myTAI.svg)](https://www.rpackages.io/package/myTAI)
 
 ### Evolutionary Transcriptomics with R
 
 Today, phenotypic phenomena such as morphological mutations, diseases or developmental processes are primarily investigated on the molecular level using transcriptomics approaches. Transcriptomes denote the total number of quantifiable transcripts present at a specific stage in a biological process. In disease or developmental (defect) studies transcriptomes are usually measured over several time points. In treatment studies aiming to quantify differences in the transcriptome due to biotic stimuli, abiotic stimuli, or diseases usually treatment / disease versus non-treatment / non-disease transcriptomes are being compared. In either case, comparing changes in transcriptomes over time or between treatments allows us to identify genes and gene regulatory mechanisms that might be involved in governing the biological process of investigation. Although transcriptomics studies are based on a powerful methodology little is known about the evolution of such transcriptomes. Understanding the evolutionary mechanism that change transcriptomes over time, however, might give us a new perspective on how diseases emerge in the first place or how morphological changes are triggered by changes of developmental transcriptomes.
 
-Evolutionary transcriptomics aims to capture and quantify the evolutionary conservation of genes that contribute to the transcriptome during a specific stage of the biological process of interest. This quantification on the highest level is achieved through transcriptome indices ([Domazet-Lošo and Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/abs/nature09632.html); [Drost et al., 2016a](http://biorxiv.org/content/early/2016/05/03/051565)) which denote weighted means of gene age or rate of protein substitutions. In general, evolutionary transcriptomics can be used as a method to quantify the evolutionary conservation of transcriptomes ([Drost et al., 2015](http://mbe.oxfordjournals.org/content/32/5/1221); [Drost et al., 2016a](http://biorxiv.org/content/early/2016/05/03/051565); [Drost et al., 2016b](http://mbe.oxfordjournals.org/content/early/2016/02/23/molbev.msw039.short?rss=1)) to investigate how transcriptomes underlying biological processes are constrained or channeled due to evolutionary history (Dollow's law).
+Evolutionary transcriptomics aims to capture and quantify the evolutionary conservation of genes that contribute to the transcriptome during a specific stage of the biological process of interest. This quantification on the highest level is achieved through transcriptome indices ([Domazet-Lošo and Tautz, 2010](http://www.nature.com/nature/journal/v468/n7325/abs/nature09632.html); [Drost et al., 2016a](http://biorxiv.org/content/early/2016/05/03/051565)) which denote weighted means of gene age or rate of protein substitutions. In general, evolutionary transcriptomics can be used as a method to quantify the evolutionary conservation of transcriptomes to investigate how transcriptomes underlying biological processes are constrained or channeled due to evolutionary history (Dollow's law) ([Drost et al., 2017](http://www.sciencedirect.com/science/article/pii/S0959437X16302040)).
 
 In principle, any transcriptome dataset published so far can be combined with evolutionary information. Thus, `myTAI` in combination with evolutionary information can be used to study corresponding transcriptomes with any available transcriptome dataset. 
 
@@ -19,12 +20,42 @@ The following tutorials will provide use cases and detailed explainations of how
 
 ### Citation
 
-**Please cite one of the following references when using `myTAI` for your own research (depending on your application). This will allow me to continue
+**Please cite one of the following references when using `myTAI` for your own research. This will allow me to continue
 working on this software tool and will motivate me to extend its functionality and usability. Many thanks in advance :)**
 
-> Drost HG, Bellstädt J, Ó'Maoiléidigh DS, Silva AT, Gabel A, Weinholdt C, Ryan PT, Dekkers BJW, Bentsink L, Hilhorst H, Ligterink W, Wellmer F, Grosse I, and Quint M. 2016. __Post-embryonic hourglass patterns mark ontogenetic transitions in plant development__. _Mol. Biol. Evol._ 33 (5): 1158-1163. [doi:10.1093/molbev/msw039](http://mbe.oxfordjournals.org/content/33/5/1158) 
+>  Drost HG, Gabel A, Domazet-Lošo T, Grosse I, Quint M. 2016. __Capturing Evolutionary Signatures in Transcriptomes with myTAI__. 
+[doi: https://doi.org/10.1101/051565](http://biorxiv.org/content/early/2016/05/03/051565)
 >
 > Drost HG, Gabel A, Grosse I, Quint M. 2015. __Evidence for Active Maintenance of Phylotranscriptomic Hourglass Patterns in Animal and Plant Embryogenesis__. _Mol. Biol. Evol._ 32 (5): 1221-1231. [doi:10.1093/molbev/msv012](http://mbe.oxfordjournals.org/content/32/5/1221.abstract?sid=767aea12-1eb3-40be-8c6a-e2861f159b46)
+
+
+## Installation
+
+Users can download `myTAI` from CRAN :
+
+```r
+# install myTAI 0.5.0 from CRAN
+source("http://bioconductor.org/biocLite.R")
+biocLite('myTAI')
+```
+
+## Install Developer Version
+Some bug fixes or new functionality will not be available on CRAN yet, but in
+the developer version here on GitHub. To download and install the most recent
+version of `myTAI` run:
+
+```r
+# install the developer version of myTAI on your system
+source("http://bioconductor.org/biocLite.R")
+biocLite("HajkD/myTAI")
+```
+
+## NEWS
+
+The current status of the package as well as a detailed history of the
+functionality of each version of `myTAI` can be found in the [NEWS](https://github.com/HajkD/myTAI/blob/master/NEWS.md) section.
+
+
 
 ## Tutorials
 
@@ -37,21 +68,6 @@ These tutorials introduce users to `myTAI`:
 - [Gene Expression Analysis with myTAI](https://github.com/HajkD/myTAI/blob/master/vignettes/Expression.Rmd)
 - [Taxonomic Information Retrieval](https://github.com/HajkD/myTAI/blob/master/vignettes/Taxonomy.Rmd)
 
-
-## NEWS
-
-The current status of the package as well as a detailed history of the
-functionality of each version of `myTAI` can be found in the [NEWS](https://github.com/HajkD/myTAI/blob/master/NEWS.md) section.
-
-
-## Installation
-
-Users can download `myTAI` from CRAN :
-
-```r
-# install myTAI 0.4.0 from CRAN
-install.packages("myTAI", dependencies = TRUE)
-```
 
 ### Package Dependencies
 
