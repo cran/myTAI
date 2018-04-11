@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2017-07-03" />
+<meta name="date" content="2018-04-11" />
 
 <title>Gene Expression Analysis with myTAI</title>
 
@@ -68,7 +68,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Gene Expression Analysis with <code>myTAI</code></h1>
-<h4 class="date"><em>2017-07-03</em></h4>
+<h4 class="date"><em>2018-04-11</em></h4>
 
 
 
@@ -107,7 +107,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;PhyloExpressionSetExample&quot;</span>)
 
 <span class="co"># Detection of DEGs using the fold-change measure</span>
-DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                   <span class="dt">nrep          =</span> <span class="dv">2</span>,
                   <span class="dt">method        =</span> <span class="st">&quot;foldchange&quot;</span>,
                   <span class="dt">stage.names   =</span> <span class="kw">c</span>(<span class="st">&quot;S1&quot;</span>,<span class="st">&quot;S2&quot;</span>,<span class="st">&quot;S3&quot;</span>))
@@ -128,7 +128,7 @@ DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;PhyloExpressionSetExample&quot;</span>)
 
 <span class="co"># Detection of DEGs using the logfold-change measure</span>
-log.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],log2),
+log.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],log2),
                       <span class="dt">nrep          =</span> <span class="dv">2</span>,
                       <span class="dt">method        =</span> <span class="st">&quot;log-foldchange&quot;</span>,
                       <span class="dt">stage.names   =</span> <span class="kw">c</span>(<span class="st">&quot;S1&quot;</span>,<span class="st">&quot;S2&quot;</span>,<span class="st">&quot;S3&quot;</span>))
@@ -181,7 +181,7 @@ log.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;PhyloExpressionSetExample&quot;</span>)
 
 <span class="co"># Detection of DEGs using the p-value returned by a Welch t-test</span>
-ttest.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],log2),
+ttest.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],log2),
                         <span class="dt">nrep          =</span> <span class="dv">2</span>,
                         <span class="dt">method        =</span> <span class="st">&quot;t.test&quot;</span>,
                         <span class="dt">stage.names   =</span> <span class="kw">c</span>(<span class="st">&quot;S1&quot;</span>,<span class="st">&quot;S2&quot;</span>,<span class="st">&quot;S3&quot;</span>))
@@ -203,7 +203,7 @@ ttest.DEGs</code></pre></div>
 <span class="co"># Detection of DEGs using the p-value returned by a Welch t-test</span>
 <span class="co"># and furthermore, adjust p-values for multiple comparison</span>
 <span class="co"># using the Benjamini &amp; Hochberg (1995) method: method = &quot;BH&quot;</span>
-ttest.DEGs.p_adjust &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet   =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],log2),
+ttest.DEGs.p_adjust &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet   =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],log2),
                                  <span class="dt">nrep            =</span> <span class="dv">2</span>,
                                  <span class="dt">method          =</span> <span class="st">&quot;t.test&quot;</span>,
                                  <span class="dt">p.adjust.method =</span> <span class="st">&quot;BH&quot;</span>,
@@ -222,7 +222,7 @@ ttest.DEGs.p_adjust</code></pre></div>
 <span class="co"># and furthermore, adjust p-values for multiple comparison</span>
 <span class="co"># using the Benjamini &amp; Hochberg (1995) method: method = &quot;BH&quot;</span>
 <span class="co"># and filter for significantly differentially expressed genes (alpha = 0.05) </span>
-ttest.DEGs.p_adjust.filtered &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet   =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">10</span> ,<span class="dv">1</span>:<span class="dv">8</span>],log2),
+ttest.DEGs.p_adjust.filtered &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet   =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span> ,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],log2),
                                           <span class="dt">nrep            =</span> <span class="dv">2</span>,
                                           <span class="dt">method          =</span> <span class="st">&quot;t.test&quot;</span>,
                                           <span class="dt">p.adjust.method =</span> <span class="st">&quot;BH&quot;</span>,
@@ -240,14 +240,14 @@ ttest.DEGs.p_adjust.filtered</code></pre></div>
 <div id="rank-top-p-values" class="section level4">
 <h4>Rank top p-values</h4>
 <p>Finally, users can rank genes in increasing p-value order for each stage comparison by typing:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ttest.DEGs.p_adjust &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet   =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">500</span>,<span class="dv">1</span>:<span class="dv">8</span>],log2),
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ttest.DEGs.p_adjust &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet   =</span> <span class="kw">tf</span>(PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">500</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],log2),
                                  <span class="dt">nrep            =</span> <span class="dv">2</span>,
                                  <span class="dt">method          =</span> <span class="st">&quot;t.test&quot;</span>,
                                  <span class="dt">p.adjust.method =</span> <span class="st">&quot;BH&quot;</span>,
                                  <span class="dt">stage.names     =</span> <span class="kw">c</span>(<span class="st">&quot;S1&quot;</span>,<span class="st">&quot;S2&quot;</span>,<span class="st">&quot;S3&quot;</span>))
 
 
-<span class="kw">head</span>(ttest.DEGs.p_adjust[<span class="kw">order</span>(ttest.DEGs.p_adjust[ , <span class="st">&quot;S1&lt;-&gt;S2&quot;</span>], <span class="dt">decreasing =</span> <span class="ot">FALSE</span>) , <span class="dv">1</span>:<span class="dv">3</span>])</code></pre></div>
+<span class="kw">head</span>(ttest.DEGs.p_adjust[<span class="kw">order</span>(ttest.DEGs.p_adjust[ , <span class="st">&quot;S1&lt;-&gt;S2&quot;</span>], <span class="dt">decreasing =</span> <span class="ot">FALSE</span>) , <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre></div>
 <pre><code>    Phylostratum      GeneID  S1&lt;-&gt;S2
 54             1 at1g02400.1 0.151388
 119            1 at1g03870.1 0.151388
@@ -265,7 +265,7 @@ ttest.DEGs.p_adjust.filtered</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;PhyloExpressionSetExample&quot;</span>)
 
 <span class="co"># Detection of DEGs using the p-value returned by a Wilcoxon-Mann-Whitney test</span>
-Wilcox.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+Wilcox.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                         <span class="dt">nrep          =</span> <span class="dv">2</span>,
                         <span class="dt">method        =</span> <span class="st">&quot;wilcox.test&quot;</span>,
                         <span class="dt">stage.names   =</span> <span class="kw">c</span>(<span class="st">&quot;S1&quot;</span>,<span class="st">&quot;S2&quot;</span>,<span class="st">&quot;S3&quot;</span>))
@@ -285,7 +285,7 @@ Wilcox.DEGs</code></pre></div>
 <span class="co"># and furthermore, adjust p-values for multiple comparison</span>
 <span class="co"># using the Benjamini &amp; Hochberg (1995) method: method = &quot;BH&quot;</span>
 <span class="co"># and filter for significantly differentially expressed genes (alpha = 0.05)</span>
-Wilcox.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet  =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+Wilcox.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet  =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                             <span class="dt">nrep            =</span> <span class="dv">2</span>,
                             <span class="dt">method          =</span> <span class="st">&quot;wilcox.test&quot;</span>,
                             <span class="dt">stage.names     =</span> <span class="kw">c</span>(<span class="st">&quot;S1&quot;</span>,<span class="st">&quot;S2&quot;</span>,<span class="st">&quot;S3&quot;</span>),
@@ -316,7 +316,7 @@ Wilcox.DEGs.adj</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;PhyloExpressionSetExample&quot;</span>)
 
 <span class="co"># Detection of DEGs using the p-value returned by the Double Tail Method</span>
-DoubleTail.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+DoubleTail.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                         <span class="dt">nrep          =</span> <span class="dv">2</span>,
                         <span class="dt">method        =</span> <span class="st">&quot;doubletail&quot;</span>,
                         <span class="dt">lib.size      =</span> <span class="dv">1000</span>,
@@ -337,7 +337,7 @@ DoubleTail.DEGs</code></pre></div>
 <span class="co"># and furthermore, adjust p-values for multiple comparison</span>
 <span class="co"># using the Benjamini &amp; Hochberg (1995) method: method = &quot;BH&quot;</span>
 <span class="co"># and filter for significantly differentially expressed genes (alpha = 0.05)</span>
-DoubleTail.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet  =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+DoubleTail.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet  =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                                 <span class="dt">nrep            =</span> <span class="dv">2</span>,
                                 <span class="dt">method          =</span> <span class="st">&quot;doubletail&quot;</span>,
                                 <span class="dt">lib.size        =</span> <span class="dv">1000</span>,
@@ -359,7 +359,7 @@ DoubleTail.DEGs.adj</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;PhyloExpressionSetExample&quot;</span>)
 
 <span class="co"># Detection of DEGs using the p-value returned by the Small-P Method</span>
-SmallP.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+SmallP.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                         <span class="dt">nrep          =</span> <span class="dv">2</span>,
                         <span class="dt">method        =</span> <span class="st">&quot;smallp&quot;</span>,
                         <span class="dt">lib.size      =</span> <span class="dv">1000</span>,
@@ -380,7 +380,7 @@ SmallP.DEGs</code></pre></div>
 <span class="co"># and furthermore, adjust p-values for multiple comparison</span>
 <span class="co"># using the Benjamini &amp; Hochberg (1995) method: method = &quot;BH&quot;</span>
 <span class="co"># and filter for significantly differentially expressed genes (alpha = 0.05)</span>
-SmallP.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet  =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+SmallP.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet  =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                                 <span class="dt">nrep            =</span> <span class="dv">2</span>,
                                 <span class="dt">method          =</span> <span class="st">&quot;smallp&quot;</span>,
                                 <span class="dt">lib.size        =</span> <span class="dv">1000</span>,
@@ -402,7 +402,7 @@ SmallP.DEGs.adj</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;PhyloExpressionSetExample&quot;</span>)
 
 <span class="co"># Detection of DEGs using the p-value returned by the Deviance</span>
-Deviance.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+Deviance.DEGs &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                         <span class="dt">nrep          =</span> <span class="dv">2</span>,
                         <span class="dt">method        =</span> <span class="st">&quot;deviance&quot;</span>,
                         <span class="dt">lib.size      =</span> <span class="dv">1000</span>,
@@ -423,7 +423,7 @@ Deviance.DEGs</code></pre></div>
 <span class="co"># and furthermore, adjust p-values for multiple comparison</span>
 <span class="co"># using the Benjamini &amp; Hochberg (1995) method: method = &quot;BH&quot;</span>
 <span class="co"># and filter for significantly differentially expressed genes (alpha = 0.05)</span>
-Deviance.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet    =</span> PhyloExpressionSetExample[<span class="dv">1</span>:<span class="dv">5</span>,<span class="dv">1</span>:<span class="dv">8</span>],
+Deviance.DEGs.adj &lt;-<span class="st"> </span><span class="kw">DiffGenes</span>(<span class="dt">ExpressionSet    =</span> PhyloExpressionSetExample[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                                 <span class="dt">nrep            =</span> <span class="dv">2</span>,
                                 <span class="dt">method          =</span> <span class="st">&quot;deviance&quot;</span>,
                                 <span class="dt">lib.size        =</span> <span class="dv">1000</span>,
@@ -447,7 +447,7 @@ Deviance.DEGs.adj</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(PhyloExpressionSetExample)
 
 <span class="co"># visualize the sd() between replicates</span>
-<span class="kw">PlotReplicateQuality</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[ , <span class="dv">1</span>:<span class="dv">8</span>],
+<span class="kw">PlotReplicateQuality</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[ , <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                      <span class="dt">nrep          =</span> <span class="dv">2</span>,
                      <span class="dt">legend.pos   =</span> <span class="st">&quot;topright&quot;</span>,
                      <span class="dt">ylim          =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="fl">0.2</span>),
@@ -458,7 +458,7 @@ Deviance.DEGs.adj</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(PhyloExpressionSetExample)
 
 <span class="co"># visualize the mad() between replicates</span>
-<span class="kw">PlotReplicateQuality</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[ , <span class="dv">1</span>:<span class="dv">8</span>],
+<span class="kw">PlotReplicateQuality</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample[ , <span class="dv">1</span><span class="op">:</span><span class="dv">8</span>],
                      <span class="dt">nrep          =</span> <span class="dv">2</span>,
                      <span class="dt">FUN           =</span> mad,
                      <span class="dt">legend.pos    =</span> <span class="st">&quot;topright&quot;</span>,
@@ -475,10 +475,10 @@ Deviance.DEGs.adj</code></pre></div>
 <span class="kw">data</span>(PhyloExpressionSetExample)
 
 <span class="co"># genrate an example PhyloExpressionSet with replicates</span>
-ExampleReplicateExpressionSet &lt;-<span class="st"> </span>PhyloExpressionSetExample[ ,<span class="dv">1</span>:<span class="dv">8</span>]
+ExampleReplicateExpressionSet &lt;-<span class="st"> </span>PhyloExpressionSetExample[ ,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]
 
 <span class="co"># rename stages</span>
-<span class="kw">names</span>(ExampleReplicateExpressionSet)[<span class="dv">3</span>:<span class="dv">8</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Stage_1_Repl_1&quot;</span>,<span class="st">&quot;Stage_1_Repl_2&quot;</span>,
+<span class="kw">names</span>(ExampleReplicateExpressionSet)[<span class="dv">3</span><span class="op">:</span><span class="dv">8</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Stage_1_Repl_1&quot;</span>,<span class="st">&quot;Stage_1_Repl_2&quot;</span>,
                                                <span class="st">&quot;Stage_2_Repl_1&quot;</span>,<span class="st">&quot;Stage_2_Repl_2&quot;</span>,
                                                <span class="st">&quot;Stage_3_Repl_1&quot;</span>,<span class="st">&quot;Stage_3_Repl_2&quot;</span>)
 <span class="co"># have a look at the example dataset</span>
@@ -620,7 +620,7 @@ FilterNSet &lt;-<span class="st"> </span><span class="kw">Expressed</span>(<span
 <span class="co"># and 2 replicates for stage 1, 3 replicates for stage 2,</span>
 <span class="co"># and 2 replicates for stage 3</span>
 <span class="co"># FOR REAL ANALYSES PLEASE USE: permutations = 1000 or 10000</span>
-<span class="co"># BUT NOTE THAT THIS TAKES MUCH MORE COMPUTATION TIME</span>
+<span class="co"># BUT </span><span class="al">NOTE</span><span class="co"> THAT THIS TAKES MUCH MORE COMPUTATION TIME</span>
 p.vector &lt;-<span class="st"> </span><span class="kw">CombinatorialSignificance</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
                                       <span class="dt">replicates    =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>),
                                       <span class="dt">TestStatistic =</span> <span class="st">&quot;FlatLineTest&quot;</span>,
@@ -629,7 +629,7 @@ p.vector &lt;-<span class="st"> </span><span class="kw">CombinatorialSignificanc
 <pre><code> [1] 2.436296e-03 2.288593e-02 1.608399e-03 1.185615e-02 1.835306e-06 1.077012e-05
  [7] 2.025515e-07 5.148342e-07 1.654885e-07 6.251145e-06 9.265520e-10 1.047479e-06</code></pre>
 <p>Users will observe that none of the replicate combinations resulted in p-values &gt; 0.05 and thus we can assume that the phylotranscriptomic pattern computed based on collapsed replicates is not biased by insignificant replicate combinations.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">any</span>(p.vector &gt;<span class="st"> </span><span class="fl">0.05</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">any</span>(p.vector <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.05</span>)
 <span class="co">#&gt; FALSE</span></code></pre></div>
 <p><code>CombinatorialSignificance()</code> can perform all significance tests introduced in the <a href="Introduction.html">Introduction</a> and <a href="Intermediate.html">Intermediate</a> vignettes.</p>
 <p>Furthermore, the <code>parallel</code> argument allows users to perform significance computations in parallel on a multicore machine. This will speed up p-value computations for a large number of combinations.</p>

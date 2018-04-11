@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // cpp_TAI
 NumericVector cpp_TAI(const NumericMatrix& ExpressionSet, const NumericVector& Phylostratum);
-RcppExport SEXP myTAI_cpp_TAI(SEXP ExpressionSetSEXP, SEXP PhylostratumSEXP) {
+RcppExport SEXP _myTAI_cpp_TAI(SEXP ExpressionSetSEXP, SEXP PhylostratumSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // cpp_bootMatrix
 NumericMatrix cpp_bootMatrix(const NumericMatrix& ExpressionMatrix, const NumericVector& AgeVector, const int& permutations);
-RcppExport SEXP myTAI_cpp_bootMatrix(SEXP ExpressionMatrixSEXP, SEXP AgeVectorSEXP, SEXP permutationsSEXP) {
+RcppExport SEXP _myTAI_cpp_bootMatrix(SEXP ExpressionMatrixSEXP, SEXP AgeVectorSEXP, SEXP permutationsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -32,7 +32,7 @@ END_RCPP
 }
 // cpp_pMatrix
 NumericMatrix cpp_pMatrix(const NumericMatrix& ExpressionSet, const NumericVector& AgeVector);
-RcppExport SEXP myTAI_cpp_pMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
+RcppExport SEXP _myTAI_cpp_pMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,7 +44,7 @@ END_RCPP
 }
 // cpp_std_error
 double cpp_std_error(const NumericVector& x);
-RcppExport SEXP myTAI_cpp_std_error(SEXP xSEXP) {
+RcppExport SEXP _myTAI_cpp_std_error(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -55,7 +55,7 @@ END_RCPP
 }
 // cpp_geom_mean
 double cpp_geom_mean(const NumericVector& x);
-RcppExport SEXP myTAI_cpp_geom_mean(SEXP xSEXP) {
+RcppExport SEXP _myTAI_cpp_geom_mean(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -66,7 +66,7 @@ END_RCPP
 }
 // cpp_harmonic_mean
 double cpp_harmonic_mean(const NumericVector& x);
-RcppExport SEXP myTAI_cpp_harmonic_mean(SEXP xSEXP) {
+RcppExport SEXP _myTAI_cpp_harmonic_mean(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -77,7 +77,7 @@ END_RCPP
 }
 // cpp_omitMatrix
 NumericMatrix cpp_omitMatrix(const NumericMatrix& ExpressionSet, const NumericVector& AgeVector);
-RcppExport SEXP myTAI_cpp_omitMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
+RcppExport SEXP _myTAI_cpp_omitMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -89,13 +89,13 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"myTAI_cpp_TAI", (DL_FUNC) &myTAI_cpp_TAI, 2},
-    {"myTAI_cpp_bootMatrix", (DL_FUNC) &myTAI_cpp_bootMatrix, 3},
-    {"myTAI_cpp_pMatrix", (DL_FUNC) &myTAI_cpp_pMatrix, 2},
-    {"myTAI_cpp_std_error", (DL_FUNC) &myTAI_cpp_std_error, 1},
-    {"myTAI_cpp_geom_mean", (DL_FUNC) &myTAI_cpp_geom_mean, 1},
-    {"myTAI_cpp_harmonic_mean", (DL_FUNC) &myTAI_cpp_harmonic_mean, 1},
-    {"myTAI_cpp_omitMatrix", (DL_FUNC) &myTAI_cpp_omitMatrix, 2},
+    {"_myTAI_cpp_TAI", (DL_FUNC) &_myTAI_cpp_TAI, 2},
+    {"_myTAI_cpp_bootMatrix", (DL_FUNC) &_myTAI_cpp_bootMatrix, 3},
+    {"_myTAI_cpp_pMatrix", (DL_FUNC) &_myTAI_cpp_pMatrix, 2},
+    {"_myTAI_cpp_std_error", (DL_FUNC) &_myTAI_cpp_std_error, 1},
+    {"_myTAI_cpp_geom_mean", (DL_FUNC) &_myTAI_cpp_geom_mean, 1},
+    {"_myTAI_cpp_harmonic_mean", (DL_FUNC) &_myTAI_cpp_harmonic_mean, 1},
+    {"_myTAI_cpp_omitMatrix", (DL_FUNC) &_myTAI_cpp_omitMatrix, 2},
     {NULL, NULL, 0}
 };
 

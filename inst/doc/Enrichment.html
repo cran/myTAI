@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2017-07-03" />
+<meta name="date" content="2018-04-11" />
 
 <title>Enrichment Analyses</title>
 
@@ -68,7 +68,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Enrichment Analyses</h1>
-<h4 class="date"><em>2017-07-03</em></h4>
+<h4 class="date"><em>2018-04-11</em></h4>
 
 
 
@@ -101,7 +101,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 DrerioPhyloMap.MBEa &lt;-<span class="st"> </span><span class="kw">read_excel</span>(<span class="st">&quot;MBE_2015a_Drerio_PhyloMap.xlsx&quot;</span>, <span class="dt">sheet =</span> <span class="dv">1</span>, <span class="dt">skip =</span> <span class="dv">4</span>)
 
 <span class="co"># format Phylostratigraphic Map for use with myTAI</span>
-Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class="dv">1</span>:<span class="dv">2</span>]
+Drerio.PhyloMap &lt;-<span class="st"> </span>DrerioPhyloMap.MBEa[ , <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>]
 
 <span class="co"># have a look at the final format</span>
 <span class="kw">head</span>(Drerio.PhyloMap)</code></pre></div>
@@ -187,7 +187,7 @@ EnrichmentResult &lt;-<span class="st"> </span><span class="kw">PlotEnrichment</
                                    <span class="dt">plot.bars    =</span> <span class="ot">FALSE</span>)
 
 <span class="co"># access p-values quantifying the enrichment for each Phylostratum</span>
-EnrichmentResult$p.values</code></pre></div>
+EnrichmentResult<span class="op">$</span>p.values</code></pre></div>
 <pre><code>         PS1          PS2          PS3          PS4          PS5          PS6 
 8.283490e-01 8.362880e-05 6.778981e-02 1.373816e-02 7.946309e-13 6.017041e-01 
          PS7          PS8          PS9         PS10         PS11         PS12 
@@ -195,7 +195,7 @@ EnrichmentResult$p.values</code></pre></div>
         PS13         PS14 
 3.929949e-03 1.593834e-05</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># access enrichment matrix storing C_1 and C_2</span>
-EnrichmentResult$enrichment.matrix</code></pre></div>
+EnrichmentResult<span class="op">$</span>enrichment.matrix</code></pre></div>
 <pre><code>           BG_Set     Test_Set
 PS1  -0.001132832  0.007668216
 PS2   0.023733936 -0.172380714

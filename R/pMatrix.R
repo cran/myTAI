@@ -38,7 +38,7 @@
 #' 
 #' # boxplot of the pMatrix using log2 transformed expression levels
 #' boxplot(pMatrix(tf(PhyloExpressionSetExample,log2)))
-#' 
+#'  
 #' 
 #' @export
 
@@ -49,12 +49,12 @@ pMatrix <- function(ExpressionSet)
         
         nCols <- dim(ExpressionSet)[2]
         nRows <- dim(ExpressionSet)[1]
-        pTAIMatrix <- matrix(nrow = nRows,ncol = nCols-2)
+        pTAIMatrix <- matrix(nrow = nRows,ncol = nCols - 2)
         
-        pTAIMatrix <- cpp_pMatrix(as.matrix(ExpressionSet[ , 3:nCols]),as.vector(ExpressionSet[ , 1]))
+        pTAIMatrix <- cpp_pMatrix(as.matrix(dplyr::select(ExpressionSet, 3:ncol(ExpressionSet))), as.vector(unlist(dplyr::select(ExpressionSet, 1))))
         
         colnames(pTAIMatrix) <- names(ExpressionSet)[3:nCols]
-        rownames(pTAIMatrix) <- ExpressionSet[ , 2]
+        rownames(pTAIMatrix) <- unlist(dplyr::select(ExpressionSet, 2))
         
         return(pTAIMatrix)
         

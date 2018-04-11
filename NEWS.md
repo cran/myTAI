@@ -1,3 +1,18 @@
+myTAI 0.7.0
+===========
+
+## Updates
+
+### New Functions
+
+- new function `PlotCIRatio()` to compute and visualize TAI/TDI etc patters using bootstrapping and confidence intervals (contributed by @ljljolinq1010)
+
+
+### Update Functionality
+
+- all functions can now handle `tibble` data as input -> before there were errors
+thrown when input data wasn't in strict `data.frame` format
+
 myTAI 0.6.0
 ===========
 
@@ -20,7 +35,7 @@ Error message accuring after new `dplyr` release was:
   Use `summarise_all()`, `summarise_at()` or `summarise_if()` instead.
   To map `funs` over all variables, use `summarise_all()`
   
-It's now fixed.  
+Is now fixed.  
 
 
 myTAI 0.5.0

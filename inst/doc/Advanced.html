@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2017-07-03" />
+<meta name="date" content="2018-04-11" />
 
 <title>Advanced Phylotranscriptomics Analyses</title>
 
@@ -68,7 +68,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Advanced Phylotranscriptomics Analyses</h1>
-<h4 class="date"><em>2017-07-03</em></h4>
+<h4 class="date"><em>2018-04-11</em></h4>
 
 
 
@@ -156,7 +156,7 @@ category-centered &quot;***&quot;  &quot;***&quot;    &quot;***&quot;    &quot;*
 <span class="co"># define an example gene subset (500 genes) which</span>
 <span class="co"># can be found in the input ExpressionSet</span>
 <span class="kw">set.seed</span>(<span class="dv">234</span>)
-example.gene.set &lt;-<span class="st"> </span>PhyloExpressionSetExample[<span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">25260</span>,<span class="dv">500</span>) , <span class="dv">2</span>]
+example.gene.set &lt;-<span class="st"> </span>PhyloExpressionSetExample[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25260</span>,<span class="dv">500</span>) , <span class="dv">2</span>]
 <span class="co"># visualize the gene expression distributions for these 500 genes (category-centered)</span>
 <span class="kw">PlotCategoryExpr</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
                  <span class="dt">legendName    =</span> <span class="st">&quot;PS&quot;</span>,
@@ -173,7 +173,7 @@ category-centered &quot;*&quot;    &quot;*&quot;      &quot;*&quot;      &quot;*
 <span class="co"># define an example gene subset (500 genes) which</span>
 <span class="co"># can be found in the input ExpressionSet</span>
 <span class="kw">set.seed</span>(<span class="dv">234</span>)
-example.gene.set &lt;-<span class="st"> </span>PhyloExpressionSetExample[<span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">25260</span>,<span class="dv">500</span>) , <span class="dv">2</span>]
+example.gene.set &lt;-<span class="st"> </span>PhyloExpressionSetExample[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25260</span>,<span class="dv">500</span>) , <span class="dv">2</span>]
 <span class="co"># visualize the gene expression distributions for these 500 genes (stage-centered)</span>
 <span class="kw">PlotCategoryExpr</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
                  <span class="dt">legendName    =</span> <span class="st">&quot;PS&quot;</span>,
@@ -197,7 +197,7 @@ stage-centered &quot;n.s.&quot;</code></pre>
 <span class="kw">data</span>(PhyloExpressionSetExample)
 
 <span class="kw">PlotGroupDiffs</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
-               <span class="dt">Groups        =</span> <span class="kw">list</span>(<span class="dt">group_1 =</span> <span class="dv">1</span>:<span class="dv">3</span>,<span class="dt">group_2 =</span> <span class="dv">4</span>:<span class="dv">12</span>),
+               <span class="dt">Groups        =</span> <span class="kw">list</span>(<span class="dt">group_1 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">group_2 =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">12</span>),
                <span class="dt">legendName    =</span> <span class="st">&quot;PS&quot;</span>,
                <span class="dt">plot.type     =</span> <span class="st">&quot;p-vals&quot;</span>,
                <span class="dt">type          =</span> <span class="st">&quot;b&quot;</span>,
@@ -208,7 +208,7 @@ stage-centered &quot;n.s.&quot;</code></pre>
 <span class="kw">data</span>(PhyloExpressionSetExample)
 <span class="co"># only receive the p-values without the corresponding plot</span>
 <span class="kw">PlotGroupDiffs</span>(<span class="dt">ExpressionSet =</span> PhyloExpressionSetExample,
-               <span class="dt">Groups        =</span> <span class="kw">list</span>(<span class="dt">group_1 =</span> <span class="dv">1</span>:<span class="dv">3</span>,<span class="dt">group_2 =</span> <span class="dv">4</span>:<span class="dv">12</span>),
+               <span class="dt">Groups        =</span> <span class="kw">list</span>(<span class="dt">group_1 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">group_2 =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">12</span>),
                <span class="dt">legendName    =</span> <span class="st">&quot;PS&quot;</span>,
                <span class="dt">plot.type     =</span> <span class="ot">NULL</span>)</code></pre></div>
 <p>Optionally, users can also visualize the difference in expression level distributions of groups of PS/DS during each developmental stage by specifying the <code>plot.type = &quot;boxplot&quot;</code> argument.</p>
@@ -216,7 +216,7 @@ stage-centered &quot;n.s.&quot;</code></pre>
 <span class="kw">data</span>(PhyloExpressionSetExample)
 <span class="co"># visualize difference as boxplot</span>
 <span class="kw">PlotGroupDiffs</span>(<span class="dt">ExpressionSet =</span> <span class="kw">tf</span>(PhyloExpressionSetExample,log2),
-               <span class="dt">Groups        =</span> <span class="kw">list</span>(<span class="dt">group_1 =</span> <span class="dv">1</span>:<span class="dv">3</span>,<span class="dt">group_2 =</span> <span class="dv">4</span>:<span class="dv">12</span>),
+               <span class="dt">Groups        =</span> <span class="kw">list</span>(<span class="dt">group_1 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">group_2 =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">12</span>),
                <span class="dt">legendName    =</span> <span class="st">&quot;PS&quot;</span>,
                <span class="dt">plot.type     =</span> <span class="st">&quot;boxplot&quot;</span>)</code></pre></div>
 <p>Here, we use log2 transformed expression levels for better visualization (<code>tf(PhyloExpressionSetExample,log2)</code>).</p>
