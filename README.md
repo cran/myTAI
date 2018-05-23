@@ -21,14 +21,14 @@ The following tutorials will provide use cases and detailed explainations of how
 ## Citation
 Please cite the following paper when using `myTAI` for your own research. This will allow me to continue working on this software tool and will motivate me to extend its functionality and usability in the next years. Many thanks in advance :)
 
-> Drost et al. __myTAI: evolutionary transcriptomics with R__ . _Bioinformatics_ (2018) [doi:10.1093](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btx835/4772684)
+> Drost et al. __myTAI: evolutionary transcriptomics with R__ . _Bioinformatics_ 2018, 34 (9), 1589-1590. [doi:10.1093](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btx835/4772684)
 
 ## Installation
 
 Users can download `myTAI` from CRAN :
 
 ```r
-# install myTAI 0.6.0 from CRAN
+# install myTAI 0.7.0 from CRAN
 source("http://bioconductor.org/biocLite.R")
 biocLite('myTAI')
 ```
@@ -47,18 +47,18 @@ biocLite("HajkD/myTAI")
 ## NEWS
 
 The current status of the package as well as a detailed history of the
-functionality of each version of `myTAI` can be found in the [NEWS](https://github.com/HajkD/myTAI/blob/master/NEWS.md) section.
+functionality of each version of `myTAI` can be found in the [NEWS](https://hajkd.github.io/myTAI/news/index.html) section.
 
 ## Tutorials
 
 These tutorials introduce users to `myTAI`:
 
-- [Introduction to the myTAI Package](https://github.com/HajkD/myTAI/blob/master/vignettes/Introduction.Rmd)
-- [Intermediate Concepts of Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Intermediate.Rmd)
-- [Advanced Topics of Phylotranscriptomics](https://github.com/HajkD/myTAI/blob/master/vignettes/Advanced.Rmd)
-- [Perform Age Enrichment Analyses](https://github.com/HajkD/myTAI/blob/master/vignettes/Enrichment.Rmd)
-- [Gene Expression Analysis with myTAI](https://github.com/HajkD/myTAI/blob/master/vignettes/Expression.Rmd)
-- [Taxonomic Information Retrieval](https://github.com/HajkD/myTAI/blob/master/vignettes/Taxonomy.Rmd)
+- [Introduction to the myTAI Package](https://hajkd.github.io/myTAI/articles/Introduction.html)
+- [Intermediate Concepts of Phylotranscriptomics](https://hajkd.github.io/myTAI/articles/Intermediate.html)
+- [Advanced Topics of Phylotranscriptomics](https://hajkd.github.io/myTAI/articles/Advanced.html)
+- [Perform Age Enrichment Analyses](https://hajkd.github.io/myTAI/articles/Enrichment.html)
+- [Gene Expression Analysis with myTAI](https://hajkd.github.io/myTAI/articles/Expression.html)
+- [Taxonomic Information Retrieval](https://hajkd.github.io/myTAI/articles/Taxonomy.html)
 
 
 ## Example

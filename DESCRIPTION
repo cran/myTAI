@@ -1,8 +1,8 @@
 Package: myTAI
 Type: Package
 Title: Evolutionary Transcriptomics
-Version: 0.7.0
-Date: 2018-04-11
+Version: 0.8.0
+Date: 2018-05-23
 Authors@R: person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
                 email = "hgd23@cam.ac.uk",
@@ -25,8 +25,8 @@ LinkingTo: Rcpp
 URL: https://github.com/HajkD/myTAI
 BugReports: https://github.com/HajkD/myTAI/issues
 RoxygenNote: 6.0.1
-Packaged: 2018-04-11 15:09:02 UTC; hajk-georg.drost
+Packaged: 2018-05-23 15:09:09 UTC; hajk-georg.drost
 Author: Hajk-Georg Drost [aut, cre] (<https://orcid.org/0000-0002-1567-306X>)
 Maintainer: Hajk-Georg Drost <hgd23@cam.ac.uk>
 Repository: CRAN
-Date/Publication: 2018-04-11 15:52:07 UTC
+Date/Publication: 2018-05-23 15:33:11 UTC
