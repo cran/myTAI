@@ -4,10 +4,10 @@
 \alias{PlotPattern}
 \title{Plot the Transcriptome Age Index or Transcriptome Divergence Index}
 \usage{
-PlotPattern(ExpressionSet, TestStatistic = "FlatLineTest", modules = NULL,
-  permutations = 1000, lillie.test = FALSE, digits.ylab = 4,
-  p.value = TRUE, shaded.area = FALSE, y.ticks = 4,
-  custom.perm.matrix = NULL, ...)
+PlotPattern(ExpressionSet, TestStatistic = "FlatLineTest",
+  modules = NULL, permutations = 1000, lillie.test = FALSE,
+  digits.ylab = 4, p.value = TRUE, shaded.area = FALSE,
+  y.ticks = 4, custom.perm.matrix = NULL, ...)
 }
 \arguments{
 \item{ExpressionSet}{a standard PhyloExpressionSet or DivergenceExpressionSet object.}
@@ -168,7 +168,7 @@ Domazet-Loso T and Tautz D. (2010). \emph{A phylogenetically based transcriptome
 
 Quint M et al. (2012). \emph{A transcriptomic hourglass in plant embryogenesis}. Nature (490): 98-101.
 
-Drost HG et al. (2015) \emph{Evidence for Active Maintenance of Phylotranscriptomic Hourglass Patterns in Animal and Plant Embryogenesis}. Mol Biol Evol. 32 (5): 1221-1231 doi:10.1093/molbev/msv012.
+Drost HG et al. (2015) Mol Biol Evol. 32 (5): 1221-1231 doi:10.1093/molbev/msv012.
 }
 \seealso{
 \code{\link{TAI}}, \code{\link{TDI}}, \code{\link{FlatLineTest}},

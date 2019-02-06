@@ -17,7 +17,17 @@ DiffGenes(ExpressionSet, nrep, method = "foldchange", lib.size = NULL,
 
 \item{lib.size}{the library sizes to equalize library sizes by quantile-to-quantile normalization (see \code{\link[edgeR]{equalizeLibSizes}}).}
 
-\item{p.adjust.method}{p value correction method.}
+\item{p.adjust.method}{p value correction method that is passed to \code{\link{p.adjust}}.
+Available options are:\itemize{
+\item \code{p.adjust.method = "BH"} (Benjamini-Hochberg correction)
+\item \code{p.adjust.method = "bonferroni"} (Bonferroni correction)
+\item \code{p.adjust.method = "holm"}
+\item \code{p.adjust.method = "hochberg"}
+\item \code{p.adjust.method = "hommel"}
+\item \code{p.adjust.method = "BY"}
+\item \code{p.adjust.method = "fdr"}
+}
+If \code{p.adjust.method = NULL} (Default) then no p-value correction is performed.}
 
 \item{comparison}{a character string specifying whether genes having fold-change or p-values
  below, above, or below AND above (both) the \code{alpha} value should be excluded from the dataset.
@@ -53,9 +63,8 @@ transformed expression levels are stored in your input \code{ExpresisonSet}.
 \item \code{method = "wilcox.test"}: Wilcoxon Rank Sum Test between replicate expression levels of two samples.
 \item \code{method = "doubletail"}: Computes two-sided p-values by doubling the smaller tail probability (see \code{\link[edgeR]{exactTestDoubleTail}} for details).
 \item \code{method = "smallp"}: Performs the method of small probabilities as proposed by Robinson and Smyth (2008) (see \code{\link[edgeR]{exactTestBySmallP}} for details).
-\item \code{method = "deviance"}: Uses the deviance goodness of fit statistics to define the rejection region, and is therefore equivalent to a conditional likelihood ratio test (see \code{\link[edgeR]{exactTestByDeviance}} for details).
+\item \code{method = "deviance"}: Uses the deviance goodness of fit statistics to define the rejection region, and is therefore equivalent to a conditional likelihood ratio test (see \code{edgeR} package for details).
 }
-
 
 Exclude non differentially expressed genes from the result dataset:
 

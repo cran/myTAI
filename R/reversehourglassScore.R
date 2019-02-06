@@ -1,4 +1,4 @@
-#' @title Compute the Hourglass Score for the Reductive Hourglass Test
+#' @title Compute the Reverse Hourglass Score for the Reverse Hourglass Test
 #' @description
 #' 
 #'         This function reduces the destruction of an hourglass shaped pattern to a single score value.
@@ -13,7 +13,7 @@
 #'         
 #'         (2) accumulate the \emph{tai_profile} or \emph{tdi_profile} values in each developmental module using the arithmetic mean (\code{\link{mean}}) in case scoringMethod = "mean-mean", or accumulate the \emph{tai_profile} or \emph{tdi_profile} values in each developmental module using \code{\link{max}} for the early and late module and \code{\link{min}} for the mid module in case scoringMethod = "max-min".
 #'         
-#'         (3) then reduce the three values for each developmental module by computing the difference between: early - mid, and late - mid.
+#'         (3) then reduce the three values for each developmental module by computing the difference between: mid - early, and mid - late.
 #'         
 #'         (4) the two difference values are referred to as a_early and a_late. 
 #v         
@@ -32,7 +32,7 @@
 #' \item \emph{"mean"}: \eqn{S = mean{a_early,a_late}}
 #' }
 #'All together this results in a global score \emph{S}.
-#'This global score \emph{S} is being returned by this function \code{\link{rhScore}}.
+#'This global score \emph{S} is being returned by this function.
 #' @param age_vals a numeric vector containing \code{\link{TAI}} or \code{\link{TDI}} values for each developmental stage s.
 #' @param early a numeric vector including the numeric stage values that correspond to the early phase of development.
 #' @param mid a numeric vector including the numeric stage values that correspond to the middle phase of development.
@@ -47,9 +47,9 @@
 #' @return a numeric value representing the hourglass destruction score.
 #' @author Hajk-Georg Drost
 #' @references
-#' Drost HG et al. (2015) Mol Biol Evol. 32 (5): 1221-1231 doi:10.1093/molbev/msv012
+#' Drost et al. (2015), Evidence for active maintenance of phylotranscriptomic hourglass patterns in animal and plant embryogenesis. Mol Bio Evol.
 #' 
-#' @seealso \code{\link{ReductiveHourglassTest}}, \code{\link{TAI}}, \code{\link{TDI}}
+#' @seealso \code{\link{ReverseHourglassTest}}, \code{\link{TAI}}, \code{\link{TDI}}
 #' @examples
 #' 
 #'  # read standard phylotranscriptomics data
@@ -63,7 +63,7 @@
 #'
 #'  # compute the global hourglass destruction score 
 #'  # for the TAIs profile using reduction method: mean(mean-mean)
-#'  rh_score <- rhScore(age_vals = TAIs,early = 1:2,mid = 3:5,late = 6:7,
+#'  reversehourglass_score <- reversehourglassScore(age_vals = TAIs,early = 1:2,mid = 3:5,late = 6:7,
 #'                      method = "mean",scoringMethod = "mean-mean")
 #'
 #'
@@ -74,12 +74,12 @@
 #'
 #'  # compute the global hourglass destruction score for the TDIs profile 
 #'  # using reduction method: mean(mean-mean)
-#'  rh_score <- rhScore(age_vals = TDIs,early = 1:2,mid = 3:5,late = 6:7,
+#'  reversehourglass_score <- rhScore(age_vals = TDIs,early = 1:2,mid = 3:5,late = 6:7,
 #'                      method = "mean",scoringMethod = "mean-mean")
 #'  
 #'  
 #' @export
-rhScore <- function(age_vals,early,mid,late,method,scoringMethod)
+reversehourglassScore <- function(age_vals,early,mid,late,method,scoringMethod)
 {
         
         Score.Early <- vector(mode = "numeric", length = 1)
@@ -96,13 +96,13 @@ rhScore <- function(age_vals,early,mid,late,method,scoringMethod)
         
         
         if(scoringMethod == "max-min"){
-                Score.Early <- max(age_valsEarly) - min(age_valsMid)
-                Score.Late <- max(age_valsLate) - min(age_valsMid) 
+                Score.Early <- min(age_valsMid) - max(age_valsEarly)
+                Score.Late <- min(age_valsMid) - max(age_valsLate)
         }
         
         if(scoringMethod == "mean-mean"){
-                Score.Early <- mean(age_valsEarly) - mean(age_valsMid)
-                Score.Late <- mean(age_valsLate) - mean(age_valsMid)    
+                Score.Early <- mean(age_valsMid) - mean(age_valsEarly)
+                Score.Late <- mean(age_valsMid) - mean(age_valsLate)    
         }
         
         if(method == "max")

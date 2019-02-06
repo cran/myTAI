@@ -106,7 +106,7 @@ In theory, any published or newly generated transcriptome dataset can be used to
 
 ![](Figures/Fig3.png)
 
-<p style="font-size:10px;"> Figure 3: Workflow describing the input and output of the myTAI package. The myTAI package takes phylogenetic information such as phylogenetic trees (see [Dunn, 2013](http://www.academia.edu/27635691/The_Comparative_Biology_of_Gene_Expression) ), genomic phylostratography based gene age inference (see [Domazet-Loso et al., 2007](http://www.sciencedirect.com/science/article/pii/S0168952507002995); [Capra et al., 2013](http://www.sciencedirect.com/science/article/pii/S016895251300111X); [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113) ), by dNdS estimation of orthologous genes (see [Quint, Drost et al., 2012](http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html) and [Drost et al., 2015](http://mbe.oxfordjournals.org/content/32/5/1221) ), or phylogenetic reconciliation (see [Doyon et al, 2011](https://www.ncbi.nlm.nih.gov/pubmed/21949266) ) and a RNA-Seq or Microarray based transcriptome dataset as input. Internally, myTAI then combines the phylogenetic data and the transcriptome data an provides numerous functions to perform evolutionary trancriptomics analyses. Here, we examplify the output of the functions `PlotSignature()`, `PlotRE()` and `PlotCategoryExpr()`. </p>
+<p style="font-size:10px;"> Figure 3: Workflow describing the input and output of the myTAI package. The myTAI package takes phylogenetic information such as phylogenetic trees (see [Dunn, 2013](http://www.academia.edu/27635691/The_Comparative_Biology_of_Gene_Expression) ), genomic phylostratography based gene age inference (see [Domazet-Loso et al., 2007](http://www.sciencedirect.com/science/article/pii/S0168952507002995); [Capra et al., 2013](http://www.sciencedirect.com/science/article/pii/S016895251300111X); [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113) ), by dNdS estimation of orthologous genes (see [Quint, Drost et al., 2012](http://www.nature.com/nature/journal/v490/n7418/full/nature11394.html) and [Drost et al., 2015](https://academic.oup.com/mbe/article/32/5/1221/1125964)), or phylogenetic reconciliation (see [Doyon et al, 2011](https://www.ncbi.nlm.nih.gov/pubmed/21949266) ) and a RNA-Seq or Microarray based transcriptome dataset as input. Internally, myTAI then combines the phylogenetic data and the transcriptome data an provides numerous functions to perform evolutionary trancriptomics analyses. Here, we examplify the output of the functions `PlotSignature()`, `PlotRE()` and `PlotCategoryExpr()`. </p>
 
 
 ## Retrieval of phylogenetic or taxonomic information
@@ -116,29 +116,71 @@ For the comparative genomics part there are different methods and tools to quant
 
 ### Genomic phylostratography based gene age inference
 
-As intensely discussed in the past years ([Capra et al., 2013](http://www.sciencedirect.com/science/article/pii/S016895251300111X); [Altenhoff et al., 2016](http://www.nature.com/nmeth/journal/v13/n5/pdf/nmeth.3830.pdf); [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113)), gene age inference is not a trivial task and might be biased in some currently existing approaches ([Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113)).
+As intensely discussed in the past years ([Capra et al., 2013](http://www.sciencedirect.com/science/article/pii/S016895251300111X); [Altenhoff et al., 2016](http://www.nature.com/nmeth/journal/v13/n5/pdf/nmeth.3830.pdf); [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113)), gene age inference is not a trivial task and might be biased in some currently existing approaches ([Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113); [Yin et al., 2018](https://academic.oup.com/bib/article-lookup/doi/10.1093/bib/bby074); [Casola 2018](https://academic.oup.com/gbe/article/10/11/2906/5140197)).
 
-In particular, Moyers & Zhang argue that [genomic phylostratigraphy](http://www.sciencedirect.com/science/article/pii/S0168952507002995) (a prominent BLAST based gene age inference method) 1) underestimates gene age for a considerable fraction of genes, 2) is biased for rapidly evolving proteins which are short, and/or their most conserved block of sites is small, and 3) these biases create spurious nonuniform distributions of various gene properties among age groups, many of which cannot be predicted a priori ([Moyers & Zhang, 2015](http://mbe.oxfordjournals.org/content/32/1/258.long);  [Moyers & Zhang, 2016](http://mbe.oxfordjournals.org/content/33/5/1245); [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113)). However, these arguments were based on simulated data and were inconclusive due to [errors in their analyses](http://mbe.oxfordjournals.org/content/33/11/3031.full?etoc). Furthermore, [Domazet-Loso et al., 2017](https://academic.oup.com/mbe/article-lookup/doi/10.1093/molbev/msw284) provide convincing evidence that there is __no__ phylostratigraphic bias. As a response,
-[Moyers & Zhang, 2017](https://academic.oup.com/gbe/article/9/6/1519/3867914) recently published a counter-study stating that a phylostratigraphic trend claimed by [Domazet-Loso et al., 2017](https://academic.oup.com/mbe/article-lookup/doi/10.1093/molbev/msw284) to be robust to error disappears when genes likely to be error-resistant are analyzed. [Moyers & Zhang, 2017](https://academic.oup.com/gbe/article/9/6/1519/3867914) further suggest a more robust methodology for controlling for the effects of error by first restricting to those genes which can be simulated and then removing those genes which, through simulation, have been shown to be error-prone.
+In particular, Moyers & Zhang argue that [genomic phylostratigraphy](http://www.sciencedirect.com/science/article/pii/S0168952507002995) (a prominent BLAST based gene age inference method) 
 
-In general, an objective benchmarking set representing the tree of life is still missing and therefore any procedure aiming to quantify gene ages will be biased to some degree. Based on this debate a recent study suggested to perform gene age inference by combining several common orthology inference algorithms to create gene age datasets and then characterize the error around each age-call on a per-gene and per-algorithm basis. Using this approach systematic error was found to be a large factor in estimating gene age, suggesting that simple consensus algorithms are not enough to give a reliable point estimate ([Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113)). However, by generating a consensus gene age and quantifying the possible error in each workflow step, [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113) provide a very useful [database](http://geneages.org/) of
+1) underestimates gene age for a considerable fraction of genes, 
+
+2) is biased for rapidly evolving proteins which are short, and/or their most conserved block of sites is small, and 
+
+3) these biases create spurious nonuniform distributions of various gene properties among age groups, many of which cannot be predicted a priori ([Moyers & Zhang, 2015](http://mbe.oxfordjournals.org/content/32/1/258.long);  [Moyers & Zhang, 2016](http://mbe.oxfordjournals.org/content/33/5/1245); [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113)). 
+
+However, these arguments were based on simulated data and were inconclusive due to [errors in their analyses](http://mbe.oxfordjournals.org/content/33/11/3031.full?etoc). Furthermore, [Domazet-Loso et al., 2017](https://academic.oup.com/mbe/article-lookup/doi/10.1093/molbev/msw284) provide convincing evidence that there is __no__ phylostratigraphic bias. As a response,
+[Moyers & Zhang, 2017](https://academic.oup.com/gbe/article/9/6/1519/3867914) recently published a counter-study stating that a phylostratigraphic trend claimed by [Domazet-Loso et al., 2017](https://academic.oup.com/mbe/article-lookup/doi/10.1093/molbev/msw284) to be robust to error disappears when genes likely to be error-resistant are analyzed. [Moyers & Zhang, 2017](https://academic.oup.com/gbe/article/9/6/1519/3867914) further suggest a more robust methodology for controlling for the effects of error by first restricting to those genes which can be simulated and then removing those genes which, through simulation, have been shown to be error-prone (see also [Moyers & Zhang, 2018](https://academic.oup.com/gbe/article/10/8/2037/5061555)).
+
+In general, an objective benchmarking set representing the tree of life is still missing and therefore any procedure aiming to quantify gene ages will be biased to some degree. Based on this debate a recent study suggested to perform gene age inference by combining several common orthology inference algorithms to create gene age datasets and then characterize the error around each age-call on a per-gene and per-algorithm basis. Using this approach systematic error was found to be a large factor in estimating gene age, suggesting that simple consensus algorithms are not enough to give a reliable point estimate ([Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113)). This was also observed by [Moyers & Zhang, 2018](https://academic.oup.com/gbe/article/10/8/2037/5061555)) when running alternative tools such as `PSIBLAST`, `HMMER`, `OMA`, etc. However, by generating a consensus gene age and quantifying the possible error in each workflow step, [Liebeskind et al., 2016](http://gbe.oxfordjournals.org/content/early/2016/06/03/gbe.evw113) provide a very useful [database](http://geneages.org/) of
 consensus gene ages for a variety of genomes. 
 
-Alternatively, [Stephen Smith, 2016](https://bib.oxfordjournals.org/content/early/2016/04/20/bib.bbw034.full) argues that _de novo_ gene birth/death and gene family expansion/contraction studies should avoid drawing direct inferences of evolutionary relatedness from measures of sequence similarity alone, and should instead, where possible, use more rigorous phylogeny-based methods. For this purpose, I recommend researchers to consult the [phylomedb database](http://orthology.phylomedb.org/) to retrieve phylogeny-based gene orthology relationships and use these age estimates in combination with `myTAI`.
+Alternatively, [Stephen Smith, 2016](https://bib.oxfordjournals.org/content/early/2016/04/20/bib.bbw034.full) argues that _de novo_ gene birth/death and gene family expansion/contraction studies should avoid drawing direct inferences of evolutionary relatedness from measures of sequence similarity alone, and should instead, where possible, use more rigorous phylogeny-based methods. For this purpose, I recommend researchers to consult the [phylomedb database](http://orthology.phylomedb.org/) to retrieve phylogeny-based gene orthology relationships and use these age estimates in combination with `myTAI`. Alternatively, users might find the simulation based removal approach propsed by [Moyers & Zhang, 2018](https://academic.oup.com/gbe/article/10/8/2037/5061555) more suitable. 
 
 Evidently, these advancements in gene age research are very recent and gene age inference is a very young and active field of genomic research. Therefore, many more studies need to address the robust and realistic inference of gene age and a community standard is still missing.
 
-Despite the ongoing debate about how to correctly infer gene age, users of `myTAI` can perform any gene age inference method they find most appropriate for their biological question and pass this gene age inference table as input to `myTAI`. To do so, users need to follow the following data format specifications to use their gene age inference table with `myTAI`.
+Despite the ongoing debate about how to correctly infer gene age, users of `myTAI` can perform any gene age inference method they find most appropriate for their biological question and pass this gene age inference table as input to `myTAI`. To do so, users need to follow the following data format specifications to use their gene age inference table with `myTAI`. However, even when users rely on established procedures such as phylostratigraphy the gene age inference bias will be present
+as 'systematic error' in all developmental stages for which TAI or TDI computations are performed. Thus, stages of constraint will be detectable in any case. Since TAI or TDI computations are indended to enable screening for conserved or constrained stages in developmental or biological processes for further downstream experimental studies, even simple approaches such as phylostratigraphy can give first evidence for the existence of transcriptomic contraints within a biological process. If researchers then wish to extract the exact candidate genes that might potentially cause such transcriptome constraints then I would advise to rely on more superior approaches of gene age inference as discussed above.
+
+In my opinion, what is completely missing in this entire debate is the bioinformatics/technical aspect of using BLAST or any other BLAST-like tool for gene age inference. Recently, it was intesely discussed how BLAST hits are biased by the use of the default argument `max_target_seqs` ([Shah et al., 2018](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty833/5106166)). The main issue of how this `max_target_seqs` is set is that:
+
+> According to the BLAST documentation itself (2008), this parameter represents the 'number of aligned sequences to keep'. This statement is commonly interpreted as meaning that BLAST will return the top N database hits for a sequence query if the value of max_target_seqs is set to N. For example, in a recent article (Wang et al., 2016) the authors explicitly state 'Setting 'max target seqs' as '1' only the best match result was considered'.
+> __To our surprise, we have recently discovered that this intuition is incorrect.__ Instead, BLAST returns the first N hits that exceed the specified E-value threshold, which may or may not be the highest scoring N hits. The invocation using the parameter '-max_target_seqs 1' simply returns the first good hit found in the database, not the best hit as one would assume. Worse yet, the output produced depends on the order in which the sequences occur in the database. For the same query, different results will be returned by BLAST when using different versions of the database even if all versions contain the same best hit for this database sequence. Even ordering the database in a different way would cause BLAST to return a different 'top hit' when setting the max_target_seqs parameter to 1.
+> - Shah et al., 2018
+
+The solution to this issue seems to be that any BLAST search must be performed with a significantly high `-max_target_seqs`, e.g. `-max_target_seqs 10000` (see https://gist.github.com/sujaikumar/504b3b7024eaf3a04ef5 for details) and best hits
+must be filtered subsequently. It is not clear from any of the studies referenced above how the best BLAST hit was retrieved and which `-max_target_seqs` values were used to perform BLAST searches in the respective study. Thus, the comparability of the results between studies is impossible and any individual claim made in these studies might be biased. 
+
+In addition, the `-max_target_seqs` argument issue seems not to be the only issue that might influence technical differences in BLAST hit results. [Gonzalez-Pech et al., 2018](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty1018/5239655) discuss another problem of retrieving the best BLAST hits based on `E-value` thresholds. 
+
+> Many users assume that BLAST alignment hits with E-values
+less than or equal to the predefined threshold (e.g. 105 via the specification of  evalue 1e-5) are identified after the search is completed, in a final step to rank all alignments by E-value, from the
+smallest (on the top of the list of results) to the largest E-value (at
+the bottom of the list).
+>__However, the E-value filtering step does not occur at the final
+stage of BLAST; it occurs earlier during the scanning phase (Altschul
+et al., 1997; Camacho et al., 2009). During this phase, a gapped
+alignment is generated using less-sensitive heuristic parameters
+(Camacho et al., 2009); alignments with an E-value that satisfies the
+defined cut-off are included in the subsequent phase of the BLAST
+algorithm (and eventually reported). During the final (trace-back)
+phase, these gapped alignments are further adjusted using moresensitive heuristic parameters (Camacho et al., 2009), and the
+E-value for each of these refined alignments is then recalculated.__
+> - Gonzalez-Pech et al., 2018
+
+This means that if one study mentioned above ran a BLAST search with a
+BLAST parameter configuration of lets say `-max_target_seqs 250` (default value in BLAST) and `evalue 10` (default value in BLAST) and then subsequently selected the best hit which returned the smallest `E-value` and another study used the parameter configuration `-max_target_seqs 1` and `evalue 0.0001` then the results of both studies would not be comparable and the proposed gene age inference bias might simply result from a technical difference in running BLAST searches.
+
+In more detail, even if one study for example ran BLAST with `evalue 10` (default value in BLAST) and then subsequently filtered for hits that resulted in `evalue < 0.0001` whereas another study ran BLAST directly with `evalue 0.0001`, according to [Gonzalez-Pech et al., 2018](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty1018/5239655) these studies although referring to the same `E-value` threshold for filtering hits will result in different sets of filtered BLAST hits.
+
+Hence, all of the above mentioned approaches are far from being perfect and much more research is needed to systematically compare different approaches for gene age inference.   
 
 The rational behind gene age inference is to assign each protein coding gene of an organism of interest with an evolutionary age estimate which aims to quantify its potential origin within the tree of life (detectable sequence homolog; orphan gene (see  [Tautz & Domazet-Loso, 2011](http://www.nature.com/nrg/journal/v12/n10/abs/nrg3053.html))). Hence, gene age inference generates a table storing the gene age in the first column and the corresponding gene id of the organism of iterest in the second column. This table is named _phylostratigraphic map_.
 
 
 __Generate or retrieve phylostratigraphic maps:__
 
+- [R package: phylostratr](https://github.com/arendsee/phylostratr) which implements `Phylostratigraphy` as an `R package` - Please consult the [Vignettes](https://github.com/arendsee/phylostratr/tree/master/vignettes) for examples. 
 - [createPSmap.pl](https://github.com/AlexGa/Phylostratigraphy): generate a phylostratigraphic map (implemented by Alexander Gabel)
 - [phylostratigraphy.pl](https://figshare.com/articles/A_developmental_hourglass_in_fungi/1284022): generate a phylostratigraphic (implemented by Cheng et al. 2015)
 - [phylo_pipeline.py](https://mynotebook.labarchives.com/share/Shuqing_Xu/NTIuMHw2NDQyMi80MC9UcmVlTm9kZS8zNDEyODM1NjE2fDEzMi4w): generate a phylostratigraphic (implemented by Shuqing Xu)
-- [R package: phylostratr](https://github.com/arendsee/phylostratr) which implements `Phylostratigraphy` as an `R package` - Please consult the [Vignettes](https://github.com/arendsee/phylostratr/tree/master/vignettes) for examples. 
 - [ORFanFinder](http://bioinformatics.oxfordjournals.org/content/early/2016/03/26/bioinformatics.btw122.full.pdf): generate a phylostratigraphic map
 - `Protein Historian`: generate a gene age map
 - download pre-computed and published [phylostratigraphic maps](https://github.com/HajkD/published_phylomaps)
@@ -149,7 +191,7 @@ __Generate or retrieve phylostratigraphic maps:__
 
 ### dNdS estimation of orthologous genes
 
-We recently proposed to use the classical dNdS measure to quantify the sequence conservation of protein coding genes between closely related species. This way, we combine the information about the selective pressure acting on a particular gene with its expression level during a particular time point or condition. We refer to this approach as Divergence Stratigraphy ([Drost et al., 2015 _Mol. Biol. Evol._](http://mbe.oxfordjournals.org/content/32/5/1221)). Analogous to gene age inference methods,
+We recently proposed to use the classical dNdS measure to quantify the sequence conservation of protein coding genes between closely related species. This way, we combine the information about the selective pressure acting on a particular gene with its expression level during a particular time point or condition. We refer to this approach as Divergence Stratigraphy ([Drost et al., 2015 _Mol. Biol. Evol._](https://academic.oup.com/mbe/article/32/5/1221/1125964)). Analogous to gene age inference methods,
 divergence stratigraphy generates a table storing the sequence conservation estimate in the first column and the corresponding gene id of the organism of iterest in the second column. This table is named _divergence stratigraphic map_.
 
 
@@ -572,7 +614,7 @@ To assess the statistical significance of all introduced measures and analyses, 
 
 Evolutionary signatures of transcriptomes can be captured by computing transcriptome indices at different measured stages of development, combining these computed values to a transcriptome index profile across the measured stages, and comparing the resulting profile with a flat line. A profile not significantly deviating from a flat line indicates the absence of significant variations of the computed transcriptome index from stage to stage. In contrast, a profile significantly deviating from a flat line indicates the presence of significant variations from stage to stage. We refer to any transcriptome index profile significantly deviating from a flat line as phylotranscriptomic pattern or evolutionary signature.
 
-Previously, we introduced three statistical tests to quantify the significance of observed TAI or TDI patterns: `Flat Line Test`, `Reductive Hourglass Test`, and `Reductive Early Conservation Test` ([Drost et al., 2015](http://mbe.oxfordjournals.org/content/32/5/1221.full)).
+Previously, we introduced three statistical tests to quantify the significance of observed TAI or TDI patterns: `Flat Line Test`, `Reductive Hourglass Test`, and `Reductive Early Conservation Test` ([Drost et al., 2015](https://academic.oup.com/mbe/article/32/5/1221/1125964)).
 
 The `PlotPattern()` function introduced in the following sections is the main analytics function of myTAI. `PlotPattern()` allows users to visualize TAI or TDI patterns and internally performs the following statistical tests to assess their significance.
 
@@ -600,7 +642,7 @@ documentation of `PlotSignature()` (`?PlotSignature` or `?FlatLineTest`), the `F
 In case the observed phylotranscriptomic pattern not only significantly deviates from a flat line but also visually resembles an _hourglass_ shape,
 one can obtain a p-value quantifying the statistical significance of a visual _hourglass_ pattern based on the `ReductiveHourglassTest` (`?ReductiveHourglassTest`).
 
-Since the `ReductiveHourglassTest` has been defined for a priori biological knowledge ([Drost et al., 2015](http://mbe.oxfordjournals.org/content/32/5/1221.short?rss=1)), the `modules` argument within the `ReductiveHourglassTest()` function needs to be specified.
+Since the `ReductiveHourglassTest` has been defined for a priori biological knowledge ([Drost et al., 2015](https://academic.oup.com/mbe/article/32/5/1221/1125964)), the `modules` argument within the `ReductiveHourglassTest()` function needs to be specified.
 
 Three modules need to be specified: an __early-module__, __phylotypic module__ (mid), and a __late-module__.
 
@@ -654,7 +696,7 @@ The `EarlyConservationTest` tests whether an observed phylotranscriptomic patter
 a low-high-high pattern (monotonically increasing function) supporting the Early Conservation Model of embryogenesis.
 
 
-Analogous to the `ReductiveHourglassTest`, the `EarlyConservationTest` needs a priori biological knowledge [Drost et al., 2015](http://mbe.oxfordjournals.org/content/32/5/1221.short?rss=1).
+Analogous to the `ReductiveHourglassTest`, the `EarlyConservationTest` needs a priori biological knowledge [Drost et al., 2015](https://academic.oup.com/mbe/article/32/5/1221/1125964).
 So again three `modules` have to be specified for the `EarlyConservationTest()` function.
 
 Three modules need to be specified: an __early-module__, __phylotypic module__ (mid), and a __late-module__.
@@ -698,8 +740,59 @@ TAI(PhyloExpressionSetExample)
 3.229942 3.225614 3.107135 3.116693 3.073993 3.176511 3.390334 
 
 ```
-## Transcriptome Divergence Index Analyses
 
+
+### Reverse Hourglass Test
+
+In case the observed phylotranscriptomic pattern not only significantly deviates from a flat line but also visually resembles an _reverse hourglass_ shape (low-high-low pattern),
+one can obtain a p-value quantifying the statistical significance of a visual _reverse hourglass_ pattern based on the `ReverseHourglassTest` (`?ReverseHourglassTest`).
+
+Since the `ReverseHourglassTest` has been defined for a priori biological knowledge ([Drost et al., 2015](https://academic.oup.com/mbe/article/32/5/1221/1125964)), the `modules` argument within the `ReverseHourglassTest()` function needs to be specified.
+
+Three modules need to be specified: an __early-module__, __phylotypic module__ (mid), and a __late-module__.
+
+For this example we divide _A. thaliana_ embryo development stored within the _PhyloExpressionSetExample_ into the following three modules:
+
+* early = stages 1 - 2 (Zygote and Quadrant)
+* mid = stages 3 - 5 (Globular, Heart, and Torpedo)
+* late = stages 6 - 7 (Bent and Mature)
+
+```{r, fig.width= 7, fig.height= 5,eval=FALSE}
+# Plot the Transcriptome Age Index of a given PhyloExpressionSet 
+# Test Statistic : Reverse Hourglass Test
+PlotSignature( ExpressionSet = PhyloExpressionSetExample,
+               measure       = "TAI",
+               TestStatistic = "ReverseHourglassTest",
+               modules       = list(early = 1:2, mid = 3:5, late = 6:7),
+               xlab          = "Ontogeny", 
+               ylab          = "TAI" )
+```
+
+The corresponding p-value `p_reverse_hourglass` now denotes the p-value returned by the `ReverseHourglassTest`
+which is different from the p-value returned by the `FlatLineTest` (`p_flt`).
+
+
+To make sure that correct modules have been selected to perform the `ReverseHourglassTest`, users can use the `shaded.area` argument to visualize chosen modules:
+
+```{r, fig.width= 7, fig.height= 5,eval=FALSE}
+# Visualize the phylotypic period used for the Reductive Hourglass Test
+PlotSignature( ExpressionSet = PhyloExpressionSetExample,
+               measure       = "TAI",
+               TestStatistic = "ReverseHourglassTest",
+               modules       = list(early = 1:2, mid = 3:5, late = 6:7),
+               shaded.area   = TRUE, 
+               xlab          = "Ontogeny", 
+               ylab          = "TAI" )
+```
+
+__Note__ that for defining a priori knowledge for the `ReverseHourglassTest` using the `modules` argument, modules need to start at stage 1, ..., N and do not correspond to the column position in the _PhyloExpressionSet/DivergenceExpressionSet_
+which in contrast would start at position 3, ... N + 2.
+
+In a biological context, it is not always clear which stages could define the ealy, mid, and late 
+modules. For animal embryogenesis, it has been suggested to choose early, mid, and late modules
+according to the morphological conservation of animal embryos (e.g. mid-stage vertebrate embryos seem to be morphologically conserved). For plants, in contrast no morphological conservation has been reported and thus the averge expression of embryo defective genes has been used to define modules (Drost et al. 2015).
+
+## Transcriptome Divergence Index Analyses
 
 Analogous to the _TAI_ computations and visualization, the _TDI_ computations can be performed in a similar fashion:
 
