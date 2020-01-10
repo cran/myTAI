@@ -1,3 +1,9 @@
+myTAI 0.9.2
+===========
+- changing maintainer email-address
+- adding contributor Alexander Gabel
+
+
 myTAI 0.9.1
 ===========
 
