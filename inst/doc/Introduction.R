@@ -61,161 +61,161 @@ knitr::opts_chunk$set(
 #  # now is.ExpressionSet() should return TRUE
 #  is.ExpressionSet(PhyloExpressionSetExample)
 
-## ---- fig.width= 7, fig.height= 5,eval=TRUE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-data(PhyloExpressionSetExample)
-# Plot the Transcriptome Age Index of a given PhyloExpressionSet 
-# Test Statistic : Flat Line Test (default)
-PlotSignature( ExpressionSet = PhyloExpressionSetExample,
-               measure       = "TAI", 
-               TestStatistic = "FlatLineTest",
-               xlab          = "Ontogeny", 
-               ylab          = "TAI" )
+## ---- fig.width= 7, fig.height= 5,eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#  data(PhyloExpressionSetExample)
+#  # Plot the Transcriptome Age Index of a given PhyloExpressionSet
+#  # Test Statistic : Flat Line Test (default)
+#  PlotSignature( ExpressionSet = PhyloExpressionSetExample,
+#                 measure       = "TAI",
+#                 TestStatistic = "FlatLineTest",
+#                 xlab          = "Ontogeny",
+#                 ylab          = "TAI" )
 
-## ---- fig.width= 9, fig.height= 5,eval=TRUE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-data(PhyloExpressionSetExample)
-# category-centered visualization of PS 
-# specific expression level distributions (log-scale)
-PlotCategoryExpr(ExpressionSet = PhyloExpressionSetExample,
-                     legendName    = "PS",
-                     test.stat     = TRUE,
-                     type          = "category-centered",
-                     distr.type    = "boxplot",
-                     log.expr      = TRUE)
+## ---- fig.width= 9, fig.height= 5,eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#  data(PhyloExpressionSetExample)
+#  # category-centered visualization of PS
+#  # specific expression level distributions (log-scale)
+#  PlotCategoryExpr(ExpressionSet = PhyloExpressionSetExample,
+#                       legendName    = "PS",
+#                       test.stat     = TRUE,
+#                       type          = "category-centered",
+#                       distr.type    = "boxplot",
+#                       log.expr      = TRUE)
 
-## ---- fig.width= 9, fig.height= 5,eval=TRUE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-data(PhyloExpressionSetExample)
-# plot evolutionary old PS (PS1-3) vs
-# evolutionary young PS (PS4-12)
-PlotMeans(PhyloExpressionSetExample,
-          Groups = list(c(1:3), c(4:12)), 
-          legendName = "PS",
-          adjust.range = TRUE)
+## ---- fig.width= 9, fig.height= 5,eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#  data(PhyloExpressionSetExample)
+#  # plot evolutionary old PS (PS1-3) vs
+#  # evolutionary young PS (PS4-12)
+#  PlotMeans(PhyloExpressionSetExample,
+#            Groups = list(c(1:3), c(4:12)),
+#            legendName = "PS",
+#            adjust.range = TRUE)
 
-## ---- fig.width= 9, fig.height= 5,eval=TRUE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-data(PhyloExpressionSetExample)
-# plot evolutionary old PS (PS1-3) vs
-# evolutionary young PS (PS4-12)
-PlotRE(PhyloExpressionSetExample,
-          Groups = list(c(1:3), c(4:12)), 
-          legendName = "PS",
-          adjust.range = TRUE)
+## ---- fig.width= 9, fig.height= 5,eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#  data(PhyloExpressionSetExample)
+#  # plot evolutionary old PS (PS1-3) vs
+#  # evolutionary young PS (PS4-12)
+#  PlotRE(PhyloExpressionSetExample,
+#            Groups = list(c(1:3), c(4:12)),
+#            legendName = "PS",
+#            adjust.range = TRUE)
 
-## ----eval=TRUE,echo=FALSE,fig.width= 7, fig.height= 15----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# select PS4-12 genes
-PhyloExpressionSetExample.PS4_12 <-
-        dplyr::filter(PhyloExpressionSetExample, Phylostratum %in% c(4:12))
-# categorize A. thaliana embryogenesis into three 
-# developmental modules (early, mid, and late)
-Ath.Embryogenesis.DiffGenes <-
-        DiffGenes(
-        ExpressionSet = PhyloExpressionSetExample.PS4_12,
-        nrep          = c(2, 3, 2),
-        stage.names   = c("Early", "Mid", "Late")
-        )
-
-# cluster young genes (PS4-12) according to their fold-change pattern: High-Low-Low        
-Ath.Embryo.High_Low_Low <-
-        PhyloExpressionSetExample.PS4_12[which((Ath.Embryogenesis.DiffGenes[, "Early->Mid"] > 3) &
-        (dplyr::between(Ath.Embryogenesis.DiffGenes[, "Mid->Late"], 1, 2))),]
-
-# cluster young genes (PS4-12) according to their fold-change pattern: High-Low-High
-Ath.Embryo.High_Low_High <-
-        PhyloExpressionSetExample.PS4_12[which((Ath.Embryogenesis.DiffGenes[, "Early->Mid"] > 3) &
-        (Ath.Embryogenesis.DiffGenes[, "Mid->Late"] < 0.2)),]
-
-# cluster young genes (PS4-12) according to their fold-change pattern: Low-Low-High        
-Ath.Embryo.Low_Low_High <-
-        PhyloExpressionSetExample.PS4_12[which((dplyr::between(Ath.Embryogenesis.DiffGenes[, "Early->Mid"], 1, 2)) &
-        (Ath.Embryogenesis.DiffGenes[, "Mid->Late"] < 0.2)),]
-        
-        
-        par(mfrow = c(3, 1))
-        matplot(
-        t(Ath.Embryo.High_Low_Low[, 3:9]),
-        type = "l",
-        lty = 1,
-        lwd = 2,
-        col = "lightblue",
-        xlab = "Ontogeny",
-        ylab = "Expression Level",
-        xaxt = "n",
-        cex.lab = 1.5,
-        cex.axis = 1.5,
-        main = "High-Low-Low"
-        )
-        lines(
-        colMeans(Ath.Embryo.High_Low_Low[, 3:9]),
-        lwd = 6 ,
-        col = "red",
-        cex.lab = 1.5,
-        cex.axis = 1.5,
-        cex = 1.5
-        )
-        axis(1, 1:7, names(PhyloExpressionSetExample)[3:9])
-        text(
-        4,
-        max(Ath.Embryo.High_Low_Low[, 3:9]) - 6000,
-        labels = paste0(nrow(Ath.Embryo.High_Low_Low), " Genes"),
-        cex = 2
-        )
-        
-        matplot(
-        t(Ath.Embryo.High_Low_High[, 3:9]),
-        type = "l",
-        lty = 1,
-        lwd = 2,
-        col = "lightblue",
-        xlab = "Ontogeny",
-        ylab = "Expression Level",
-        xaxt = "n",
-        cex.lab = 1.5,
-        cex.axis = 1.5,
-        main = "High-Low-High"
-        )
-        lines(
-        colMeans(Ath.Embryo.High_Low_High[, 3:9]),
-        lwd = 6 ,
-        col = "red",
-        cex.lab = 1.5,
-        cex.axis = 1.5,
-        cex = 1.5
-        )
-        axis(1, 1:7, names(PhyloExpressionSetExample)[3:9])
-        text(
-        4,
-        max(Ath.Embryo.High_Low_High[, 3:9]) - 6000,
-        labels = paste0(nrow(Ath.Embryo.High_Low_High), " Genes"),
-        cex = 2
-        )
-        
-        matplot(
-        t(Ath.Embryo.Low_Low_High[, 3:9]),
-        type = "l",
-        lty = 1,
-        lwd = 2,
-        col = "lightblue",
-        xlab = "Ontogeny",
-        ylab = "Expression Level",
-        xaxt = "n",
-        cex.lab = 1.5,
-        cex.axis = 1.5,
-        main = "Low-Low-High"
-        )
-        lines(
-        colMeans(Ath.Embryo.Low_Low_High[, 3:9]),
-        lwd = 6 ,
-        col = "red",
-        cex.lab = 1.5,
-        cex.axis = 1.5,
-        cex = 1.5
-        )
-        axis(1, 1:7, names(PhyloExpressionSetExample)[3:9])
-        text(
-        4,
-        max(Ath.Embryo.Low_Low_High[, 3:9]) - 6000,
-        labels = paste0(nrow(Ath.Embryo.Low_Low_High), " Genes"),
-        cex = 2
-        )
+## ----eval=FALSE,echo=FALSE,fig.width= 7, fig.height= 15---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#  # select PS4-12 genes
+#  PhyloExpressionSetExample.PS4_12 <-
+#          dplyr::filter(PhyloExpressionSetExample, Phylostratum %in% c(4:12))
+#  # categorize A. thaliana embryogenesis into three
+#  # developmental modules (early, mid, and late)
+#  Ath.Embryogenesis.DiffGenes <-
+#          DiffGenes(
+#          ExpressionSet = PhyloExpressionSetExample.PS4_12,
+#          nrep          = c(2, 3, 2),
+#          stage.names   = c("Early", "Mid", "Late")
+#          )
+#  
+#  # cluster young genes (PS4-12) according to their fold-change pattern: High-Low-Low
+#  Ath.Embryo.High_Low_Low <-
+#          PhyloExpressionSetExample.PS4_12[which((Ath.Embryogenesis.DiffGenes[, "Early->Mid"] > 3) &
+#          (dplyr::between(Ath.Embryogenesis.DiffGenes[, "Mid->Late"], 1, 2))),]
+#  
+#  # cluster young genes (PS4-12) according to their fold-change pattern: High-Low-High
+#  Ath.Embryo.High_Low_High <-
+#          PhyloExpressionSetExample.PS4_12[which((Ath.Embryogenesis.DiffGenes[, "Early->Mid"] > 3) &
+#          (Ath.Embryogenesis.DiffGenes[, "Mid->Late"] < 0.2)),]
+#  
+#  # cluster young genes (PS4-12) according to their fold-change pattern: Low-Low-High
+#  Ath.Embryo.Low_Low_High <-
+#          PhyloExpressionSetExample.PS4_12[which((dplyr::between(Ath.Embryogenesis.DiffGenes[, "Early->Mid"], 1, 2)) &
+#          (Ath.Embryogenesis.DiffGenes[, "Mid->Late"] < 0.2)),]
+#  
+#  
+#          par(mfrow = c(3, 1))
+#          matplot(
+#          t(Ath.Embryo.High_Low_Low[, 3:9]),
+#          type = "l",
+#          lty = 1,
+#          lwd = 2,
+#          col = "lightblue",
+#          xlab = "Ontogeny",
+#          ylab = "Expression Level",
+#          xaxt = "n",
+#          cex.lab = 1.5,
+#          cex.axis = 1.5,
+#          main = "High-Low-Low"
+#          )
+#          lines(
+#          colMeans(Ath.Embryo.High_Low_Low[, 3:9]),
+#          lwd = 6 ,
+#          col = "red",
+#          cex.lab = 1.5,
+#          cex.axis = 1.5,
+#          cex = 1.5
+#          )
+#          axis(1, 1:7, names(PhyloExpressionSetExample)[3:9])
+#          text(
+#          4,
+#          max(Ath.Embryo.High_Low_Low[, 3:9]) - 6000,
+#          labels = paste0(nrow(Ath.Embryo.High_Low_Low), " Genes"),
+#          cex = 2
+#          )
+#  
+#          matplot(
+#          t(Ath.Embryo.High_Low_High[, 3:9]),
+#          type = "l",
+#          lty = 1,
+#          lwd = 2,
+#          col = "lightblue",
+#          xlab = "Ontogeny",
+#          ylab = "Expression Level",
+#          xaxt = "n",
+#          cex.lab = 1.5,
+#          cex.axis = 1.5,
+#          main = "High-Low-High"
+#          )
+#          lines(
+#          colMeans(Ath.Embryo.High_Low_High[, 3:9]),
+#          lwd = 6 ,
+#          col = "red",
+#          cex.lab = 1.5,
+#          cex.axis = 1.5,
+#          cex = 1.5
+#          )
+#          axis(1, 1:7, names(PhyloExpressionSetExample)[3:9])
+#          text(
+#          4,
+#          max(Ath.Embryo.High_Low_High[, 3:9]) - 6000,
+#          labels = paste0(nrow(Ath.Embryo.High_Low_High), " Genes"),
+#          cex = 2
+#          )
+#  
+#          matplot(
+#          t(Ath.Embryo.Low_Low_High[, 3:9]),
+#          type = "l",
+#          lty = 1,
+#          lwd = 2,
+#          col = "lightblue",
+#          xlab = "Ontogeny",
+#          ylab = "Expression Level",
+#          xaxt = "n",
+#          cex.lab = 1.5,
+#          cex.axis = 1.5,
+#          main = "Low-Low-High"
+#          )
+#          lines(
+#          colMeans(Ath.Embryo.Low_Low_High[, 3:9]),
+#          lwd = 6 ,
+#          col = "red",
+#          cex.lab = 1.5,
+#          cex.axis = 1.5,
+#          cex = 1.5
+#          )
+#          axis(1, 1:7, names(PhyloExpressionSetExample)[3:9])
+#          text(
+#          4,
+#          max(Ath.Embryo.Low_Low_High[, 3:9]) - 6000,
+#          labels = paste0(nrow(Ath.Embryo.Low_Low_High), " Genes"),
+#          cex = 2
+#          )
 
 ## ---- fig.width= 7, fig.height= 5,eval=FALSE--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 #  data(PhyloExpressionSetExample)

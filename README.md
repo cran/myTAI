@@ -1,9 +1,9 @@
 
 # myTAI <img src="inst/myTAI.png" align="right" height="174" width="150" />
 [![Travis-CI Build Status](https://travis-ci.org/HajkD/myTAI.svg?branch=master)](https://travis-ci.org/HajkD/myTAI)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/myTAI)](https://github.com/metacran/cranlogs.app)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/myTAI)](https://github.com/metacran/cranlogs.app)
- 
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/myTAI)](https://github.com/r-hub/cranlogs.app)
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/myTAI)](https://github.com/r-hub/cranlogs.app)
+[![Paper link](https://img.shields.io/badge/Published%20in-Bioinformatics-126888.svg)](https://academic.oup.com/bioinformatics/article/34/9/1589/4772684)  
 
 
 # Evolutionary Transcriptomics with R
@@ -12,7 +12,7 @@
 
 Evolutionary transcriptomics studies can serve as a first approach to screen _in silico_ for the potential existence of evolutionary constraints within a biological process of interest. This is achieved by quantifying transcriptome conservation patterns and their underlying gene sets in biological processes. The exploratory analysis functions implemented in `myTAI` provide users with a standardized, automated and optimized framework to detect patterns of evolutionary constraints in any transcriptome dataset of interest.
 
-Please find a detailed documentation [here](https://hajkd.github.io/myTAI/articles/Introduction.html).
+Please find a detailed documentation [here](https://drostlab.github.io/myTAI/articles/Introduction.html).
 
 
 ## Citation
@@ -30,20 +30,20 @@ if (!requireNamespace("BiocManager"))
     install.packages("BiocManager")
 BiocManager::install()
 # Install package dependencies
-BiocManager::install("Biostrings", version = "3.8")
+BiocManager::install("Biostrings")
 BiocManager::install("edgeR")
 ```
 
 Now users can install `myTAI` from CRAN:
 
 ```r
-# install myTAI 0.9.1
+# install myTAI 0.9.3
 install.packages("myTAI", dependencies = TRUE)
 ```
 
 ### Short package description
 
-Using `myTAI`, any existing or newly generated transcriptome dataset can be combined with evolutionary information (find [details here](https://hajkd.github.io/myTAI/articles/Introduction.html#retrieval-of-phylogenetic-or-taxonomic-information)) to retrieve novel insights about the evolutionary conservation of the transcriptome at hand. 
+Using `myTAI`, any existing or newly generated transcriptome dataset can be combined with evolutionary information (find [details here](https://drostlab.github.io/myTAI/articles/Introduction.html#retrieval-of-phylogenetic-or-taxonomic-information)) to retrieve novel insights about the evolutionary conservation of the transcriptome at hand. 
 
 For the purpose of performing large scale evolutionary transcriptomics studies, the `myTAI` package implements the quantification, statistical assessment, and analytics functionality to allow researchers to study the evolution of biological processes by determining stages or periods of evolutionary conservation or variability in transcriptome data. 
 
@@ -55,10 +55,10 @@ Today, phenotypic phenomena such as morphological mutations, diseases or develop
 
 Evolutionary transcriptomics aims to capture and quantify the evolutionary conservation of genes that contribute to the transcriptome during a specific stage of the biological process of interest. The resulting temporal conservation pattern
 then enables to detect stages of development or other biological processes that
-are evolutionarily conserved ([Drost et al., 2018](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btx835/4772684)). This quantification on the highest level is achieved through transcriptome indices (e.g. [Transcriptome Age Index or Transcriptome Divergence Index](https://hajkd.github.io/myTAI/articles/Introduction.html#transcriptome-age-index)) which aim to quantify the average evolutionary age or sequence conseration of genes that contribute to the transcriptome at a particular stage. In general, evolutionary transcriptomics can be used as a method to quantify the evolutionary conservation of transcriptomes to investigate how transcriptomes underlying biological processes are constrained or channeled due to events in evolutionary history (Dollow's law) ([Drost et al., 2017](http://www.sciencedirect.com/science/article/pii/S0959437X16302040)).
+are evolutionarily conserved ([Drost et al., 2018](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btx835/4772684)). This quantification on the highest level is achieved through transcriptome indices (e.g. [Transcriptome Age Index or Transcriptome Divergence Index](https://drostlab.github.io/myTAI/articles/Introduction.html#transcriptome-age-index)) which aim to quantify the average evolutionary age or sequence conseration of genes that contribute to the transcriptome at a particular stage. In general, evolutionary transcriptomics can be used as a method to quantify the evolutionary conservation of transcriptomes to investigate how transcriptomes underlying biological processes are constrained or channeled due to events in evolutionary history (Dollow's law) ([Drost et al., 2017](https://www.sciencedirect.com/science/article/pii/S0959437X16302040).
 
 __Please note, since myTAI relies on gene age inference and there has been an extensive debate about the best approaches for gene age inference in the last years,
-please follow my [updated discussion about the gene age inference literature](https://hajkd.github.io/myTAI/articles/Introduction.html#genomic-phylostratography-based-gene-age-inference).__
+please follow my [updated discussion about the gene age inference literature](https://drostlab.github.io/myTAI/articles/Introduction.html#genomic-phylostratography-based-gene-age-inference).__
 
 
 ## Install Developer Version
@@ -75,24 +75,24 @@ BiocManager::install()
 BiocManager::install("Biostrings", version = "3.8")
 BiocManager::install("edgeR")
 # install developer version of myTAI
-BiocManager::install("HajkD/myTAI")
+BiocManager::install("drostlab/myTAI")
 ```
 
 ## NEWS
 
 The current status of the package as well as a detailed history of the
-functionality of each version of `myTAI` can be found in the [NEWS](https://hajkd.github.io/myTAI/news/index.html) section.
+functionality of each version of `myTAI` can be found in the [NEWS](https://drostlab.github.io/myTAI/news/index.html) section.
 
 ## Tutorials
 
 The following tutorials will provide use cases and detailed explainations of how to quantify transcriptome onservation with `myTAI` and how to interpret the results generated with this software tool.
 
-- [Introduction to the myTAI Package](https://hajkd.github.io/myTAI/articles/Introduction.html)
-- [Intermediate Concepts of Phylotranscriptomics](https://hajkd.github.io/myTAI/articles/Intermediate.html)
-- [Advanced Topics of Phylotranscriptomics](https://hajkd.github.io/myTAI/articles/Advanced.html)
-- [Perform Age Enrichment Analyses](https://hajkd.github.io/myTAI/articles/Enrichment.html)
-- [Gene Expression Analysis with myTAI](https://hajkd.github.io/myTAI/articles/Expression.html)
-- [Taxonomic Information Retrieval](https://hajkd.github.io/myTAI/articles/Taxonomy.html)
+- [Introduction to the myTAI Package](https://drostlab.github.io/myTAI/articles/Introduction.html)
+- [Intermediate Concepts of Phylotranscriptomics](https://drostlab.github.io/myTAI/articles/Intermediate.html)
+- [Advanced Topics of Phylotranscriptomics](https://drostlab.github.io/myTAI/articles/Advanced.html)
+- [Perform Age Enrichment Analyses](https://drostlab.github.io/myTAI/articles/Enrichment.html)
+- [Gene Expression Analysis with myTAI](https://drostlab.github.io/myTAI/articles/Expression.html)
+- [Taxonomic Information Retrieval](https://drostlab.github.io/myTAI/articles/Taxonomy.html)
 
 
 ## Example
@@ -114,6 +114,9 @@ ExprExample <- tf(PhyloExpressionSetExample, log2)
 PlotSignature(ExprExample)
 ```
 
+![](docs/articles/Introduction_files/figure-html/unnamed-chunk-10-1.png)
+
+
 #### Quantify expression level distributions for each gene age category
 
 ```r
@@ -122,6 +125,7 @@ PlotSignature(ExprExample)
 PlotCategoryExpr(ExprExample, "PS")
 ```
 
+![](docs/articles/Introduction_files/figure-html/unnamed-chunk-11-1.png)
 
 #### Quantify mean expression of individual gene age categories
 
@@ -131,6 +135,9 @@ PlotCategoryExpr(ExprExample, "PS")
 PlotMeans(ExprExample, Groups = list(1:3, 4:12))
 ```
 
+![](docs/articles/Introduction_files/figure-html/unnamed-chunk-12-1.png)
+
+
 #### Quantify relative mean expression of each age category seperated by old versus young genes
 
 ```r
@@ -139,6 +146,7 @@ PlotMeans(ExprExample, Groups = list(1:3, 4:12))
 PlotRE(ExprExample, Groups = list(1:3, 4:12))
 ```
 
+![](docs/articles/Introduction_files/figure-html/unnamed-chunk-13-1.png)
 
 ```r
 # plot the significant differences between gene expression distributions 
@@ -151,7 +159,7 @@ PlotGroupDiffs(ExpressionSet = ExprExample,
 
 ## Getting started with `myTAI`
 
-Users can also read the tutorials within ([RStudio](http://www.rstudio.com/)) :
+Users can also read the tutorials within ([RStudio](https://rstudio.com/)) :
 
 ```r
 # source the myTAI package
@@ -254,6 +262,12 @@ All functions also include visual analytics tools to quantify the goodness of te
 
 ## Studies that successfully used `myTAI` to quantify transcriptome conservation:
 
+> - __Evolutionary transcriptomics of metazoan biphasic life cycle supports a single intercalation origin of metazoan larvae__
+>J Wang, L Zhang, S Lian, Z Qin, X Zhu, X Dai, Z Huang et al. - __Nature Ecology & Evolution__, 2020
+>
+> - __Reconstructing the transcriptional ontogeny of maize and sorghum supports an inverse hourglass model of inflorescence development__ 
+> S Leiboff, S Hake - __Current Biology__, 2019
+>
 > - __Evidence for active maintenance of phylotranscriptomic hourglass patterns in animal and plant embryogenesis__
 >HG Drost, A Gabel, I Grosse, M Quint - __Molecular biology and evolution__, 2015
 >
@@ -265,9 +279,6 @@ D Xiang, TD Quilichini, Z Liu, P Gao, Y Pan et al. - __The Plant Cell__, 2019
 >
 > - __Developmental constraints on genome evolution in four bilaterian model species__
 J Liu, M Robinson-Rechavi - __Genome biology and evolution__, 2018
->
-> - __Reconstructing the transcriptional ontogeny of maize and sorghum supports an inverse hourglass model of inflorescence development__
-S Leiboff, S Hake - __Current Biology__, 2019
 >
 > - __Mapping selection within Drosophila melanogaster embryo's anatomy__
 I Salvador-Martínez et al. - __Molecular biology and evolution__, 2017
@@ -305,7 +316,7 @@ provided in this package.
 Furthermore, in case you find some bugs or need additional (more flexible) functionality of parts
 of this package, please let me know:
 
-https://github.com/HajkD/myTAI/issues
+https://github.com/drostlab/myTAI/issues
 
 ## References
 
@@ -315,7 +326,7 @@ Quint M, Drost HG, et al. __A transcriptomic hourglass in plant embryogenesis__.
 
 Drost HG, Gabel A, Grosse I, Quint M. __Evidence for Active Maintenance of Phylotranscriptomic Hourglass Patterns in Animal and Plant Embryogenesis__. _Mol. Biol. Evol._ (2015) 32 (5): 1221-1231.
 
-Drost HG, Bellstädt J, Ó'Maoiléidigh DS, Silva AT, Gabel A, Weinholdt C, Ryan PT, Dekkers BJW, Bentsink L, Hilhorst H, Ligterink W, Wellmer F, Grosse I, and Quint M. __Post-embryonic hourglass patterns mark ontogenetic transitions in plant development__. _Mol. Biol. Evol._ (2016) [doi:10.1093/molbev/msw039](http://mbe.oxfordjournals.org/content/early/2016/02/23/molbev.msw039.short?rss=1) 
+Drost HG, Bellstädt J, Ó'Maoiléidigh DS, Silva AT, Gabel A, Weinholdt C, Ryan PT, Dekkers BJW, Bentsink L, Hilhorst H, Ligterink W, Wellmer F, Grosse I, and Quint M. __Post-embryonic hourglass patterns mark ontogenetic transitions in plant development__. _Mol. Biol. Evol._ (2016) [doi:10.1093/molbev/msw039](https://academic.oup.com/mbe/article/33/5/1158/2580081) 
 
 
 ## Acknowledgement
