@@ -1,0 +1,15 @@
+#!/bin/sh
+# Minimal configure: add -latomic only on Linux
+
+UNAME=$(uname -s)
+
+PKG_LIBS=""
+
+if [ "$UNAME" = "Linux" ]; then
+    PKG_LIBS="-latomic"
+fi
+
+mkdir -p src
+cat <<EOF > src/Makevars
+PKG_LIBS = $PKG_LIBS
+EOF

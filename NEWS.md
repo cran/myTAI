@@ -1,3 +1,252 @@
+# NEWS
+
+myTAI 2.3.1
+===========
+
+This update has focused on improving the single-cell phyloset functionality.
+
+The single-cell phylo expression object no longer depends on Seurat. You can construct the ScPhyloExpressionSet either from a count matrix (sparse or dense), using `ScPhyloExpressionSet_from_matrix`, or from a Seurat object, using `ScPhyloExpressionSet_from_seurat`. For consistency, one can use `BulkPhyloExpressionSet_from_df` instead of `as_BulkPhyloExpressionSet`.
+
+One key functionality of the single-cell object is the ability to switch between different identities when plotting (equivalent to the `Seurat::Idents` functionality). This is done by setting the `::identities_label` property of the object. The `::available_idents` property can be used to see what options the user has in setting the current identity. By setting `::idents_colours[[]]`, the user can choose a colour pallette for the different identities when plotting, which are saved across different plotting calls. 
+
+The computation of TAI values for single cell is now cached. Moreover, we have readded the C++ accelerated code for the computation of TAI, which upon profiling shows to be faster than the R version when handling more than 100000 cells (an adaptive function chooses the appropriate implementation for the object size). 
+
+Some of the plotting functionality had been improved and more options were added for plotting (e.g. plot_gene_heatmap now allows for passing a custom colour mapping for the rows (genes), instead of colouring them by their strata; plot_signature for single cell should be more readable).
+
+Bug fixes:
+- validation of S7 objects now works properly
+- printing of object information now works properly (instead of dumping all the properties information)
+
+
+
+
+myTAI 2.2.0.9006
+===========
+
+Most importantly, new vignettes were added and the website has been updated. Many thanks to @LotharukpongJS
+
+Functionality wise:
+
+- added more input validation across functions
+- improved plotting in `destroy_pattern`
+- renamed `tfPS` to `tf_PS` and fixed bug which prevented strata transformations from happening (PhyloExpressionSet now has an extra field @strata_values which keeps track of the phylostratum values)
+- added back standard deviation ribbon to plot_signature
+- finer control over cell identity selection in the sc object
+- fixed bugs in some of the plotting functions, such as plot_signature_multiple showing the colours in reverse, plot_genes_heatmap not working when given just one gene etc.
+
+myTAI 2.1.0.9000
+===========
+
+## Major Refactoring and New Features
+- **Single-cell support:** New `ScPhyloExpressionSet` S7 class for single-cell data, alongside `BulkPhyloExpressionSet` for bulk data.
+- **Property renaming:** `conditions` → `identities` (and `conditions_label` → `identities_label`), `counts`/`counts_collapsed` → `expression`/`expression_collapsed`.
+- **All core logic and plotting now robust to both bulk and single-cell objects.**
+
+## Function Renaming and Prefixes
+- **Statistical tests:** All core test functions now use the `stat_` prefix:
+    - `flatline_test()` → `stat_flatline_test()`
+    - `early_conservation_test()` → `stat_early_conservation_test()`
+    - `late_conservation_test()` → `stat_late_conservation_test()`
+    - `reductive_hourglass_test()` → `stat_reductive_hourglass_test()`
+    - `reverse_hourglass_test()` → `stat_reverse_hourglass_test()`
+    - `pairwise_test()` → `stat_pairwise_test()`
+    - `generic_conservation_test()` → `stat_generic_conservation_test()`
+    - `generate_conservation_txis()` → `stat_generate_conservation_txis()`
+- **Gene selection/filtering:** All gene selection/filtering functions now use the `genes_` prefix:
+    - `top_expression_genes()` → `genes_top_mean()`
+    - `top_variance_genes()` → `genes_top_variance()`
+    - `lowly_expressed_genes()` → `genes_lowly_expressed()`
+    - `filter_dyn_expr()` → `genes_filter_dynamic()`
+
+## Other Changes
+- Many internal and Rd files renamed for consistency (e.g., `gene_patterns.R` → `genes_patterns.R`, `S7_utils.R` → `utils_S7.R`).
+- Deprecated/legacy files removed: `expression_utils.R`, `single_cell.R`.
+- All documentation and examples updated to use new function/property names.
+
+myTAI 2.0.0.9000
+===========
+## Major Changes
+
+### New S7 Class System
+- Migrated from traditional R data structures to modern S7 classes
+- New `PhyloExpressionSet` S7 class replaces the old data.frame-based format
+- New `TestResult` S7 class for standardized storage of statistical test results
+- Computed properties automatically calculate derived values like TXI, pTXI, conditions, etc.
+- Built-in data validation and type checking through S7 properties
+- Improved replicate data handling with automatic collapsing
+
+### Function Name Modernization
+Function names have been updated to use snake_case convention:
+
+#### Statistical Tests (old → new)
+- `FlatLineTest()` → `flatline_test()`
+- `ReductiveHourglassTest()` → `reductive_hourglass_test()`
+- `EarlyConservationTest()` → `early_conservation_test()`
+- `LateConservationTest()` → `late_conservation_test()`
+- `ReverseHourglassTest()` → `reverse_hourglass_test()`
+- `PairwiseTest()` → `pairwise_test()`
+
+#### Visualization Functions (old → new)
+- `PlotSignature()` → `plot_signature()`
+- `PlotPattern()` → `plot_signature()`
+- `PlotContribution()` → `plot_contribution()`
+- `PlotDistribution()` → `plot_distribution_strata()`
+- `PlotCategoryExpr()` → `plot_strata_expression()`
+- `PlotRE()` → `plot_relative_expression_line()`
+- `PlotBarRE()` → `plot_relative_expression_bar()`
+- `PlotGeneSet()` → `plot_gene_profiles()`
+- `PlotMeans`, `PlotVars`, `PlotMedians` → `plot_strata_expression(aggregate_FUN="mean"/"var"/"median")
+- `PlotSignatureMultiple()` → `plot_signature_multiple()`
+- `PlotSignatureTransformed()` → `plot_signature_transformed()`
+- `PlotSignatureGeneQuantiles()` → `plot_signature_gene_quantiles()`
+
+#### Utility Functions (old → new)
+- `TAI()` → Computed property of PhyloExpressionSet (still accessible via `TAI()`)
+- `TDI()` → Computed property of PhyloExpressionSet (still accessible via `TDI()`)
+- `TEI()` → Computed property of PhyloExpressionSet (still accessible via `TEI()`)
+- `TPI()` → Computed property of PhyloExpressionSet (still accessible via `TPI()`)
+- `pTAI()`, `pTDI` → `sTXI()` (generalized for all transcriptomic indices)
+- `pMatrix()` → `pTXI()`
+- `CollapseReplicates()` → `collapse`, Built into PhyloExpressionSet constructor
+- `Expressed()` → `lowly_expressed_genes()`
+- `MatchMap()` → `match_map()`
+- `SelectGeneSet()` → `select_genes()`
+- `TopExpressionGenes()` → `top_expression_genes()`
+- `TopVarianceGenes()` → `top_variance_genes()`
+- `REMatrix()` → `rel_exp_matrix()`
+- `RE()` → `relative_expression()`
+- `omitMatrix()` → `omit_matrix()`
+- `is.ExpressionSet()` → Built into S7 validation
+- `age.apply()` → `age.apply()` (unchanged)
+- `tf()` → `tf()` or `transform_counts()`
+- `tfPS()` → `tfPS()` (unchanged)
+- `tfStability()` → `tf_stability()`
+- `taxid()` → `taxid()` (unchanged)
+
+### New Functions
+- `destroy_pattern()`: Apply GATAI algorithm to identify pattern-contributing genes
+- `plot_signature_multiple()`: Plot multiple signatures on the same plot
+- `plot_signature_gene_quantiles()`: Plot signature with gene expression quantiles
+- `plot_signature_transformed()`: Plot signatures with different transformations
+- `plot_sample_space()`: Visualize sample relationships using PCA or UMAP
+- `plot_mean_var()`: Mean-variance relationship plots
+- `plot_gene_profiles()`: Individual gene expression profiles
+- `plot_distribution_expression()`: Expression distribution plots
+- `plot_distribution_pTAI()`: Partial TXI distribution plots
+- `plot_distribution_pTAI_qqplot()`: Q-Q plots for pTXI distributions
+- `plot_distribution_strata()`: Phylostrata distribution plots
+- `plot_gene_heatmap()`: Gene expression heatmaps
+- `plot_gene_space()`: Gene space visualization
+- `plot_cullen_frey()`: Cullen-Frey plots for distribution assessment
+- `plot_null_txi_sample()`: Null TXI sample plots
+- `as_PhyloExpressionSet()`: Convert data to PhyloExpressionSet S7 object
+- `get_sc_TAI()`: Single-cell TAI computation for Seurat objects=
+- `diagnose_test_robustness()`: Diagnose statistical test robustness
+- `remove_genes()`: Remove genes from PhyloExpressionSet
+- `PS_colours()`: Generate phylostratum color palettes
+- `ConservationTestResult()`: S7 class for conservation test results
+- `TestResult()`: S7 class for statistical test results
+
+### Enhanced Features
+- Improved performance with parallelized C++ functions using RcppArmadillo
+- All plots now use ggplot2 with consistent styling
+- Comprehensive unit tests
+- Updated to use modern R packages (ggplot2, dplyr, etc.)
+
+### Breaking Changes
+- Function names have been updated to snake_case convention
+- PhyloExpressionSet is now an S7 object instead of a data.frame
+- Function signatures have been updated for consistency
+- Some deprecated functions have been removed
+- New package dependencies: S7, RcppArmadillo
+
+### Migration Guide
+To migrate from myTAI 1.x to 2.0:
+
+1. **Convert data format**:
+   ```r
+   # Old format (data.frame)
+   old_phyex <- PhyloExpressionSetExample
+   
+   # New format (S7 object)
+   new_phyex <- as_PhyloExpressionSet(old_phyex)
+   ```
+
+2. **Update function calls**:
+   ```r
+   # Old syntax
+   PlotSignature(phyex_set, TestStatistic = "FlatLineTest")
+   
+   # New syntax
+   plot_signature(phyex_set, conservation_test = flatline_test)
+   ```
+
+3. **Access computed properties**:
+   ```r
+   # Old syntax
+   tai_values <- TAI(phyex_set)
+   
+   # New syntax
+   tai_values <- phyex_set@TXI
+   # or
+   tai_values <- TAI(phyex_set)
+   ```
+
+myTAI 1.0.2.9000
+===========
+## New Functions
+- New function `tfPS()` : Perform transformation of phylostratum values, analogous to `PS()` which transforms expression levels. Currently, `tfPS()` supports quantile rank transformation.
+- New function `PairwiseTest()` : Statistically evaluate the pairwise difference in the phylotranscriptomic pattern between two contrasts based on \code{\link{TAI}} or \code{\link{TDI}} computations.
+- New function `pairScore()` : Compute pairwise difference in TAI (or TDI) score.
+
+## Bug and Issue Fixes
+- Removed `taxonomy()` and references to it due to the deprecation of `taxize()`. This is needed for CRAN submission.
+
+myTAI 1.0.1.9000
+===========
+## New Functions
+- New function `PlotSignatureTransformed()` : Plot evolutionary signatures across transcriptomes and RNA-seq transformations
+- New function `tfStability()`: Perform Permutation Tests Under Different Transformations (to test the robustness of the p-values of a given test (e.g. `FlatLineTest()`, `ReductiveHourglassTest()`, `ReverseHourglassTest()`, `EarlyConservationTest()` and `LateConservationTest()`) to expression data transformations)
+- New function `LateConservationTest()` : Perform Reductive Late Conservation Test (to test for a high-mid-low (or high-high-low) TAI or TDI pattern)
+- New function `lcScore()` : Compute the Hourglass Score for the LateConservationTest
+
+- internal `rcpp` functions are now using Eigen to automatically enable parallelization
+
+## New Features
+- `PlotSignature()` updated to be able to perform the `TestStatistic = "LateConservationTest"`.
+- `PlotSignature()` now prints p-value as a subtitle rather than via `ggplot2::annotate()`.
+- `tf()` now has a `pseudocount` parameter, which is useful for performing logarithmic transformations when there are genes with 0 counts.
+- `tf()` now supports `vst` and `rlog` transformations from [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html).
+- `tf()` now has an `intergerise` parameter, which is needed when applying `vst` or `rlog` transformations.
+- `tf()` updated documentation for performing rank transformation, which assigns ranks to the gene expression values within each stage, based on their relative positions compared to other values.
+- Improvements to existing test functions (`ecScore()`, `rhScore()` and `reversehourglassScore()`) to give a message when the phylotranscriptomic pattern is unlikely to follow the test statistics.
+
+- `FlatLineTest()` - newly returns the ks test statistics for the fitting of gamma
+- `FlatLineTest()` - improved fitting
+- `FlatLineTest()` - cpp functions are newly parallelized and progress bar is implemented for the computation of permutations
+  
+## Bug and Issue Fixes
+- Some changes to remove errors and warnings from `devtools::test()` and `devtools::check()`, when building this package, which has been accumulated from previous updates.
+
+myTAI 1.0.0
+===========
+## New Functions
+- New function `TEI()`: Compute the Transcriptome Evolutionary Index 
+- New function `pMatrixTEI`: Compute Partial Transcriptome Evolutionary Index (TEI) Values 
+- New function `pStrataTEI`: Compute Partial Transcriptome Evolutionary Index (TEI) Strata Values
+- New function `bootTEI`: Compute a Permutation Matrix of Transcriptome Evolutionary Index (TEI)
+- new internal `rcpp` functions to support parallel C++ computations for `TEI()`, `pMatrixTEI()`, `pStrataTEI()`, `bootTEI()`
+
+## New Features
+- `CollapseReplicates()` now returns `tibble` objects
+- `PlotCategoryExpr()` received a new argument `y.ticks` 
+
+## Bug and Issue Fixes
+
+- `CollapseFromTo()` now has an exception when a replicate number `1` is passed to the function
+-> previously this would cause an error to occur
+
+
 myTAI 0.9.3
 ===========
 - removing the depreciated `std::random_shuffle()` function to sample `plylostratum` or `divergence stratum` columns and replacing it with `std::shuffle()`. See full discussion [here](https://meetingcpp.com/blog/items/stdrandom_shuffle-is-deprecated.html).
@@ -70,7 +319,7 @@ myTAI 0.6.0
 
 ### Updates
 
-- `is.ExpressionSet()` now prints out more detailed error messages when [ExpressionSet format](https://github.com/drostlab/myTAI/blob/master/vignettes/Introduction.Rmd) is violated
+- `is.ExpressionSet()` now prints out more detailed error messages when ExpressionSet is violated
 
 - adapt `PlotContribution()` to new version of `dplyr` where `summarise_each()` is deprecated.
 

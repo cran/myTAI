@@ -2,89 +2,51 @@
 // Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #include <RcppArmadillo.h>
+#include <RcppThread.h>
 #include <Rcpp.h>
 
 using namespace Rcpp;
 
-// cpp_TAI
-NumericVector cpp_TAI(const NumericMatrix& ExpressionSet, const NumericVector& Phylostratum);
-RcppExport SEXP _myTAI_cpp_TAI(SEXP ExpressionSetSEXP, SEXP PhylostratumSEXP) {
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
+// cpp_nullTXIs
+arma::mat cpp_nullTXIs(const arma::mat& count_matrix, const arma::vec& strata_vector, int num_permutations);
+RcppExport SEXP _myTAI_cpp_nullTXIs(SEXP count_matrixSEXP, SEXP strata_vectorSEXP, SEXP num_permutationsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type ExpressionSet(ExpressionSetSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type Phylostratum(PhylostratumSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_TAI(ExpressionSet, Phylostratum));
+    Rcpp::traits::input_parameter< const arma::mat& >::type count_matrix(count_matrixSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type strata_vector(strata_vectorSEXP);
+    Rcpp::traits::input_parameter< int >::type num_permutations(num_permutationsSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_nullTXIs(count_matrix, strata_vector, num_permutations));
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_bootMatrix
-NumericMatrix cpp_bootMatrix(const NumericMatrix& ExpressionMatrix, const NumericVector& AgeVector, const int& permutations);
-RcppExport SEXP _myTAI_cpp_bootMatrix(SEXP ExpressionMatrixSEXP, SEXP AgeVectorSEXP, SEXP permutationsSEXP) {
+// cpp_txi_sc
+Rcpp::NumericVector cpp_txi_sc(const arma::sp_mat& expression, const arma::vec& strata_values, int batch_size, int ncores);
+RcppExport SEXP _myTAI_cpp_txi_sc(SEXP expressionSEXP, SEXP strata_valuesSEXP, SEXP batch_sizeSEXP, SEXP ncoresSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type ExpressionMatrix(ExpressionMatrixSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type AgeVector(AgeVectorSEXP);
-    Rcpp::traits::input_parameter< const int& >::type permutations(permutationsSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_bootMatrix(ExpressionMatrix, AgeVector, permutations));
+    Rcpp::traits::input_parameter< const arma::sp_mat& >::type expression(expressionSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type strata_values(strata_valuesSEXP);
+    Rcpp::traits::input_parameter< int >::type batch_size(batch_sizeSEXP);
+    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
+    rcpp_result_gen = Rcpp::wrap(cpp_txi_sc(expression, strata_values, batch_size, ncores));
     return rcpp_result_gen;
 END_RCPP
 }
-// cpp_pMatrix
-NumericMatrix cpp_pMatrix(const NumericMatrix& ExpressionSet, const NumericVector& AgeVector);
-RcppExport SEXP _myTAI_cpp_pMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type ExpressionSet(ExpressionSetSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type AgeVector(AgeVectorSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_pMatrix(ExpressionSet, AgeVector));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_std_error
-double cpp_std_error(const NumericVector& x);
-RcppExport SEXP _myTAI_cpp_std_error(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_std_error(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_geom_mean
-double cpp_geom_mean(const NumericVector& x);
-RcppExport SEXP _myTAI_cpp_geom_mean(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_geom_mean(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_harmonic_mean
-double cpp_harmonic_mean(const NumericVector& x);
-RcppExport SEXP _myTAI_cpp_harmonic_mean(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_harmonic_mean(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// cpp_omitMatrix
-NumericMatrix cpp_omitMatrix(const NumericMatrix& ExpressionSet, const NumericVector& AgeVector);
-RcppExport SEXP _myTAI_cpp_omitMatrix(SEXP ExpressionSetSEXP, SEXP AgeVectorSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type ExpressionSet(ExpressionSetSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type AgeVector(AgeVectorSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_omitMatrix(ExpressionSet, AgeVector));
-    return rcpp_result_gen;
-END_RCPP
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_myTAI_cpp_nullTXIs", (DL_FUNC) &_myTAI_cpp_nullTXIs, 3},
+    {"_myTAI_cpp_txi_sc", (DL_FUNC) &_myTAI_cpp_txi_sc, 4},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_myTAI(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
