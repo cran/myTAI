@@ -16,7 +16,6 @@
   cluster_rows = FALSE,
   cluster_cols = FALSE,
   show_gene_age = TRUE,
-  show_phylostrata_legend = TRUE,
   show_gene_ids = FALSE,
   gene_annotation = NULL,
   gene_annotation_colors = NULL,
@@ -47,8 +46,6 @@
 \item{cluster_cols}{Logical indicating whether to cluster identities/columns (default: FALSE)}
 
 \item{show_gene_age}{Logical indicating whether to show gene age as row annotation (default: TRUE)}
-
-\item{show_phylostrata_legend}{Logical indicating whether to show the phylostratum legend (default: TRUE)}
 
 \item{show_gene_ids}{Logical indicating whether to show gene names (default: FALSE)}
 

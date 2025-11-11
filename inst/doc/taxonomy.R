@@ -70,13 +70,19 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
         
         name <- id <- NULL
 
-        if (db == "ncbi")
-                tax_hierarchy <- as.data.frame(taxize::classification(taxize::get_uid(organism), db = "ncbi")[[1]])
+        tax_hierarchy <- tryCatch({
+                if (db == "ncbi")
+                        as.data.frame(taxize::classification(taxize::get_uid(organism), db = "ncbi")[[1]])
+                else if (db == "itis")    
+                        as.data.frame(taxize::classification(taxize::get_tsn(organism), db = "itis")[[1]])
+        }, error = function(e) {
+                warning("Could not retrieve taxonomy information from ", db, ". Check internet connection or try again later.", call. = FALSE)
+                return(NULL)
+        })
         
-        else if (db == "itis")    
-                tax_hierarchy <- as.data.frame(taxize::classification(taxize::get_tsn(organism), db = "itis")[[1]])
-        
-        # tryCatch({colnames(tax_hierarchy) <- c("name","rank","id")},stop("The connection to ",db," did not work properly. Please check your internet connection or maybe the API did change.", call. = FALSE))
+        if (is.null(tax_hierarchy)) {
+                return(NULL)
+        }
         
         if(output == "classification"){
                 
@@ -101,7 +107,7 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
 #           db       = "ncbi",
 #           output   = "classification" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE)----
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
 taxonomy( organism = "Arabidopsis thaliana", 
           db       = "ncbi",
           output   = "classification" )
@@ -113,7 +119,7 @@ taxonomy( organism = "Arabidopsis thaliana",
 #           db       = "itis",
 #           output   = "classification" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE)----
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
 taxonomy( organism = "Arabidopsis thaliana", 
           db       = "itis",
           output   = "classification" )
@@ -124,7 +130,7 @@ taxonomy( organism = "Arabidopsis thaliana",
 #           db       = "ncbi",
 #           output   = "taxid" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE)----
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
 taxonomy( organism = "Arabidopsis thaliana", 
           db       = "ncbi", 
           output   = "taxid" )
@@ -135,7 +141,7 @@ taxonomy( organism = "Arabidopsis thaliana",
 #           db       = "itis",
 #           output   = "taxid" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE)----
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
 taxonomy( organism = "Arabidopsis", 
           db       = "itis", 
           output   = "taxid" )
@@ -146,7 +152,7 @@ taxonomy( organism = "Arabidopsis",
 #           db       = "ncbi",
 #           output   = "children" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE)----
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
 taxonomy( organism = "Arabidopsis", 
           db       = "ncbi", 
           output   = "children" )
@@ -157,7 +163,7 @@ taxonomy( organism = "Arabidopsis",
 #           db       = "itis",
 #           output   = "children" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE)----
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
 taxonomy( organism = "Arabidopsis", 
           db       = "itis", 
           output   = "children" )

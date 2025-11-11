@@ -436,29 +436,35 @@ taxonomy function.</p>
 <span id="cb2-69"><a href="#cb2-69" tabindex="-1"></a>        </span>
 <span id="cb2-70"><a href="#cb2-70" tabindex="-1"></a>        name <span class="ot">&lt;-</span> id <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb2-71"><a href="#cb2-71" tabindex="-1"></a></span>
-<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a>        <span class="cf">if</span> (db <span class="sc">==</span> <span class="st">&quot;ncbi&quot;</span>)</span>
-<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a>                tax_hierarchy <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">classification</span>(taxize<span class="sc">::</span><span class="fu">get_uid</span>(organism), <span class="at">db =</span> <span class="st">&quot;ncbi&quot;</span>)[[<span class="dv">1</span>]])</span>
-<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a>        </span>
-<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>        <span class="cf">else</span> <span class="cf">if</span> (db <span class="sc">==</span> <span class="st">&quot;itis&quot;</span>)    </span>
-<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a>                tax_hierarchy <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">classification</span>(taxize<span class="sc">::</span><span class="fu">get_tsn</span>(organism), <span class="at">db =</span> <span class="st">&quot;itis&quot;</span>)[[<span class="dv">1</span>]])</span>
-<span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a>        </span>
-<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a>        <span class="co"># tryCatch({colnames(tax_hierarchy) &lt;- c(&quot;name&quot;,&quot;rank&quot;,&quot;id&quot;)},stop(&quot;The connection to &quot;,db,&quot; did not work properly. Please check your internet connection or maybe the API did change.&quot;, call. = FALSE))</span></span>
-<span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a>        </span>
-<span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;classification&quot;</span>){</span>
-<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a>                </span>
-<span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a>                <span class="fu">return</span>(tax_hierarchy)</span>
-<span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a>        }</span>
-<span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a>        </span>
-<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;taxid&quot;</span>){</span>
-<span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a>                </span>
-<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a>                        <span class="fu">return</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(tax_hierarchy, name <span class="sc">==</span> organism),id))</span>
-<span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a>        }</span>
-<span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a>        </span>
-<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;children&quot;</span>){</span>
-<span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a>                </span>
-<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a>                <span class="fu">return</span>(<span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">children</span>(organism, <span class="at">db =</span> db)[[<span class="dv">1</span>]]))</span>
-<span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a>        } </span>
-<span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb2-72"><a href="#cb2-72" tabindex="-1"></a>        tax_hierarchy <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
+<span id="cb2-73"><a href="#cb2-73" tabindex="-1"></a>                <span class="cf">if</span> (db <span class="sc">==</span> <span class="st">&quot;ncbi&quot;</span>)</span>
+<span id="cb2-74"><a href="#cb2-74" tabindex="-1"></a>                        <span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">classification</span>(taxize<span class="sc">::</span><span class="fu">get_uid</span>(organism), <span class="at">db =</span> <span class="st">&quot;ncbi&quot;</span>)[[<span class="dv">1</span>]])</span>
+<span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>                <span class="cf">else</span> <span class="cf">if</span> (db <span class="sc">==</span> <span class="st">&quot;itis&quot;</span>)    </span>
+<span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a>                        <span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">classification</span>(taxize<span class="sc">::</span><span class="fu">get_tsn</span>(organism), <span class="at">db =</span> <span class="st">&quot;itis&quot;</span>)[[<span class="dv">1</span>]])</span>
+<span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a>        }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a>                <span class="fu">warning</span>(<span class="st">&quot;Could not retrieve taxonomy information from &quot;</span>, db, <span class="st">&quot;. Check internet connection or try again later.&quot;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a>                <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a>        })</span>
+<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a>        </span>
+<span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(tax_hierarchy)) {</span>
+<span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a>                <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a>        }</span>
+<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a>        </span>
+<span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;classification&quot;</span>){</span>
+<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a>                </span>
+<span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a>                <span class="fu">return</span>(tax_hierarchy)</span>
+<span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a>        }</span>
+<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a>        </span>
+<span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;taxid&quot;</span>){</span>
+<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a>                </span>
+<span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a>                        <span class="fu">return</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(tax_hierarchy, name <span class="sc">==</span> organism),id))</span>
+<span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a>        }</span>
+<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a>        </span>
+<span id="cb2-96"><a href="#cb2-96" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;children&quot;</span>){</span>
+<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a>                </span>
+<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a>                <span class="fu">return</span>(<span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">children</span>(organism, <span class="at">db =</span> db)[[<span class="dv">1</span>]]))</span>
+<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a>        } </span>
+<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>The <code>taxonomy()</code> function can be used to classify genomes
 according to phylogenetic classification into Phylostrata

@@ -1,4 +1,4 @@
-## ----message = FALSE----------------------------------------------------------
+## ----message = FALSE, echo = FALSE--------------------------------------------
 library(myTAI)
 data("example_phyex_set")
 
@@ -23,7 +23,7 @@ S7::prop_names(example_phyex_set)
 # myTAI::stat_flatline_test(example_phyex_set)
 # myTAI::stat_flatline_test(example_phyex_set)
 
-## ----message = FALSE----------------------------------------------------------
+## ----message = FALSE, echo=FALSE----------------------------------------------
 data("example_phyex_set_old")
 example_expression <- 
     example_phyex_set_old@expression |> 
@@ -40,7 +40,7 @@ example_phylorank <-
 ## ----message = FALSE, echo=FALSE----------------------------------------------
 example_expression |> head()
 
-## ----message = FALSE----------------------------------------------------------
+## ----message = FALSE, echo = FALSE--------------------------------------------
 example_phyex_set.df <-
     data.frame(phylorank = example_phylorank) |>
     tibble::rownames_to_column(var = "GeneID") |>
@@ -55,7 +55,7 @@ example_phyex_set.df <-
 example_phyex_set.df |> head()
 example_phyex_set.df |> str()
 
-## ----warning=FALSE, message=FALSE---------------------------------------------
+## ----warning=FALSE, message=FALSE, echo = FALSE-------------------------------
 example_phyex_set.remake <- 
     myTAI::BulkPhyloExpressionSet_from_df(
         example_phyex_set.df,
@@ -71,7 +71,7 @@ print(example_phyex_set.remake)
 example_phyex_set.remake |> 
     myTAI::plot_signature()
 
-## ----message = FALSE----------------------------------------------------------
+## ----message = FALSE, echo = FALSE--------------------------------------------
 data("example_phyex_set") # not data("example_phyex_set_old")
 example_expression <- 
     example_phyex_set@expression |> 
@@ -92,7 +92,7 @@ example_phyex_set.df <-
 ## ----message = FALSE, echo=FALSE----------------------------------------------
 colnames(example_phyex_set.df)
 
-## ----message = FALSE----------------------------------------------------------
+## ----message = FALSE, echo = FALSE--------------------------------------------
 groups_example_phyex_set.df <- c(
             rep("Preglobular",3), 
             rep("Globular",3), 
