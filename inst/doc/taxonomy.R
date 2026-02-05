@@ -130,10 +130,10 @@ taxonomy( organism = "Arabidopsis thaliana",
 #           db       = "ncbi",
 #           output   = "taxid" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
-taxonomy( organism = "Arabidopsis thaliana", 
-          db       = "ncbi", 
-          output   = "taxid" )
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = FALSE-------------
+# taxonomy( organism = "Arabidopsis thaliana",
+#           db       = "ncbi",
+#           output   = "taxid" )
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # retrieving the taxonomy id of the query organism from Integrated Taxonomic Information Service
