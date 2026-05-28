@@ -442,29 +442,35 @@ taxonomy function.</p>
 <span id="cb2-75"><a href="#cb2-75" tabindex="-1"></a>                <span class="cf">else</span> <span class="cf">if</span> (db <span class="sc">==</span> <span class="st">&quot;itis&quot;</span>)    </span>
 <span id="cb2-76"><a href="#cb2-76" tabindex="-1"></a>                        <span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">classification</span>(taxize<span class="sc">::</span><span class="fu">get_tsn</span>(organism), <span class="at">db =</span> <span class="st">&quot;itis&quot;</span>)[[<span class="dv">1</span>]])</span>
 <span id="cb2-77"><a href="#cb2-77" tabindex="-1"></a>        }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
-<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a>                <span class="fu">warning</span>(<span class="st">&quot;Could not retrieve taxonomy information from &quot;</span>, db, <span class="st">&quot;. Check internet connection or try again later.&quot;</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-78"><a href="#cb2-78" tabindex="-1"></a>                <span class="fu">message</span>(<span class="st">&quot;Could not retrieve taxonomy information from &quot;</span>, db, <span class="st">&quot;. Check internet connection or try again later.&quot;</span>)</span>
 <span id="cb2-79"><a href="#cb2-79" tabindex="-1"></a>                <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
 <span id="cb2-80"><a href="#cb2-80" tabindex="-1"></a>        })</span>
-<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a>        </span>
+<span id="cb2-81"><a href="#cb2-81" tabindex="-1"></a></span>
 <span id="cb2-82"><a href="#cb2-82" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(tax_hierarchy)) {</span>
 <span id="cb2-83"><a href="#cb2-83" tabindex="-1"></a>                <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
 <span id="cb2-84"><a href="#cb2-84" tabindex="-1"></a>        }</span>
-<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a>        </span>
+<span id="cb2-85"><a href="#cb2-85" tabindex="-1"></a></span>
 <span id="cb2-86"><a href="#cb2-86" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;classification&quot;</span>){</span>
-<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a>                </span>
+<span id="cb2-87"><a href="#cb2-87" tabindex="-1"></a></span>
 <span id="cb2-88"><a href="#cb2-88" tabindex="-1"></a>                <span class="fu">return</span>(tax_hierarchy)</span>
 <span id="cb2-89"><a href="#cb2-89" tabindex="-1"></a>        }</span>
-<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a>        </span>
+<span id="cb2-90"><a href="#cb2-90" tabindex="-1"></a></span>
 <span id="cb2-91"><a href="#cb2-91" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;taxid&quot;</span>){</span>
-<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a>                </span>
+<span id="cb2-92"><a href="#cb2-92" tabindex="-1"></a></span>
 <span id="cb2-93"><a href="#cb2-93" tabindex="-1"></a>                        <span class="fu">return</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(dplyr<span class="sc">::</span><span class="fu">filter</span>(tax_hierarchy, name <span class="sc">==</span> organism),id))</span>
 <span id="cb2-94"><a href="#cb2-94" tabindex="-1"></a>        }</span>
-<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a>        </span>
+<span id="cb2-95"><a href="#cb2-95" tabindex="-1"></a></span>
 <span id="cb2-96"><a href="#cb2-96" tabindex="-1"></a>        <span class="cf">if</span>(output <span class="sc">==</span> <span class="st">&quot;children&quot;</span>){</span>
-<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a>                </span>
-<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a>                <span class="fu">return</span>(<span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">children</span>(organism, <span class="at">db =</span> db)[[<span class="dv">1</span>]]))</span>
-<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a>        } </span>
-<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb2-97"><a href="#cb2-97" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" tabindex="-1"></a>                result <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
+<span id="cb2-99"><a href="#cb2-99" tabindex="-1"></a>                        <span class="fu">as.data.frame</span>(taxize<span class="sc">::</span><span class="fu">children</span>(organism, <span class="at">db =</span> db)[[<span class="dv">1</span>]])</span>
+<span id="cb2-100"><a href="#cb2-100" tabindex="-1"></a>                }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb2-101"><a href="#cb2-101" tabindex="-1"></a>                        <span class="fu">message</span>(<span class="st">&quot;Could not retrieve children taxa from &quot;</span>, db, <span class="st">&quot;. Check internet connection or try again later.&quot;</span>)</span>
+<span id="cb2-102"><a href="#cb2-102" tabindex="-1"></a>                        <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb2-103"><a href="#cb2-103" tabindex="-1"></a>                })</span>
+<span id="cb2-104"><a href="#cb2-104" tabindex="-1"></a>                <span class="fu">return</span>(result)</span>
+<span id="cb2-105"><a href="#cb2-105" tabindex="-1"></a>        }</span>
+<span id="cb2-106"><a href="#cb2-106" tabindex="-1"></a>}</span></code></pre></div>
 </details>
 <p>The <code>taxonomy()</code> function can be used to classify genomes
 according to phylogenetic classification into Phylostrata
@@ -499,35 +505,6 @@ information.</p>
 <summary>
 Show output
 </summary>
-<pre><code>## ══  1 queries  ═══════════════</code></pre>
-<pre><code>## ✔  Found:  Arabidopsis+thaliana
-## ══  Results  ═════════════════
-## 
-## • Total: 1 
-## • Found: 1 
-## • Not Found: 0</code></pre>
-<pre><code>##                    name          rank      id
-## 1    cellular organisms cellular root  131567
-## 2             Eukaryota        domain    2759
-## 3         Viridiplantae       kingdom   33090
-## 4          Streptophyta        phylum   35493
-## 5        Streptophytina     subphylum  131221
-## 6           Embryophyta         clade    3193
-## 7          Tracheophyta         clade   58023
-## 8         Euphyllophyta         clade   78536
-## 9         Spermatophyta         clade   58024
-## 10        Magnoliopsida         class    3398
-## 11      Mesangiospermae         clade 1437183
-## 12       eudicotyledons         clade   71240
-## 13           Gunneridae         clade   91827
-## 14         Pentapetalae         clade 1437201
-## 15               rosids         clade   71275
-## 16              malvids         clade   91836
-## 17          Brassicales         order    3699
-## 18         Brassicaceae        family    3700
-## 19           Camelineae         tribe  980083
-## 20          Arabidopsis         genus    3701
-## 21 Arabidopsis thaliana       species    3702</code></pre>
 </details>
 <p>The <code>organism</code> argument takes the scientific name of a
 query organism, the <code>db</code> argument specifies that database
@@ -546,35 +523,15 @@ taxonomic rank, and the third column the NCBI Taxonomy id for
 corresponding taxa.</p>
 <p>Analogous <code>classification</code> information can be obtained
 from different databases.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># retrieving the taxonomic hierarchy of &quot;Arabidopsis thaliana&quot;</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="co"># from the Integrated Taxonomic Information System</span></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;itis&quot;</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;classification&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># retrieving the taxonomic hierarchy of &quot;Arabidopsis thaliana&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="co"># from the Integrated Taxonomic Information System</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;itis&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;classification&quot;</span> )</span></code></pre></div>
 <details>
 <summary>
 Show output
 </summary>
-<pre><code>## ══  1 queries  ═══════════════</code></pre>
-<pre><code>## ✔  Found:  Arabidopsis thaliana
-## ══  Results  ═════════════════
-## 
-## • Total: 1 
-## • Found: 1 
-## • Not Found: 0</code></pre>
-<pre><code>##                    name          rank     id
-## 1               Plantae       kingdom 202422
-## 2         Viridiplantae    subkingdom 954898
-## 3          Streptophyta  infrakingdom 846494
-## 4           Embryophyta superdivision 954900
-## 5          Tracheophyta      division 846496
-## 6       Spermatophytina   subdivision 846504
-## 7         Magnoliopsida         class  18063
-## 8               Rosanae    superorder 846548
-## 9           Brassicales         order 822943
-## 10         Brassicaceae        family  22669
-## 11          Arabidopsis         genus  23040
-## 12 Arabidopsis thaliana       species  23041</code></pre>
 <p>The <code>output</code> argument allows you to directly access
 taxonomy ids for a query organism or species.</p>
 </details>
@@ -583,10 +540,10 @@ taxonomy ids for a query organism or species.</p>
 <summary>
 <strong>retrieve taxonomy ID from <code>ncbi</code></strong>
 </summary>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co"># retrieving the taxonomy id of the query organism from NCBI Taxonomy</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;ncbi&quot;</span>, </span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;taxid&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># retrieving the taxonomy id of the query organism from NCBI Taxonomy</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis thaliana&quot;</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;ncbi&quot;</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;taxid&quot;</span> )</span></code></pre></div>
 <details>
 <summary>
 Show output
@@ -597,23 +554,14 @@ Show output
 <summary>
 <strong>retrieve taxonomy ID from <code>itis</code></strong>
 </summary>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># retrieving the taxonomy id of the query organism from Integrated Taxonomic Information Service</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis&quot;</span>, </span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;itis&quot;</span>, </span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;taxid&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># retrieving the taxonomy id of the query organism from Integrated Taxonomic Information Service</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis&quot;</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;itis&quot;</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;taxid&quot;</span> )</span></code></pre></div>
 <details>
 <summary>
 Show output
 </summary>
-<pre><code>## ══  1 queries  ═══════════════</code></pre>
-<pre><code>## ✔  Found:  Arabidopsis
-## ══  Results  ═════════════════
-## 
-## • Total: 1 
-## • Found: 1 
-## • Not Found: 0</code></pre>
-<pre><code>##      id
-## 1 23040</code></pre>
 </details>
 </details>
 <p>So far, the following data bases can be accesses to retrieve
@@ -648,123 +596,28 @@ Divergence Stratigraphy.</p>
 <summary>
 <strong>retrieve children nodes from <code>ncbi</code></strong>
 </summary>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># retrieve children taxa of the query organism stored in the correspondning database</span></span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis&quot;</span>, </span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;ncbi&quot;</span>, </span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;children&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># retrieve children taxa of the query organism stored in the correspondning database</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis&quot;</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;ncbi&quot;</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;children&quot;</span> )</span></code></pre></div>
 <details>
 <summary>
 Show output
 </summary>
-<pre><code>## ══  1 queries  ═══════════════</code></pre>
-<pre><code>## ✔  Found:  Arabidopsis
-## ══  Results  ═════════════════
-## 
-## • Total: 1 
-## • Found: 1 
-## • Not Found: 0</code></pre>
-<pre><code>##    childtaxa_id
-## 1       2608267
-## 2       2486701
-## 3       1837063
-## 4       1547872
-## 5       1328956
-## 6       1240361
-## 7        869751
-## 8        869750
-## 9        864766
-## 10       412662
-## 11       378006
-## 12       347883
-## 13       302551
-## 14        97980
-## 15        97979
-## 16        81970
-## 17        59690
-## 18        59689
-## 19        45251
-## 20        45249
-## 21        38785
-## 22         3702
-##                                                        childtaxa_name
-## 1                            Arabidopsis arenosa x Arabidopsis lyrata
-## 2                            Arabidopsis lyrata x Arabidopsis halleri
-## 3                          Arabidopsis thaliana x Arabidopsis halleri
-## 4                                               Arabidopsis umezawana
-## 5  (Arabidopsis thaliana x Arabidopsis arenosa) x Arabidopsis suecica
-## 6                          Arabidopsis thaliana x Arabidopsis arenosa
-## 7         Arabidopsis thaliana x Arabidopsis halleri subsp. gemmifera
-## 8                           Arabidopsis thaliana x Arabidopsis lyrata
-## 9                                         Arabidopsis septentrionalis
-## 10                                            Arabidopsis pedemontana
-## 11                         Arabidopsis arenosa x Arabidopsis thaliana
-## 12                                              Arabidopsis arenicola
-## 13                                              Arabidopsis petrogena
-## 14                                               Arabidopsis croatica
-## 15                                            Arabidopsis cebennensis
-## 16                                                Arabidopsis halleri
-## 17                                             Arabidopsis kamchatica
-## 18                                                 Arabidopsis lyrata
-## 19                                               Arabidopsis neglecta
-## 20                                                Arabidopsis suecica
-## 21                                                Arabidopsis arenosa
-## 22                                               Arabidopsis thaliana
-##    childtaxa_rank
-## 1         species
-## 2         species
-## 3         species
-## 4         species
-## 5         species
-## 6         species
-## 7         species
-## 8         species
-## 9         species
-## 10        species
-## 11        species
-## 12        species
-## 13        species
-## 14        species
-## 15        species
-## 16        species
-## 17        species
-## 18        species
-## 19        species
-## 20        species
-## 21        species
-## 22        species</code></pre>
 </details>
 </details>
 <details>
 <summary>
 <strong>retrieve children nodes from <code>itis</code></strong>
 </summary>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="co"># retrieve children taxa of the query organism stored in the correspondning database</span></span>
-<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis&quot;</span>, </span>
-<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;itis&quot;</span>, </span>
-<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;children&quot;</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># retrieve children taxa of the query organism stored in the correspondning database</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">taxonomy</span>( <span class="at">organism =</span> <span class="st">&quot;Arabidopsis&quot;</span>, </span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>          <span class="at">db       =</span> <span class="st">&quot;itis&quot;</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>          <span class="at">output   =</span> <span class="st">&quot;children&quot;</span> )</span></code></pre></div>
 <details>
 <summary>
 Show output
 </summary>
-<pre><code>## ══  1 queries  ═══════════════</code></pre>
-<pre><code>## ✔  Found:  Arabidopsis
-## ══  Results  ═════════════════
-## 
-## • Total: 1 
-## • Found: 1 
-## • Not Found: 0
-## ══  1 queries  ═══════════════</code></pre>
-<pre><code>## ✔  Found:  Arabidopsis
-## ══  Results  ═════════════════
-## 
-## • Total: 1 
-## • Found: 1 
-## • Not Found: 0</code></pre>
-<pre><code>##    parentname parenttsn rankname             taxonname    tsn
-## 1 Arabidopsis     23040  Species  Arabidopsis thaliana  23041
-## 2 Arabidopsis     23040  Species   Arabidopsis arenosa 823130
-## 3 Arabidopsis     23040  Species    Arabidopsis lyrata 823171
-## 4 Arabidopsis     23040  Species Arabidopsis arenicola 823113</code></pre>
 </details>
 </details>
 <p>These results allow us to choose <code>subject</code> organisms for

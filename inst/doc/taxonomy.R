@@ -76,28 +76,34 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
                 else if (db == "itis")    
                         as.data.frame(taxize::classification(taxize::get_tsn(organism), db = "itis")[[1]])
         }, error = function(e) {
-                warning("Could not retrieve taxonomy information from ", db, ". Check internet connection or try again later.", call. = FALSE)
+                message("Could not retrieve taxonomy information from ", db, ". Check internet connection or try again later.")
                 return(NULL)
         })
-        
+
         if (is.null(tax_hierarchy)) {
                 return(NULL)
         }
-        
+
         if(output == "classification"){
-                
+
                 return(tax_hierarchy)
         }
-        
+
         if(output == "taxid"){
-                
+
                         return(dplyr::select(dplyr::filter(tax_hierarchy, name == organism),id))
         }
-        
+
         if(output == "children"){
-                
-                return(as.data.frame(taxize::children(organism, db = db)[[1]]))
-        } 
+
+                result <- tryCatch({
+                        as.data.frame(taxize::children(organism, db = db)[[1]])
+                }, error = function(e) {
+                        message("Could not retrieve children taxa from ", db, ". Check internet connection or try again later.")
+                        return(NULL)
+                })
+                return(result)
+        }
 }
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -107,10 +113,10 @@ taxonomy <- function(organism, db = "ncbi", output = "classification"){
 #           db       = "ncbi",
 #           output   = "classification" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
-taxonomy( organism = "Arabidopsis thaliana", 
-          db       = "ncbi",
-          output   = "classification" )
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = FALSE-------------
+# taxonomy( organism = "Arabidopsis thaliana",
+#           db       = "ncbi",
+#           output   = "classification" )
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # retrieving the taxonomic hierarchy of "Arabidopsis thaliana"
@@ -119,10 +125,10 @@ taxonomy( organism = "Arabidopsis thaliana",
 #           db       = "itis",
 #           output   = "classification" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
-taxonomy( organism = "Arabidopsis thaliana", 
-          db       = "itis",
-          output   = "classification" )
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = FALSE-------------
+# taxonomy( organism = "Arabidopsis thaliana",
+#           db       = "itis",
+#           output   = "classification" )
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # retrieving the taxonomy id of the query organism from NCBI Taxonomy
@@ -141,10 +147,10 @@ taxonomy( organism = "Arabidopsis thaliana",
 #           db       = "itis",
 #           output   = "taxid" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
-taxonomy( organism = "Arabidopsis", 
-          db       = "itis", 
-          output   = "taxid" )
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = FALSE-------------
+# taxonomy( organism = "Arabidopsis",
+#           db       = "itis",
+#           output   = "taxid" )
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # retrieve children taxa of the query organism stored in the correspondning database
@@ -152,10 +158,10 @@ taxonomy( organism = "Arabidopsis",
 #           db       = "ncbi",
 #           output   = "children" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
-taxonomy( organism = "Arabidopsis", 
-          db       = "ncbi", 
-          output   = "children" )
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = FALSE-------------
+# taxonomy( organism = "Arabidopsis",
+#           db       = "ncbi",
+#           output   = "children" )
 
 ## ----eval=FALSE---------------------------------------------------------------
 # # retrieve children taxa of the query organism stored in the correspondning database
@@ -163,8 +169,8 @@ taxonomy( organism = "Arabidopsis",
 #           db       = "itis",
 #           output   = "children" )
 
-## ----message = FALSE, warning = FALSE, echo = FALSE, eval = requireNamespace("taxize", quietly = TRUE) && curl::has_internet()----
-taxonomy( organism = "Arabidopsis", 
-          db       = "itis", 
-          output   = "children" )
+## ----message = FALSE, warning = FALSE, echo = FALSE, eval = FALSE-------------
+# taxonomy( organism = "Arabidopsis",
+#           db       = "itis",
+#           output   = "children" )
 
