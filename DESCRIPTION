@@ -1,8 +1,8 @@
 Package: myTAI
 Type: Package
 Title: Evolutionary Transcriptomics
-Version: 2.3.6
-Date: 2026-05-28
+Version: 2.3.7
+Date: 2026-08-24
 Maintainer: Hajk-Georg Drost <hajk-georg.drost@tuebingen.mpg.de>
 Authors@R: c(person("Hajk-Georg", "Drost",
                 role = c("aut", "cre"),
@@ -38,8 +38,8 @@ License: GPL-2
 Depends: R (>= 4.1)
 Imports: S7, patchwork, purrr, tidyr, Rcpp, memoise, fitdistrplus (>=
         1.1-5), dplyr (>= 0.3.0), RColorBrewer (>= 1.1-2), ggplot2 (>=
-        1.0.1), ggforce, ggridges, ggtext, readr (>= 0.2.2), tibble,
-        ggplotify, ggrepel, Matrix, pheatmap
+        1.0.1), ggforce, ggridges, readr (>= 0.2.2), tibble, ggplotify,
+        ggrepel, Matrix, pheatmap
 Suggests: knitr (>= 1.6), rmarkdown (>= 0.3.3), testthat (>= 0.9.1),
         mgcv, Seurat, SeuratObject, uwot, decor, DESeq2, gganimate,
         taxize
@@ -70,7 +70,7 @@ Collate: 'globals.R' 'utils_S7.R' 'utils_math.R' 'phyloset_base.R'
         'stat_pairwise_test.R' 'stat_reductive_hourglass_test.R'
         'stat_reverse_hourglass_test.R' 'taxid.R' 'tf_PS.R'
         'tf_stability.R' 'zzz.R'
-Packaged: 2026-05-28 11:34:37 UTC; 2648894
+Packaged: 2026-08-24 14:27:36 UTC; 2648894
 Author: Hajk-Georg Drost [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-1567-306X>),
   Stefan Manolache [aut, ctb] (ORCID:
@@ -83,4 +83,4 @@ Author: Hajk-Georg Drost [aut, cre] (ORCID:
   Kristian K Ullrich [aut, ctb] (ORCID:
     <https://orcid.org/0000-0003-4308-9626>)
 Repository: CRAN
-Date/Publication: 2026-05-28 12:30:02 UTC
+Date/Publication: 2026-08-24 16:50:02 UTC
